@@ -1,0 +1,180 @@
+# 알공 LMS 공부방용 개선 프로젝트
+
+## 프로젝트 정보
+- **프로젝트명**: 알공스마트리 LMS (공부방용)
+- **목표**: 소규모 공부방/학원 환경에 최적화된 LMS 개선
+- **핵심 작업**: 신규미션 생성 시 과제 선택 옵션 2개 → 4개 확장
+
+## 참조 파일 (반드시 확인)
+작업 전 아래 파일들을 반드시 참조하세요:
+
+1. **`LMS img/`** - 현재 알공 LMS 화면 캡처 이미지
+   - 현재 UI/UX 디자인 참고
+   - 기존 컴포넌트 스타일 파악
+   - 색상, 레이아웃, 버튼 스타일 등 일관성 유지
+
+2. **`algong-lms-improvement-plan.md`** - 개선 계획서 v2
+   - 상세 요구사항 정의
+   - DB 스키마 설계
+   - API 명세
+   - 컴포넌트 구조
+
+3. **`알공 LMS 공부방용 개선 계획서.pdf`** - 마인드맵 문서
+   - 전체 시스템 구조도
+   - 메뉴/탭 계층 구조
+   - 기능별 화면 흐름
+
+## 기술 스택
+- **Frontend**: React 18+ with TypeScript
+- **Styling**: Tailwind CSS
+- **State Management**: React Query (TanStack Query) + Zustand
+- **Backend**: Node.js + Express (또는 Next.js API Routes)
+- **Database**: MySQL 또는 PostgreSQL
+- **Build Tool**: Vite
+
+## 코딩 컨벤션
+
+### 파일/폴더 명명
+- 컴포넌트: PascalCase (예: `TaskSelector.tsx`)
+- 훅: camelCase with 'use' prefix (예: `useLibraryBooks.ts`)
+- 유틸리티: camelCase (예: `formatDate.ts`)
+- 타입 정의: camelCase (예: `mission.ts`)
+
+### 컴포넌트 구조
+```tsx
+// 1. imports
+import React from 'react';
+import { useQuery } from '@tanstack/react-query';
+
+// 2. types/interfaces
+interface Props {
+  // ...
+}
+
+// 3. component
+const ComponentName: React.FC<Props> = ({ prop1, prop2 }) => {
+  // hooks
+  // state
+  // handlers
+  // effects
+  // render
+  return <div>...</div>;
+};
+
+export default ComponentName;
+```
+
+### 스타일 가이드
+- Tailwind CSS 클래스 사용
+- 기존 알공 LMS 색상 체계 유지:
+  - Primary Blue: `#4A90D9` (강의듣기)
+  - Green: `#7CB342` (액티비티)
+  - Purple: `#9C27B0` (AI 대화)
+  - Orange: `#FF9800` (영어도서관)
+  - 완료 상태: `#4CAF50` (초록)
+  - 미완료 상태: `#F48FB1` (핑크)
+
+## 현재 시스템 구조
+
+### 메뉴 구조
+```
+알공스마트리 LMS
+├── 1. 학습현황 탭
+│   ├── 스마트 파닉스 단원 선택 (40단원)
+│   ├── 학습결과 (단원별)
+│   └── more (상세 학습현황)
+│
+├── 2. 학습설정 탭  ⭐ 주요 개선 대상
+│   ├── 과제 미션 관리
+│   │   └── +신규미션 생성
+│   │       ├── 1. 과제명 (16자 이내)
+│   │       ├── 2. 단원 선택
+│   │       ├── 3. 과제 선택 ⭐ 확장 필요 (2개→4개)
+│   │       ├── 4. 과제별 횟수 선택
+│   │       ├── 5. 전송 대상 설정
+│   │       ├── 6. 보상 설정 (4종 스톤, 골드)
+│   │       ├── 7. 기간 설정
+│   │       └── 8. 수업 모드 설정
+│   └── 학생 과제 현황
+│
+├── 3. 수업보기 탭
+│   └── 접속중(○) / 학습중(●) 실시간 모니터링
+│
+└── 4. 스마트리 탭
+    ├── 단원별 콘텐츠 (6차시 구성)
+    │   ├── 1차시: Let's Do the Chant (챈트)
+    │   ├── 2차시: Let's Listen and Repeat (듣고 따라 말하기)
+    │   ├── 3차시: Let's Trace (따라쓰기)
+    │   ├── 4차시: Game (게임)
+    │   ├── 5차시: Let's Read the Story (스토리 읽기)
+    │   └── 6차시: Let's Scratch (복습하기)
+    └── 리뷰 테스트
+```
+
+### 스마트 파닉스 40단원 목록
+```
+01. It Is an Apple        21. Look at My Nose
+02. It Is a Dog           22. Look at the Hole
+03. This Is a Hat         23. Listen to the Tune
+04. This Is a Jet         24. I Like June
+05. I See a Mouse         25. What Color Is the Flag?
+06. I See a Panda         26. I See a Crab
+07. Look at the Sun       27. I Love My Glass
+08. Look at the Watch     28. Where Is the Dress?
+09. Where Is the Cap?     29. Can You Swim?
+10. Where Is the Man?     30. I Hear a Bang
+11. The Jet Is Here       31. Look at the Ship
+12. I Have a Wig          32. This Is My Thumb
+13. I Can Hit the Bell    33. I Like the Bee
+14. A Fox Is in the Box   34. Let's Do It
+15. There Is a Bug        35. It Rains Every Day
+16. I Can Run Fast        36. I Feel Joy
+17. I Like to Bake a Cake 37. I See a Cow
+18. What Is Your Name?    38. Look at the Girl
+19. Let's Hike            39. I Love My Car
+20. Let's Fly a Kite      40. Look at the Moon
+```
+
+## 핵심 개선 사항
+
+### 과제 선택 확장 (2개 → 4개)
+
+| 순서 | 과제 유형 | 아이콘 | 색상 | 설명 |
+|:---:|---|:---:|---|---|
+| 1 | 강의듣기 (스마트리) | 📺 | #4A90D9 | 1~6차시 중 선택, 🆕 신규 |
+| 2 | 액티비티 | 📝 | #7CB342 | 듣기/읽기/말하기/쓰기 |
+| 3 | AI 대화 | 💬 | #9C27B0 | 교과서 대화 |
+| 4 | 영어도서관 | 📚 | #FF9800 | 레벨별 도서 선택, 🆕 신규 |
+
+## 구현 우선순위
+
+### Phase 1 (Week 1-2): 기반 작업
+- [ ] DB 스키마 생성 (library_books, student_lecture_progress, student_library_progress)
+- [ ] API 엔드포인트 구현
+- [ ] 타입 정의 및 API 훅
+
+### Phase 2 (Week 3-4): 과제 선택 UI
+- [ ] TaskSelector 메인 컴포넌트
+- [ ] LectureTaskCard (강의듣기) - 🆕
+- [ ] ActivityTaskCard (액티비티) - 기존 리팩토링
+- [ ] AiChatTaskCard (AI대화) - 기존 리팩토링
+- [ ] LibraryTaskCard + LibraryBookSelector (영어도서관) - 🆕
+
+### Phase 3 (Week 5-6): 진행 현황 연동
+- [ ] 학생 과제 현황 테이블 확장
+- [ ] 과제 유형별 진행률 컴포넌트
+
+### Phase 4 (Week 7-8): 고도화
+- [ ] 영어도서관 독후 퀴즈
+- [ ] AI 종합 학습 레포트 연동
+
+## 주의사항
+1. **기존 UI 일관성 유지**: `LMS img/` 폴더의 스크린샷을 참고하여 기존 디자인과 일관된 UI 구현
+2. **점진적 개선**: 기존 기능 유지하면서 새 기능 추가
+3. **한국어 지원**: 모든 UI 텍스트는 한국어로 작성
+4. **반응형 고려**: 태블릿/PC 환경 지원 (공부방 환경)
+
+## 질문 시 참조
+- 디자인 관련: `LMS img/` 폴더 이미지 확인
+- 기능 상세: `algong-lms-improvement-plan.md` 확인
+- 전체 구조: `알공 LMS 공부방용 개선 계획서.pdf` 확인
