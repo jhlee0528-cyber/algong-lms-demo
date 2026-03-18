@@ -70,7 +70,10 @@ const WeeklyStatsWidget: React.FC = () => {
         </div>
 
         {/* 주간 리포트 보기 버튼 */}
-        <button className="w-full mt-4 py-2 text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors">
+        <button
+          onClick={() => window.location.href = '/reports/communication'}
+          className="w-full mt-4 py-2 text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors"
+        >
           주간 리포트 보기 →
         </button>
       </div>

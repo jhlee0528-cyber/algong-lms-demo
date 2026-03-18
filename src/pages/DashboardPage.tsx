@@ -89,7 +89,10 @@ const DashboardPage: React.FC = () => {
                         ArLex {student.diagnosticResult?.level} 진단 권장
                       </p>
                     </div>
-                    <button className="text-xs text-purple-600 hover:text-purple-700 font-medium">
+                    <button
+                      onClick={() => window.location.href = `/diagnostic/${student.id}`}
+                      className="text-xs text-purple-600 hover:text-purple-700 font-medium"
+                    >
                       상세보기
                     </button>
                   </div>
