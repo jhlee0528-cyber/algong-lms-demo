@@ -16,6 +16,7 @@ import {
 import CurriculumPage from './pages/CurriculumPage';
 import ClassroomPage from './pages/ClassroomPage';
 import DashboardPage from './pages/DashboardPage';
+import QuickGradingPage from './pages/Grading/QuickGradingPage';
 import './styles/index.css';
 
 // React Query 클라이언트 생성
@@ -37,6 +38,7 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/" element={<Navigate to="/dashboard" replace />} />
             <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/grading/quick" element={<QuickGradingPage />} />
             <Route path="/learning-status" element={<LearningStatusPage />} />
             <Route path="/curriculum" element={<CurriculumPage />} />
             <Route path="/learning-settings" element={<LearningSettingsPage />} />
