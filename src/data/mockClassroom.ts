@@ -20,12 +20,12 @@ export interface ClassroomStudent {
   }>;
 }
 
-// 15명 학생 실시간 상태 (mockStudents와 동일한 학생들)
+// 20명 학생 실시간 상태 (mockStudents와 동일한 학생들)
 export const mockClassroomStudents: ClassroomStudent[] = [
   // 학습 중 (10명)
   {
     id: '001',
-    name: '김민지',
+    name: '김민수',
     grade: 5,
     status: 'learning',
     currentSubject: '영어',
@@ -40,7 +40,7 @@ export const mockClassroomStudents: ClassroomStudent[] = [
   },
   {
     id: '002',
-    name: '이서준',
+    name: '이지은',
     grade: 4,
     status: 'learning',
     currentSubject: '파닉스',
@@ -55,7 +55,7 @@ export const mockClassroomStudents: ClassroomStudent[] = [
   },
   {
     id: '003',
-    name: '박지우',
+    name: '박준호',
     grade: 3,
     status: 'learning',
     currentSubject: '수학',
@@ -220,6 +220,79 @@ export const mockClassroomStudents: ClassroomStudent[] = [
     grade: 5,
     status: 'offline',
     todayHistory: [],
+  },
+
+  // 추가 학생 (16-20)
+  {
+    id: '016',
+    name: '유하늘',
+    grade: 4,
+    status: 'learning',
+    currentSubject: '영어',
+    currentActivity: 'Unit 2 - 읽기 연습',
+    currentLevel: 'Lv.12',
+    progressPercent: 60,
+    estimatedMinutesLeft: 14,
+    todayHistory: [
+      { time: '14:05', activity: '영어 Lv.12 Unit 2 시작', completed: false },
+    ],
+  },
+  {
+    id: '017',
+    name: '문지원',
+    grade: 5,
+    status: 'learning',
+    currentSubject: '영어',
+    currentActivity: 'Unit 3 - 문법 학습',
+    currentLevel: 'Lv.14',
+    progressPercent: 75,
+    estimatedMinutesLeft: 10,
+    todayHistory: [
+      { time: '13:55', activity: '영어 Lv.14 Unit 3 시작', completed: false },
+    ],
+  },
+  {
+    id: '018',
+    name: '양준혁',
+    grade: 6,
+    status: 'learning',
+    currentSubject: '영어',
+    currentActivity: 'Unit 8 - 고급 독해',
+    currentLevel: 'Lv.18',
+    progressPercent: 85,
+    estimatedMinutesLeft: 8,
+    todayHistory: [
+      { time: '13:45', activity: 'Unit 7 완료', completed: true },
+      { time: '14:15', activity: 'Unit 8 시작', completed: false },
+    ],
+  },
+  {
+    id: '019',
+    name: '백서아',
+    grade: 3,
+    status: 'paused',
+    currentSubject: '파닉스',
+    currentActivity: 'Spark A2 - 발음 연습',
+    currentLevel: 'A2',
+    progressPercent: 40,
+    estimatedMinutesLeft: 18,
+    todayHistory: [
+      { time: '14:10', activity: 'Spark A2 시작', completed: false },
+    ],
+  },
+  {
+    id: '020',
+    name: '남도윤',
+    grade: 5,
+    status: 'learning',
+    currentSubject: '영어',
+    currentActivity: 'Unit 4 - 어휘 학습',
+    currentLevel: 'Lv.13',
+    progressPercent: 68,
+    estimatedMinutesLeft: 12,
+    todayHistory: [
+      { time: '14:00', activity: '영어 Lv.13 Unit 4 시작', completed: false },
+    ],
   },
 ];
 

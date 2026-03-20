@@ -57,12 +57,12 @@ export interface Student {
   unpaidMonths?: number;     // 미납 개월 수
 }
 
-// 15명 학생 더미 데이터
+// 20명 학생 더미 데이터 (LearningStatusPage와 동일한 이름)
 export const mockStudents: Student[] = [
-  // 1. 김민지 (주인공 - 성장 스토리)
+  // 1. 김민수 (주인공 - 성장 스토리)
   {
     id: '001',
-    name: '김민지',
+    name: '김민수',
     grade: 5,
     parentName: '김미영',
     parentPhone: '010-1234-5678',
@@ -119,10 +119,10 @@ export const mockStudents: Student[] = [
     ]
   },
 
-  // 2. 이서준
+  // 2. 이지은
   {
     id: '002',
-    name: '이서준',
+    name: '이지은',
     grade: 4,
     parentName: '이정희',
     parentPhone: '010-2345-6789',
@@ -157,10 +157,10 @@ export const mockStudents: Student[] = [
     ]
   },
 
-  // 3. 박지우 (진도 지연 주의)
+  // 3. 박준호
   {
     id: '003',
-    name: '박지우',
+    name: '박준호',
     grade: 3,
     parentName: '박수정',
     parentPhone: '010-3456-7890',
@@ -195,10 +195,10 @@ export const mockStudents: Student[] = [
     ]
   },
 
-  // 4. 최예은
+  // 4. 최서연
   {
     id: '004',
-    name: '최예은',
+    name: '최서연',
     grade: 6,
     parentName: '최현주',
     parentPhone: '010-4567-8901',
@@ -231,10 +231,10 @@ export const mockStudents: Student[] = [
     ]
   },
 
-  // 5. 정우진
+  // 5. 정현우
   {
     id: '005',
-    name: '정우진',
+    name: '정현우',
     grade: 5,
     parentName: '정미란',
     parentPhone: '010-5678-9012',
@@ -265,10 +265,10 @@ export const mockStudents: Student[] = [
     ]
   },
 
-  // 6. 강서연
+  // 6. 강소영
   {
     id: '006',
-    name: '강서연',
+    name: '강소영',
     grade: 4,
     parentPhone: '010-6789-0123',
     registeredDate: '2025-10-05',
@@ -292,10 +292,10 @@ export const mockStudents: Student[] = [
     recentActivities: []
   },
 
-  // 7. 윤재혁
+  // 7. 윤도현
   {
     id: '007',
-    name: '윤재혁',
+    name: '윤도현',
     grade: 6,
     parentPhone: '010-7890-1234',
     registeredDate: '2025-08-20',
@@ -319,10 +319,10 @@ export const mockStudents: Student[] = [
     recentActivities: []
   },
 
-  // 8. 한지민
+  // 8. 임수진
   {
     id: '008',
-    name: '한지민',
+    name: '임수진',
     grade: 3,
     parentPhone: '010-8901-2345',
     registeredDate: '2025-10-15',
@@ -346,10 +346,10 @@ export const mockStudents: Student[] = [
     recentActivities: []
   },
 
-  // 9. 송민호
+  // 9. 한지훈
   {
     id: '009',
-    name: '송민호',
+    name: '한지훈',
     grade: 5,
     parentPhone: '010-9012-3456',
     registeredDate: '2025-09-05',
@@ -373,10 +373,10 @@ export const mockStudents: Student[] = [
     recentActivities: []
   },
 
-  // 10. 배수지
+  // 10. 오나은
   {
     id: '010',
-    name: '배수지',
+    name: '오나은',
     grade: 4,
     parentPhone: '010-0123-4567',
     registeredDate: '2025-09-20',
@@ -400,10 +400,10 @@ export const mockStudents: Student[] = [
     recentActivities: []
   },
 
-  // 11. 임하늘
+  // 11. 신동욱
   {
     id: '011',
-    name: '임하늘',
+    name: '신동욱',
     grade: 6,
     parentPhone: '010-1234-6789',
     registeredDate: '2025-08-25',
@@ -427,10 +427,10 @@ export const mockStudents: Student[] = [
     recentActivities: []
   },
 
-  // 12. 오지훈
+  // 12. 배미래
   {
     id: '012',
-    name: '오지훈',
+    name: '배미래',
     grade: 3,
     parentPhone: '010-2345-7890',
     registeredDate: '2025-10-10',
@@ -454,10 +454,10 @@ export const mockStudents: Student[] = [
     recentActivities: []
   },
 
-  // 13. 신유리
+  // 13. 조성민
   {
     id: '013',
-    name: '신유리',
+    name: '조성민',
     grade: 5,
     parentPhone: '010-3456-8901',
     registeredDate: '2025-09-12',
@@ -481,10 +481,10 @@ export const mockStudents: Student[] = [
     recentActivities: []
   },
 
-  // 14. 홍길동
+  // 14. 홍예린
   {
     id: '014',
-    name: '홍길동',
+    name: '홍예린',
     grade: 4,
     parentPhone: '010-4567-9012',
     registeredDate: '2025-09-25',
@@ -508,10 +508,10 @@ export const mockStudents: Student[] = [
     recentActivities: []
   },
 
-  // 15. 김철수 (미납 1건)
+  // 15. 송태현
   {
     id: '015',
-    name: '김철수',
+    name: '송태현',
     grade: 6,
     parentPhone: '010-5678-0123',
     registeredDate: '2025-08-30',
@@ -525,6 +525,141 @@ export const mockStudents: Student[] = [
         currentLevel: 'Lv.16',
         startDate: '2025-08-30',
         progress: 84
+      }
+    ],
+    attendance: [],
+    notificationSettings: {
+      attendance: false,
+      progress: true,
+      weeklyReport: true
+    },
+    recentActivities: []
+  },
+
+  // 16. 유하늘
+  {
+    id: '016',
+    name: '유하늘',
+    grade: 4,
+    parentPhone: '010-6789-1234',
+    registeredDate: '2025-10-12',
+    attendanceRate: 89,
+    status: 'good',
+    subjects: [
+      {
+        subjectId: 'arlex',
+        subjectName: '알공 영어',
+        currentLevel: 'Lv.12',
+        startDate: '2025-10-12',
+        progress: 64
+      }
+    ],
+    attendance: [],
+    notificationSettings: {
+      attendance: false,
+      progress: true,
+      weeklyReport: true
+    },
+    recentActivities: []
+  },
+
+  // 17. 문지원
+  {
+    id: '017',
+    name: '문지원',
+    grade: 5,
+    parentPhone: '010-7890-2345',
+    registeredDate: '2025-09-18',
+    attendanceRate: 93,
+    status: 'good',
+    subjects: [
+      {
+        subjectId: 'arlex',
+        subjectName: '알공 영어',
+        currentLevel: 'Lv.14',
+        startDate: '2025-09-18',
+        progress: 77
+      }
+    ],
+    attendance: [],
+    notificationSettings: {
+      attendance: false,
+      progress: true,
+      weeklyReport: true
+    },
+    recentActivities: []
+  },
+
+  // 18. 양준혁
+  {
+    id: '018',
+    name: '양준혁',
+    grade: 6,
+    parentPhone: '010-8901-3456',
+    registeredDate: '2025-08-22',
+    attendanceRate: 97,
+    status: 'good',
+    subjects: [
+      {
+        subjectId: 'arlex',
+        subjectName: '알공 영어',
+        currentLevel: 'Lv.18',
+        startDate: '2025-08-22',
+        progress: 85
+      }
+    ],
+    attendance: [],
+    notificationSettings: {
+      attendance: false,
+      progress: true,
+      weeklyReport: true
+    },
+    recentActivities: []
+  },
+
+  // 19. 백서아
+  {
+    id: '019',
+    name: '백서아',
+    grade: 3,
+    parentPhone: '010-9012-4567',
+    registeredDate: '2025-10-18',
+    attendanceRate: 78,
+    status: 'warning',
+    subjects: [
+      {
+        subjectId: 'arlex',
+        subjectName: '알공 영어',
+        currentLevel: 'Lv.9',
+        startDate: '2025-10-18',
+        progress: 42
+      }
+    ],
+    attendance: [],
+    notificationSettings: {
+      attendance: false,
+      progress: true,
+      weeklyReport: true
+    },
+    recentActivities: []
+  },
+
+  // 20. 남도윤
+  {
+    id: '020',
+    name: '남도윤',
+    grade: 5,
+    parentPhone: '010-0123-5678',
+    registeredDate: '2025-09-08',
+    attendanceRate: 91,
+    status: 'good',
+    subjects: [
+      {
+        subjectId: 'arlex',
+        subjectName: '알공 영어',
+        currentLevel: 'Lv.13',
+        startDate: '2025-09-08',
+        progress: 71
       }
     ],
     attendance: [],

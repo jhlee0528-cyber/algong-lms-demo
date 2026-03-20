@@ -3,6 +3,8 @@
  * 원장님 입력 → 선택안 제시
  */
 
+import { mockStudents } from './mockStudents';
+
 export interface CobyOption {
   icon: string;
   title: string;
@@ -155,32 +157,29 @@ export const keywordMap: Record<string, CobyResponse> = {
   },
 };
 
-// 학생 이름으로 검색 (mockStudents 15명 이름)
-export const studentNames = [
-  '김민지', '이서준', '박지우', '최서연', '정현우',
-  '강소영', '윤도현', '임수진', '한지훈', '오나은',
-  '신동욱', '배미래', '조성민', '홍예린', '송태현',
-];
+// 학생 이름 입력 시 응답 생성 함수 (mockStudents에서 검색)
+export const getStudentResponse = (input: string): CobyResponse | null => {
+  // mockStudents에서 이름으로 검색
+  const matchedStudent = mockStudents.find(s =>
+    s.name.includes(input.trim())
+  );
 
-// 학생 이름 입력 시 응답 생성 함수
-export const getStudentResponse = (studentName: string): CobyResponse | null => {
-  if (!studentNames.includes(studentName)) {
+  if (!matchedStudent) {
     return null;
   }
 
-  // 더미: 일부 학생은 주의 필요 상태로 설정
-  const warningStudents = ['박지우', '오나은', '홍예린'];
-  const isWarning = warningStudents.includes(studentName);
+  // 더미: warning 상태 학생은 주의 필요 메시지 표시
+  const isWarning = matchedStudent.status === 'warning' || matchedStudent.status === 'delayed';
 
   return {
-    message: `${studentName} 학생에 대해 안내해 드릴게요!`,
-    alert: isWarning ? `⚠️ 3일 연속 미접속 상태입니다.` : undefined,
+    message: `${matchedStudent.name} 학생에 대해 안내해 드릴게요!`,
+    alert: isWarning ? `⚠️ 진도 미달 주의가 필요합니다.` : undefined,
     options: [
       {
         icon: '👤',
-        title: `${studentName} 학생 상세보기`,
+        title: `${matchedStudent.name} 학생 상세보기`,
         description: '학습현황, 출결, 진도 한눈에 보기',
-        navigateTo: '/students',
+        navigateTo: `/students/${matchedStudent.id}`, // ID로 정확히 이동
       },
       {
         icon: '📨',
