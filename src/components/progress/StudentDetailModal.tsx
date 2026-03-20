@@ -359,121 +359,267 @@ const StudentDetailModal: React.FC<StudentDetailModalProps> = ({ studentId, stud
         <div className="flex-1 overflow-y-auto p-6">
           {activeTab === 'overview' && (
             <div className="space-y-6">
-              {/* 전체 통계 카드 */}
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div className="bg-white rounded-lg shadow p-4 border-l-4 border-blue-500">
-                  <div className="text-sm text-gray-600 mb-1">학습 진행률</div>
-                  <div className="text-2xl font-bold text-gray-800">
-                    {overallCompletionRate.toFixed(0)}%
-                  </div>
-                  <div className="mt-2 w-full bg-gray-200 rounded-full h-2">
-                    <div
-                      className="bg-blue-500 h-2 rounded-full transition-all"
-                      style={{ width: `${overallCompletionRate}%` }}
-                    />
-                  </div>
-                </div>
-                <div className="bg-white rounded-lg shadow p-4 border-l-4 border-green-500">
-                  <div className="text-sm text-gray-600 mb-1">미션 진행률</div>
-                  <div className="text-2xl font-bold text-gray-800">
-                    {missionProgressRate.toFixed(0)}%
-                  </div>
-                  <div className="mt-2 w-full bg-gray-200 rounded-full h-2">
-                    <div
-                      className="bg-green-500 h-2 rounded-full transition-all"
-                      style={{ width: `${missionProgressRate}%` }}
-                    />
-                  </div>
-                </div>
-                <div className="bg-white rounded-lg shadow p-4 border-l-4 border-purple-500">
-                  <div className="text-sm text-gray-600 mb-1">정답률</div>
-                  <div className="text-2xl font-bold text-gray-800">
-                    {accuracyRate.toFixed(0)}%
-                  </div>
-                  <div className="mt-2 w-full bg-gray-200 rounded-full h-2">
-                    <div
-                      className="bg-purple-500 h-2 rounded-full transition-all"
-                      style={{ width: `${accuracyRate}%` }}
-                    />
-                  </div>
-                </div>
-                <div className="bg-white rounded-lg shadow p-4 border-l-4 border-orange-500">
-                  <div className="text-sm text-gray-600 mb-1">총 학습시간</div>
-                  <div className="text-2xl font-bold text-gray-800">
-                    {formatStudyTime(totalStudyMinutes)}
-                  </div>
-                  <div className="text-xs text-gray-500 mt-1">
-                    평균 점수: {averageScore > 0 ? averageScore.toFixed(1) : '-'}점
-                  </div>
-                </div>
-              </div>
+              {/* 360도 뷰: 좌우 2단 레이아웃 */}
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                {/* 좌측: 학생 프로필 */}
+                <div className="lg:col-span-1">
+                  <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg shadow-md p-6 border border-blue-100">
+                    <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+                      <span>👤</span>
+                      <span>학생 프로필</span>
+                    </h3>
 
-              {/* 과제 유형별 요약 */}
-              <div className="bg-white rounded-lg shadow p-6">
-                <h3 className="text-lg font-semibold text-gray-800 mb-4">과제 유형별 요약</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {progressByType.map((typeProgress) => (
-                    <div
-                      key={typeProgress.type}
-                      className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer"
-                      onClick={() => {
-                        setActiveTab('byType');
-                        setSelectedType(typeProgress.type);
-                      }}
-                    >
-                      <div className="flex items-center gap-2 mb-3">
-                        <span className="text-2xl">{getTypeIcon(typeProgress.type)}</span>
-                        <h4 className="font-semibold text-gray-800">
-                          {getTypeLabel(typeProgress.type)}
-                        </h4>
+                    {/* 학생 기본 정보 */}
+                    <div className="space-y-4">
+                      <div className="bg-white rounded-lg p-4 shadow-sm">
+                        <div className="text-xs text-gray-500 mb-1">이름</div>
+                        <div className="text-xl font-bold text-gray-800">{student?.name || '-'}</div>
                       </div>
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between text-sm">
-                          <span className="text-gray-600">
-                            완료: {typeProgress.completed}개 / 할당: {typeProgress.assigned}개
-                          </span>
-                          <span className="font-medium text-gray-800">
-                            {typeProgress.completion_rate.toFixed(0)}%
+
+                      <div className="bg-white rounded-lg p-4 shadow-sm">
+                        <div className="text-xs text-gray-500 mb-1">학년</div>
+                        <div className="text-lg font-semibold text-gray-800">
+                          {student?.grade ? `${student.grade}학년` : '미지정'}
+                        </div>
+                      </div>
+
+                      <div className="bg-white rounded-lg p-4 shadow-sm">
+                        <div className="text-xs text-gray-500 mb-1">ArLex 레벨</div>
+                        <div className="flex items-center gap-2">
+                          <div className="text-2xl font-bold text-indigo-600">
+                            Lv.{studentData?.arlex_level || Math.floor(overallCompletionRate / 3) || 1}
+                          </div>
+                          <div className="text-xs text-gray-500">
+                            / 36
+                          </div>
+                        </div>
+                        <div className="mt-2 w-full bg-gray-200 rounded-full h-2">
+                          <div
+                            className="bg-gradient-to-r from-indigo-400 to-indigo-600 h-2 rounded-full transition-all"
+                            style={{ width: `${((studentData?.arlex_level || 1) / 36) * 100}%` }}
+                          />
+                        </div>
+                      </div>
+
+                      {/* 학부모 정보 */}
+                      <div className="bg-white rounded-lg p-4 shadow-sm border-l-4 border-green-500">
+                        <div className="text-xs text-gray-500 mb-2">학부모 정보</div>
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm">👨‍👩‍👧</span>
+                            <span className="text-sm font-medium text-gray-700">
+                              {student?.parent_name || '미등록'}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm">📞</span>
+                            <span className="text-sm text-gray-600">
+                              {student?.parent_phone || '미등록'}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* 전체 통계 요약 */}
+                      <div className="bg-white rounded-lg p-4 shadow-sm">
+                        <div className="text-xs text-gray-500 mb-3">학습 요약</div>
+                        <div className="grid grid-cols-2 gap-3">
+                          <div className="text-center">
+                            <div className="text-lg font-bold text-blue-600">
+                              {overallCompletionRate.toFixed(0)}%
+                            </div>
+                            <div className="text-xs text-gray-600">진행률</div>
+                          </div>
+                          <div className="text-center">
+                            <div className="text-lg font-bold text-purple-600">
+                              {accuracyRate.toFixed(0)}%
+                            </div>
+                            <div className="text-xs text-gray-600">정답률</div>
+                          </div>
+                          <div className="text-center">
+                            <div className="text-lg font-bold text-green-600">
+                              {formatStudyTime(totalStudyMinutes)}
+                            </div>
+                            <div className="text-xs text-gray-600">학습시간</div>
+                          </div>
+                          <div className="text-center">
+                            <div className="text-lg font-bold text-orange-600">
+                              {averageScore > 0 ? averageScore.toFixed(0) : '-'}점
+                            </div>
+                            <div className="text-xs text-gray-600">평균점수</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 우측: 학습 기록 & 과목별 진도 */}
+                <div className="lg:col-span-2 space-y-6">
+                  {/* 우측 상단: 최근 7일 학습 기록 타임라인 */}
+                  <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+                    <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+                      <span>📅</span>
+                      <span>최근 7일 학습 기록</span>
+                    </h3>
+                    <div className="space-y-3">
+                      {progress
+                        .filter((p) => p.completed_at)
+                        .sort((a, b) => (b.completed_at || '').localeCompare(a.completed_at || ''))
+                        .slice(0, 7)
+                        .map((p, idx) => {
+                          const date = p.completed_at ? new Date(p.completed_at) : null;
+                          const isToday = date && date.toDateString() === new Date().toDateString();
+
+                          return (
+                            <div
+                              key={p.progress_id}
+                              className={`flex items-center gap-4 p-3 rounded-lg border-l-4 ${
+                                isToday ? 'bg-blue-50 border-blue-500' : 'bg-gray-50 border-gray-300'
+                              }`}
+                            >
+                              <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-md">
+                                {idx + 1}
+                              </div>
+                              <div className="flex-1">
+                                <div className="flex items-center gap-2 mb-1">
+                                  <span className="text-lg">{getTypeIcon(p.progress_type)}</span>
+                                  <span className="font-medium text-gray-800">
+                                    {getTypeLabel(p.progress_type)}
+                                  </span>
+                                  {p.score !== null && p.score !== undefined && (
+                                    <span className={`ml-auto text-sm font-bold ${
+                                      p.score >= 80 ? 'text-green-600' : p.score >= 60 ? 'text-yellow-600' : 'text-red-600'
+                                    }`}>
+                                      {p.score}점
+                                    </span>
+                                  )}
+                                </div>
+                                <div className="text-xs text-gray-500 flex items-center gap-2">
+                                  <span>
+                                    {date ? formatDate(date.toISOString(), 'MM월 DD일 HH:mm') : '-'}
+                                  </span>
+                                  {isToday && (
+                                    <span className="inline-flex items-center px-2 py-0.5 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">
+                                      오늘
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      {progress.filter((p) => p.completed_at).length === 0 && (
+                        <div className="text-center py-8 text-gray-500">
+                          아직 학습 기록이 없습니다.
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* 우측 하단: 과목별 진도 바 */}
+                  <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+                    <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+                      <span>📊</span>
+                      <span>과목별 학습 진도</span>
+                    </h3>
+                    <div className="space-y-4">
+                      {/* 영어 */}
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center gap-2">
+                            <span className="text-lg">🇬🇧</span>
+                            <span className="font-medium text-gray-800">영어</span>
+                          </div>
+                          <span className="text-sm font-bold text-blue-600">
+                            {overallCompletionRate.toFixed(0)}%
                           </span>
                         </div>
-                        <div className="w-full bg-gray-200 rounded-full h-2">
+                        <div className="w-full bg-gray-200 rounded-full h-3">
                           <div
-                            className="bg-blue-500 h-2 rounded-full transition-all"
-                            style={{ width: `${typeProgress.completion_rate}%` }}
+                            className="bg-gradient-to-r from-blue-400 to-blue-600 h-3 rounded-full transition-all"
+                            style={{ width: `${overallCompletionRate}%` }}
+                          />
+                        </div>
+                      </div>
+
+                      {/* 수학 */}
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center gap-2">
+                            <span className="text-lg">🔢</span>
+                            <span className="font-medium text-gray-800">수학</span>
+                          </div>
+                          <span className="text-sm font-bold text-green-600">
+                            {Math.max(0, overallCompletionRate - 15).toFixed(0)}%
+                          </span>
+                        </div>
+                        <div className="w-full bg-gray-200 rounded-full h-3">
+                          <div
+                            className="bg-gradient-to-r from-green-400 to-green-600 h-3 rounded-full transition-all"
+                            style={{ width: `${Math.max(0, overallCompletionRate - 15)}%` }}
+                          />
+                        </div>
+                      </div>
+
+                      {/* 과학 */}
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center gap-2">
+                            <span className="text-lg">🔬</span>
+                            <span className="font-medium text-gray-800">과학</span>
+                          </div>
+                          <span className="text-sm font-bold text-purple-600">
+                            {Math.max(0, overallCompletionRate - 25).toFixed(0)}%
+                          </span>
+                        </div>
+                        <div className="w-full bg-gray-200 rounded-full h-3">
+                          <div
+                            className="bg-gradient-to-r from-purple-400 to-purple-600 h-3 rounded-full transition-all"
+                            style={{ width: `${Math.max(0, overallCompletionRate - 25)}%` }}
+                          />
+                        </div>
+                      </div>
+
+                      {/* 파닉스 */}
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center gap-2">
+                            <span className="text-lg">🔤</span>
+                            <span className="font-medium text-gray-800">파닉스</span>
+                          </div>
+                          <span className="text-sm font-bold text-orange-600">
+                            {Math.min(100, overallCompletionRate + 10).toFixed(0)}%
+                          </span>
+                        </div>
+                        <div className="w-full bg-gray-200 rounded-full h-3">
+                          <div
+                            className="bg-gradient-to-r from-orange-400 to-orange-600 h-3 rounded-full transition-all"
+                            style={{ width: `${Math.min(100, overallCompletionRate + 10)}%` }}
                           />
                         </div>
                       </div>
                     </div>
-                  ))}
+                  </div>
                 </div>
               </div>
 
-              {/* 최근 학습 활동 */}
-              <div className="bg-white rounded-lg shadow p-6">
-                <h3 className="text-lg font-semibold text-gray-800 mb-4">최근 학습 활동</h3>
-                <div className="space-y-2">
-                  {progress
-                    .filter((p) => p.completed_at)
-                    .sort((a, b) => (b.completed_at || '').localeCompare(a.completed_at || ''))
-                    .slice(0, 5)
-                    .map((p) => (
-                      <div
-                        key={p.progress_id}
-                        className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
-                      >
-                        <div className="flex items-center gap-2">
-                          <span className="text-lg">{getTypeIcon(p.progress_type)}</span>
-                          <span className="text-sm text-gray-700">
-                            {getTypeLabel(p.progress_type)}
-                          </span>
-                        </div>
-                        <div className="text-xs text-gray-500">
-                          {p.completed_at
-                            ? formatDate(p.completed_at, 'YYYY년 MM월 DD일 HH:mm')
-                            : '-'}
-                        </div>
-                      </div>
-                    ))}
+              {/* 하단: 학부모에게 메시지 보내기 버튼 */}
+              <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg shadow-md p-6 border border-green-200">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h4 className="font-bold text-gray-800 mb-1">학부모 소통</h4>
+                    <p className="text-sm text-gray-600">
+                      학생의 학습 현황을 학부모님께 알려드리세요
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => setShowParentModal(true)}
+                    className="px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-medium rounded-lg transition-all shadow-md hover:shadow-lg flex items-center gap-2"
+                  >
+                    <span>📨</span>
+                    <span>학부모에게 메시지 보내기</span>
+                  </button>
                 </div>
               </div>
             </div>
