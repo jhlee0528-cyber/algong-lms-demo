@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useUnits } from '../hooks/useUnits';
 import CurriculumSelector from '../components/units/CurriculumSelector';
 import UnitProgressDetail from '../components/progress/UnitProgressDetail';
+import CEFRLevelChart from '../components/curriculum/CEFRLevelChart';
 import type { StudentWithStats } from '../components/progress/StudentListTable';
 
 type Curriculum = 'phonics' | 'speaking' | 'reading' | 'grammar' | 'writing';
@@ -26,6 +27,17 @@ const CurriculumPage: React.FC = () => {
         </div>
       </div>
 
+      {/* CEFR 레벨 맵핑 차트 */}
+      <div className="bg-white rounded-lg shadow p-6">
+        <CEFRLevelChart
+          currentStudentLevel={15} // 더미 데이터: 현재 학생 레벨 (실제로는 props나 state에서 가져옴)
+          onLevelClick={(level) => {
+            console.log('Selected level:', level);
+            // TODO: 레벨 클릭 시 해당 단원 표시 로직
+          }}
+        />
+      </div>
+
       {/* 커리큘럼 선택 */}
       <div className="bg-white rounded-lg shadow p-4" style={{ minHeight: '300px' }}>
         <h3 className="text-lg font-semibold text-gray-800 mb-4">
@@ -45,15 +57,15 @@ const CurriculumPage: React.FC = () => {
             <h3 className="font-bold text-blue-800">
               📝 단원 상세 현황
             </h3>
-            <button 
+            <button
               onClick={() => setSelectedUnit(null)}
               className="text-blue-600 hover:text-blue-800"
             >
               ✕ 닫기
             </button>
           </div>
-          
-          <UnitProgressDetail 
+
+          <UnitProgressDetail
             unitId={selectedUnit}
             unit={units.find((u) => u.unit_id === selectedUnit)!}
             studentId={selectedStudent || undefined}
