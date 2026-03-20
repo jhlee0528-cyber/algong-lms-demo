@@ -5,14 +5,24 @@ import { useDemoStore } from '../../store/demoStore';
 import GallerySelector from '../../components/grading/GallerySelector';
 import LoadingAnimation from '../../components/grading/LoadingAnimation';
 import GradingResult from '../../components/grading/GradingResult';
+import GradingModeSelector from '../../components/grading/GradingModeSelector';
 
-type Step = 'select' | 'grading' | 'result';
+type Step = 'mode-select' | 'select' | 'grading' | 'result';
 
 const QuickGradingPage: React.FC = () => {
   const navigate = useNavigate();
   const { currentGradingResult, isGrading, startGrading, clearGrading } = useDemoStore();
   const [selectedSampleId, setSelectedSampleId] = useState<string | undefined>();
-  const [step, setStep] = useState<Step>('select');
+  const [step, setStep] = useState<Step>('mode-select');
+
+  // 모드 선택 핸들러
+  const handleSelectPhotoMode = () => {
+    navigate('/grading/ai');
+  };
+
+  const handleSelectSampleMode = () => {
+    setStep('select');
+  };
 
   // 샘플 선택 핸들러
   const handleSelectSample = async (sampleId: string) => {
@@ -48,7 +58,7 @@ const QuickGradingPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen bg-gray-50">
       {/* 뒤로 가기 버튼 */}
       <div className="max-w-4xl mx-auto mb-4">
         <button
@@ -64,9 +74,19 @@ const QuickGradingPage: React.FC = () => {
 
       {/* 메인 컨텐츠 */}
       <div className="max-w-4xl mx-auto">
+        {/* Step 0: 모드 선택 */}
+        {step === 'mode-select' && (
+          <div className="bg-white rounded-lg shadow-lg p-4 md:p-8">
+            <GradingModeSelector
+              onSelectPhotoMode={handleSelectPhotoMode}
+              onSelectSampleMode={handleSelectSampleMode}
+            />
+          </div>
+        )}
+
         {/* Step 1: 샘플 선택 */}
         {step === 'select' && (
-          <div className="bg-white rounded-lg shadow-lg p-6">
+          <div className="bg-white rounded-lg shadow-lg p-4 md:p-6">
             <GallerySelector
               onSelectSample={handleSelectSample}
               selectedId={selectedSampleId}
@@ -81,7 +101,7 @@ const QuickGradingPage: React.FC = () => {
 
         {/* Step 3: 채점 결과 */}
         {step === 'result' && currentGradingResult && (
-          <div className="bg-white rounded-lg shadow-lg p-6">
+          <div className="bg-white rounded-lg shadow-lg p-4 md:p-6">
             <GradingResult
               result={currentGradingResult}
               onSend={handleSend}

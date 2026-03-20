@@ -20,6 +20,7 @@ import CurriculumPage from './pages/CurriculumPage';
 import ClassroomPage from './pages/ClassroomPage';
 import DashboardPage from './pages/DashboardPage';
 import QuickGradingPage from './pages/Grading/QuickGradingPage';
+import AIGradingPage from './pages/Grading/AIGradingPage';
 import StudentsListPage from './pages/Students/StudentsListPage';
 import StudentDetailPage from './pages/Students/StudentDetailPage';
 import ParentCommunicationPage from './pages/Reports/ParentCommunicationPage';
@@ -46,6 +47,7 @@ const App: React.FC = () => {
             <Route path="/" element={<Navigate to="/dashboard" replace />} />
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/grading/quick" element={<QuickGradingPage />} />
+            <Route path="/grading/ai" element={<AIGradingPage />} />
             <Route path="/students" element={<StudentsListPage />} />
             <Route path="/students/:id" element={<StudentDetailPage />} />
             <Route path="/reports/communication" element={<ParentCommunicationPage />} />
