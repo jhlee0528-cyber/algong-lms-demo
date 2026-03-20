@@ -25,6 +25,13 @@ import StudentsListPage from './pages/Students/StudentsListPage';
 import StudentDetailPage from './pages/Students/StudentDetailPage';
 import ParentCommunicationPage from './pages/Reports/ParentCommunicationPage';
 import DiagnosticResultPage from './pages/Diagnostic/DiagnosticResultPage';
+import EnglishLibraryPage from './pages/Library/EnglishLibraryPage';
+import BookDetailPage from './pages/Library/BookDetailPage';
+import ReadingModePage from './pages/Library/ReadingModePage';
+import ShadowingModePage from './pages/Library/ShadowingModePage';
+import DictationModePage from './pages/Library/DictationModePage';
+import VocabularyModePage from './pages/Library/VocabularyModePage';
+import QuizModePage from './pages/Library/QuizModePage';
 import './styles/index.css';
 
 // React Query 클라이언트 생성
@@ -59,6 +66,13 @@ const App: React.FC = () => {
             <Route path="/learning-materials" element={<LearningMaterialsPage />} />
             <Route path="/learning-materials/ai-quiz" element={<AIQuizPage />} />
             <Route path="/smartree" element={<SmartreePage />} />
+            <Route path="/english-library" element={<EnglishLibraryPage />} />
+            <Route path="/english-library/:bookId" element={<BookDetailPage />} />
+            <Route path="/english-library/:bookId/read" element={<ReadingModePage />} />
+            <Route path="/english-library/:bookId/shadow" element={<ShadowingModePage />} />
+            <Route path="/english-library/:bookId/dictation" element={<DictationModePage />} />
+            <Route path="/english-library/:bookId/vocabulary" element={<VocabularyModePage />} />
+            <Route path="/english-library/:bookId/quiz" element={<QuizModePage />} />
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Routes>
           <FeedbackButton />

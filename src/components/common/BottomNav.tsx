@@ -8,6 +8,7 @@ const BottomNav: React.FC = () => {
 
   const navItems = [
     { path: '/dashboard', icon: '🏠', label: '홈' },
+    { path: '/english-library', icon: '📚', label: '도서관' },
     { path: '/grading/quick', icon: '📸', label: '채점' },
     { path: '/students', icon: '👥', label: '학생' },
     { path: '/reports/communication', icon: '📬', label: '소통' },
