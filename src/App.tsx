@@ -32,6 +32,8 @@ import ShadowingModePage from './pages/Library/ShadowingModePage';
 import DictationModePage from './pages/Library/DictationModePage';
 import VocabularyModePage from './pages/Library/VocabularyModePage';
 import QuizModePage from './pages/Library/QuizModePage';
+import MainClassViewPage from './pages/MainClassViewPage';
+import SettingsPage from './pages/SettingsPage';
 import './styles/index.css';
 
 // React Query 클라이언트 생성
@@ -51,7 +53,10 @@ const App: React.FC = () => {
       <BrowserRouter>
         <Layout>
           <Routes>
-            <Route path="/" element={<Navigate to="/dashboard" replace />} />
+            <Route path="/" element={<MainClassViewPage />} />
+            <Route path="/settings" element={<SettingsPage />} />
+
+            {/* 기존 페이지들 (설정 메뉴에서 접근) */}
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/grading/quick" element={<QuickGradingPage />} />
             <Route path="/grading/ai" element={<AIGradingPage />} />
@@ -66,6 +71,8 @@ const App: React.FC = () => {
             <Route path="/learning-materials" element={<LearningMaterialsPage />} />
             <Route path="/learning-materials/ai-quiz" element={<AIQuizPage />} />
             <Route path="/smartree" element={<SmartreePage />} />
+
+            {/* 영어도서관 */}
             <Route path="/english-library" element={<EnglishLibraryPage />} />
             <Route path="/english-library/:bookId" element={<BookDetailPage />} />
             <Route path="/english-library/:bookId/read" element={<ReadingModePage />} />
@@ -73,7 +80,8 @@ const App: React.FC = () => {
             <Route path="/english-library/:bookId/dictation" element={<DictationModePage />} />
             <Route path="/english-library/:bookId/vocabulary" element={<VocabularyModePage />} />
             <Route path="/english-library/:bookId/quiz" element={<QuizModePage />} />
-            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
           <FeedbackButton />
           <BottomNav />

@@ -4,8 +4,7 @@
  */
 
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import SettingsModal from './SettingsModal';
+import { NavLink, useNavigate } from 'react-router-dom';
 import HelpModal from './HelpModal';
 import type { User } from '../../types';
 
@@ -15,14 +14,12 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ user, studyRoomName = '알공 공부방' }) => {
-  const [showSettings, setShowSettings] = useState(false);
+  const navigate = useNavigate();
   const [showHelp, setShowHelp] = useState(false);
 
   const navItems = [
-    { path: '/learning-status', label: '학습현황', icon: '📊' },
-    { path: '/learning-settings', label: '학습설정', icon: '✏️' },
-    { path: '/class-view', label: '수업보기', icon: '👁️' },
-    { path: '/smartree', label: '스마트리', icon: '📚' },
+    { path: '/', label: '수업보기', icon: '📚' },
+    { path: '/english-library', label: '영어도서관', icon: '📖' },
   ];
 
   const handleLogout = () => {
@@ -96,7 +93,7 @@ const Header: React.FC<HeaderProps> = ({ user, studyRoomName = '알공 공부방
 
               {/* 설정 아이콘 */}
               <button
-                onClick={() => setShowSettings(true)}
+                onClick={() => navigate('/settings')}
                 className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
                 title="설정"
               >
@@ -166,11 +163,6 @@ const Header: React.FC<HeaderProps> = ({ user, studyRoomName = '알공 공부방
           </div>
         </div>
       </header>
-
-      {/* 설정 모달 */}
-      {showSettings && (
-        <SettingsModal user={user} onClose={() => setShowSettings(false)} />
-      )}
 
       {/* 도움말 모달 */}
       {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}

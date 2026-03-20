@@ -10,12 +10,9 @@ interface MenuItem {
 }
 
 const menuItems: MenuItem[] = [
-  { id: 'learning-status', label: '학습현황', icon: '📊', path: '/learning-status' },
-  { id: 'curriculum', label: '커리큘럼', icon: '📚', path: '/curriculum' },
-  { id: 'learning-settings', label: '학습설정', icon: '✏️', path: '/learning-settings' },
-  { id: 'class-view', label: '수업보기', icon: '📺', path: '/class-view' },
-  { id: 'learning-materials', label: '학습자료', icon: '📖', path: '/learning-materials' },
-  { id: 'english-library', label: '영어도서관', icon: '📚', path: '/english-library' },
+  { id: 'class-view', label: '수업보기', icon: '📚', path: '/' },
+  { id: 'english-library', label: '영어도서관', icon: '📖', path: '/english-library' },
+  { id: 'settings', label: '설정', icon: '⚙️', path: '/settings' },
 ];
 
 const Sidebar: React.FC = () => {

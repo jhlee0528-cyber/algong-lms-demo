@@ -40,6 +40,12 @@ export interface RecentActivity {
   icon: string;              // '✅', '💬', '📚'
 }
 
+export interface LibraryProgress {
+  readingLevel: number;      // 독서 레벨 (1-10)
+  totalBooksRead: number;    // 총 읽은 책 수
+  thisMonthBooks: number;    // 이번 달 읽은 책 수
+}
+
 export interface Student {
   id: string;
   name: string;
@@ -55,6 +61,8 @@ export interface Student {
   recentActivities: RecentActivity[];
   status: 'good' | 'warning' | 'delayed';  // 진도 상태
   unpaidMonths?: number;     // 미납 개월 수
+  libraryProgress: LibraryProgress;  // 도서관 진행 상황
+  avatar?: string;           // 아바타 이미지 (선택)
 }
 
 // 20명 학생 더미 데이터 (LearningStatusPage와 동일한 이름)
@@ -69,6 +77,11 @@ export const mockStudents: Student[] = [
     registeredDate: '2025-09-01',
     attendanceRate: 94,
     status: 'good',
+    libraryProgress: {
+      readingLevel: 3,
+      totalBooksRead: 12,
+      thisMonthBooks: 4
+    },
     subjects: [
       {
         subjectId: 'arlex',
@@ -129,6 +142,11 @@ export const mockStudents: Student[] = [
     registeredDate: '2025-09-15',
     attendanceRate: 88,
     status: 'good',
+    libraryProgress: {
+      readingLevel: 3,
+      totalBooksRead: 15,
+      thisMonthBooks: 3
+    },
     subjects: [
       {
         subjectId: 'arlex',
@@ -167,6 +185,11 @@ export const mockStudents: Student[] = [
     registeredDate: '2025-10-01',
     attendanceRate: 80,
     status: 'warning',
+    libraryProgress: {
+      readingLevel: 2,
+      totalBooksRead: 6,
+      thisMonthBooks: 1
+    },
     subjects: [
       {
         subjectId: 'arlex',
@@ -205,6 +228,11 @@ export const mockStudents: Student[] = [
     registeredDate: '2025-08-15',
     attendanceRate: 96,
     status: 'good',
+    libraryProgress: {
+      readingLevel: 4,
+      totalBooksRead: 18,
+      thisMonthBooks: 4
+    },
     subjects: [
       {
         subjectId: 'arlex',
@@ -241,6 +269,11 @@ export const mockStudents: Student[] = [
     registeredDate: '2025-09-10',
     attendanceRate: 90,
     status: 'good',
+    libraryProgress: {
+      readingLevel: 3,
+      totalBooksRead: 14,
+      thisMonthBooks: 3
+    },
     subjects: [
       {
         subjectId: 'arlex',
@@ -274,6 +307,11 @@ export const mockStudents: Student[] = [
     registeredDate: '2025-10-05',
     attendanceRate: 85,
     status: 'good',
+    libraryProgress: {
+      readingLevel: 2,
+      totalBooksRead: 10,
+      thisMonthBooks: 2
+    },
     subjects: [
       {
         subjectId: 'arlex',
@@ -301,6 +339,11 @@ export const mockStudents: Student[] = [
     registeredDate: '2025-08-20',
     attendanceRate: 98,
     status: 'good',
+    libraryProgress: {
+      readingLevel: 4,
+      totalBooksRead: 20,
+      thisMonthBooks: 5
+    },
     subjects: [
       {
         subjectId: 'arlex',
@@ -328,6 +371,11 @@ export const mockStudents: Student[] = [
     registeredDate: '2025-10-15',
     attendanceRate: 75,
     status: 'delayed',
+    libraryProgress: {
+      readingLevel: 1,
+      totalBooksRead: 2,
+      thisMonthBooks: 0
+    },
     subjects: [
       {
         subjectId: 'arlex',
@@ -355,6 +403,11 @@ export const mockStudents: Student[] = [
     registeredDate: '2025-09-05',
     attendanceRate: 92,
     status: 'good',
+    libraryProgress: {
+      readingLevel: 3,
+      totalBooksRead: 16,
+      thisMonthBooks: 4
+    },
     subjects: [
       {
         subjectId: 'arlex',
@@ -382,6 +435,11 @@ export const mockStudents: Student[] = [
     registeredDate: '2025-09-20',
     attendanceRate: 87,
     status: 'good',
+    libraryProgress: {
+      readingLevel: 3,
+      totalBooksRead: 11,
+      thisMonthBooks: 3
+    },
     subjects: [
       {
         subjectId: 'arlex',
@@ -409,6 +467,11 @@ export const mockStudents: Student[] = [
     registeredDate: '2025-08-25',
     attendanceRate: 95,
     status: 'good',
+    libraryProgress: {
+      readingLevel: 4,
+      totalBooksRead: 17,
+      thisMonthBooks: 4
+    },
     subjects: [
       {
         subjectId: 'arlex',
@@ -436,6 +499,11 @@ export const mockStudents: Student[] = [
     registeredDate: '2025-10-10',
     attendanceRate: 82,
     status: 'warning',
+    libraryProgress: {
+      readingLevel: 1,
+      totalBooksRead: 5,
+      thisMonthBooks: 1
+    },
     subjects: [
       {
         subjectId: 'arlex',
@@ -463,6 +531,11 @@ export const mockStudents: Student[] = [
     registeredDate: '2025-09-12',
     attendanceRate: 91,
     status: 'good',
+    libraryProgress: {
+      readingLevel: 3,
+      totalBooksRead: 13,
+      thisMonthBooks: 3
+    },
     subjects: [
       {
         subjectId: 'arlex',
@@ -490,6 +563,11 @@ export const mockStudents: Student[] = [
     registeredDate: '2025-09-25',
     attendanceRate: 86,
     status: 'good',
+    libraryProgress: {
+      readingLevel: 2,
+      totalBooksRead: 9,
+      thisMonthBooks: 2
+    },
     subjects: [
       {
         subjectId: 'arlex',
@@ -518,6 +596,11 @@ export const mockStudents: Student[] = [
     attendanceRate: 93,
     status: 'good',
     unpaidMonths: 1,
+    libraryProgress: {
+      readingLevel: 4,
+      totalBooksRead: 19,
+      thisMonthBooks: 5
+    },
     subjects: [
       {
         subjectId: 'arlex',
@@ -545,6 +628,11 @@ export const mockStudents: Student[] = [
     registeredDate: '2025-10-12',
     attendanceRate: 89,
     status: 'good',
+    libraryProgress: {
+      readingLevel: 3,
+      totalBooksRead: 12,
+      thisMonthBooks: 3
+    },
     subjects: [
       {
         subjectId: 'arlex',
@@ -572,6 +660,11 @@ export const mockStudents: Student[] = [
     registeredDate: '2025-09-18',
     attendanceRate: 93,
     status: 'good',
+    libraryProgress: {
+      readingLevel: 3,
+      totalBooksRead: 14,
+      thisMonthBooks: 4
+    },
     subjects: [
       {
         subjectId: 'arlex',
@@ -599,6 +692,11 @@ export const mockStudents: Student[] = [
     registeredDate: '2025-08-22',
     attendanceRate: 97,
     status: 'good',
+    libraryProgress: {
+      readingLevel: 4,
+      totalBooksRead: 20,
+      thisMonthBooks: 5
+    },
     subjects: [
       {
         subjectId: 'arlex',
@@ -626,6 +724,11 @@ export const mockStudents: Student[] = [
     registeredDate: '2025-10-18',
     attendanceRate: 78,
     status: 'warning',
+    libraryProgress: {
+      readingLevel: 1,
+      totalBooksRead: 4,
+      thisMonthBooks: 1
+    },
     subjects: [
       {
         subjectId: 'arlex',
@@ -653,6 +756,11 @@ export const mockStudents: Student[] = [
     registeredDate: '2025-09-08',
     attendanceRate: 91,
     status: 'good',
+    libraryProgress: {
+      readingLevel: 3,
+      totalBooksRead: 15,
+      thisMonthBooks: 4
+    },
     subjects: [
       {
         subjectId: 'arlex',

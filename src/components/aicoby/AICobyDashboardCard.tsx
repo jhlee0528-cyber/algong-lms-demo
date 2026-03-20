@@ -84,6 +84,7 @@ const AICobyDashboardCard: React.FC<AICobyDashboardCardProps> = ({ onClick }) =>
         <span className="ml-1">→</span>
       </div>
     </button>
+    </>
   );
 };
 
