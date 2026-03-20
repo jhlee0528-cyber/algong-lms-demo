@@ -7,7 +7,6 @@ import React, { useState, useMemo } from 'react';
 import { getWeekStart, getNextWeekStart, formatWeekRange } from '../../utils/weekHelper';
 import WeeklyPlanningPanel from '../weekly/WeeklyPlanningPanel';
 import StudentStatusPanel from './StudentStatusPanel';
-import AICobyCard from './AICobyCard';
 import type { StudentWithStats } from '../progress/StudentListTable';
 import type { WeekTab } from '../../hooks/useWeeklyData';
 import type { WeeklySummary } from '../../types/weeklyData';
@@ -410,7 +409,7 @@ export const DashboardStats: React.FC<DashboardStatsProps> = ({
               </div>
             )}
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               <div className="text-center p-4 bg-blue-50 rounded-lg shadow-[2px_2px_4px_rgba(0,0,0,0.1)]">
                 <div className="text-3xl font-bold text-blue-600">
                   {useNewData ? (propSummary?.completedStudents || 0) : (selectedData?.completedStudents || 0)}명
@@ -481,11 +480,6 @@ export const DashboardStats: React.FC<DashboardStatsProps> = ({
                 <div className="text-sm text-gray-600 mt-1">진행 중</div>
                 <div className="text-xs text-gray-500 mt-1">미완료 학생</div>
               </div>
-
-              {/* AI Coby 카드 */}
-              <AICobyCard
-                warningStudentCount={useNewData ? (propSummary?.warningCount || 0) + (propSummary?.criticalCount || 0) : 3}
-              />
             </div>
             
             {/* 상태별 분포 바 (새로운 데이터 사용 시) */}

@@ -30,7 +30,6 @@ const CurriculumPage: React.FC = () => {
       {/* CEFR 레벨 맵핑 차트 */}
       <div className="bg-white rounded-lg shadow p-6">
         <CEFRLevelChart
-          currentStudentLevel={15} // 더미 데이터: 현재 학생 레벨 (실제로는 props나 state에서 가져옴)
           onLevelClick={(level) => {
             console.log('Selected level:', level);
             // TODO: 레벨 클릭 시 해당 단원 표시 로직

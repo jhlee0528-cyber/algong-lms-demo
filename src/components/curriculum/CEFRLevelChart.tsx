@@ -6,7 +6,6 @@
 import React, { useState } from 'react';
 
 interface CEFRLevelChartProps {
-  currentStudentLevel?: number; // 현재 학생의 ArLex 레벨 (1-36)
   onLevelClick?: (level: number) => void;
 }
 
@@ -21,7 +20,6 @@ interface CEFRLevel {
 }
 
 const CEFRLevelChart: React.FC<CEFRLevelChartProps> = ({
-  currentStudentLevel = 15,
   onLevelClick,
 }) => {
   const [hoveredLevel, setHoveredLevel] = useState<number | null>(null);
@@ -98,35 +96,25 @@ const CEFRLevelChart: React.FC<CEFRLevelChartProps> = ({
   return (
     <div className="space-y-6">
       {/* 헤더 */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold text-gray-800">CEFR 레벨 맵핑</h2>
-          <p className="text-sm text-gray-600 mt-1">
-            ArLex 36개 레벨을 유럽 공통 참조 기준(CEFR)에 맵핑한 차트입니다
-          </p>
-        </div>
-        {currentStudentLevel && (
-          <div className="bg-indigo-100 px-4 py-2 rounded-lg border-2 border-indigo-500">
-            <div className="text-xs text-indigo-600 font-medium">현재 레벨</div>
-            <div className="text-xl font-bold text-indigo-700">Lv.{currentStudentLevel}</div>
-          </div>
-        )}
+      <div>
+        <h2 className="text-2xl font-bold text-gray-800 mb-2">📚 알공영어 커리큘럼 — CEFR 레벨 매핑</h2>
+        <p className="text-sm text-gray-600">
+          알공영어 36단계는 국제 표준 CEFR 레벨에 맞춰 설계되었습니다.
+          각 레벨을 클릭하면 상세 학습 목표를 확인할 수 있어요.
+        </p>
       </div>
 
       {/* CEFR 레벨 차트 */}
       <div className="grid grid-cols-1 lg:grid-cols-6 gap-4">
         {cefrLevels.map((cefr) => {
           const isExpanded = selectedCEFR === cefr.code;
-          const hasCurrentLevel = cefr.levels.includes(currentStudentLevel);
 
           return (
             <div
               key={cefr.code}
-              className={`rounded-xl border-2 transition-all ${
-                hasCurrentLevel
-                  ? `${cefr.borderColor} ring-4 ring-offset-2 ring-indigo-300`
-                  : 'border-gray-200 hover:border-gray-300'
-              } ${isExpanded ? 'lg:col-span-6' : ''}`}
+              className={`rounded-xl border-2 transition-all border-gray-200 hover:border-gray-300 ${
+                isExpanded ? 'lg:col-span-6' : ''
+              }`}
             >
               {/* CEFR 헤더 */}
               <button
@@ -140,13 +128,6 @@ const CEFRLevelChart: React.FC<CEFRLevelChartProps> = ({
                   </div>
                   <div className="text-sm font-medium text-gray-600">
                     Lv.{cefr.levels[0]}-{cefr.levels[cefr.levels.length - 1]}
-                    {hasCurrentLevel && (
-                      <div className="mt-1">
-                        <span className="inline-flex items-center px-2 py-1 bg-indigo-600 text-white text-xs rounded-full">
-                          👤 현재
-                        </span>
-                      </div>
-                    )}
                   </div>
                 </div>
                 {isExpanded && (
@@ -161,7 +142,6 @@ const CEFRLevelChart: React.FC<CEFRLevelChartProps> = ({
                 <div className="p-4 bg-white border-t-2 border-gray-100">
                   <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
                     {cefr.levels.map((level) => {
-                      const isCurrentLevel = level === currentStudentLevel;
                       const isHovered = level === hoveredLevel;
 
                       return (
@@ -173,22 +153,15 @@ const CEFRLevelChart: React.FC<CEFRLevelChartProps> = ({
                           className={`
                             relative p-4 rounded-lg border-2 transition-all
                             ${
-                              isCurrentLevel
-                                ? 'bg-indigo-600 text-white border-indigo-700 ring-4 ring-indigo-200'
-                                : isHovered
+                              isHovered
                                 ? `${cefr.bgColor} ${cefr.borderColor}`
                                 : 'bg-gray-50 border-gray-200 hover:border-gray-300'
                             }
                           `}
                         >
-                          <div className={`text-lg font-bold ${isCurrentLevel ? 'text-white' : cefr.color}`}>
+                          <div className={`text-lg font-bold ${cefr.color}`}>
                             {level}
                           </div>
-                          {isCurrentLevel && (
-                            <div className="absolute -top-2 -right-2 w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center text-xs">
-                              👤
-                            </div>
-                          )}
                         </button>
                       );
                     })}
@@ -205,10 +178,6 @@ const CEFRLevelChart: React.FC<CEFRLevelChartProps> = ({
         <div className="flex items-center gap-2 text-sm text-gray-700">
           <span className="font-medium">💡 사용 방법:</span>
           <span>CEFR 레벨을 클릭하면 상세 레벨을 확인할 수 있습니다.</span>
-          <span className="ml-4 inline-flex items-center gap-1">
-            <span className="w-3 h-3 bg-indigo-600 rounded"></span>
-            <span>= 현재 학생 레벨</span>
-          </span>
         </div>
       </div>
     </div>

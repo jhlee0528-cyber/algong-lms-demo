@@ -1,127 +1,86 @@
+/**
+ * 수업보기 페이지 (완전히 새로 작성)
+ * 학생 중심 카드 그리드로 실시간 학습 현황 표시
+ */
+
 import React, { useState } from 'react';
-import { Domain } from '../types/smartree';
-import { ClassroomStudent } from '../types/classroom';
-import { CLASSROOM_STUDENTS } from '../data/dummyStudentData';
-import { DOMAIN_CONFIG, DOMAINS, DOMAIN_LEVEL_COUNT } from '../data/curriculumLevels';
-import ClassroomLevelMap from '../components/classroom/ClassroomLevelMap';
-import StudentSelector from '../components/smartree/StudentSelector';
-import StudentQuickAccess from '../components/smartree/StudentQuickAccess';
-import StudentDetailModal from '../components/smartree/StudentDetailModal';
-import { generateStudentDetail } from '../data/dummyStudentData';
+import { mockClassroomStudents, getClassroomStats } from '../data/mockClassroom';
+import StudentCard from '../components/classroom/StudentCard';
+import StudentDetailSlide from '../components/classroom/StudentDetailSlide';
+import ClassroomHeader from '../components/classroom/ClassroomHeader';
+import type { ClassroomStudent } from '../data/mockClassroom';
 
 const ClassroomPage: React.FC = () => {
-  const [selectedStudentId, setSelectedStudentId] = useState<string | null>(null);
-  const [selectedDomain, setSelectedDomain] = useState<Domain | 'all'>('all');
-  const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
+  const [selectedStudent, setSelectedStudent] = useState<ClassroomStudent | null>(null);
 
-  const selectedStudent = CLASSROOM_STUDENTS.find((s) => s.id === selectedStudentId);
+  const stats = getClassroomStats();
+  const students = mockClassroomStudents;
 
-  // 상태별 학생 수 계산
-  const statusCounts = {
-    learning: CLASSROOM_STUDENTS.filter((s) => s.status === 'learning').length,
-    online: CLASSROOM_STUDENTS.filter((s) => s.status === 'online').length,
-    offline: CLASSROOM_STUDENTS.filter((s) => s.status === 'offline').length,
+  // 학생 수에 따른 그리드 클래스 결정 (적응형 크기)
+  const getGridClasses = (count: number): string => {
+    if (count <= 15) {
+      // 기본: 5열, 넉넉한 크기
+      return 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4';
+    } else if (count <= 30) {
+      // 1/2 크기: 7열
+      return 'grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-3';
+    } else {
+      // 최소 크기: 8열 이상
+      return 'grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-2';
+    }
   };
 
-  // 선택된 학생의 상세 정보 생성 (StudentDetailModal용)
-  const selectedStudentDetail = selectedStudent
-    ? generateStudentDetail({
-        id: selectedStudent.id,
-        name: selectedStudent.name,
-        currentLevel: selectedStudent.currentLevel,
-        currentDomain: selectedStudent.currentDomain,
-        currentUnit: selectedStudent.currentUnit,
-      })
-    : null;
+  // 학생 수에 따른 텍스트 크기 결정
+  const getTextSize = (count: number) => {
+    if (count <= 15) {
+      return { name: 'text-lg', info: 'text-sm', status: 'text-xs' };
+    } else if (count <= 30) {
+      return { name: 'text-base', info: 'text-xs', status: 'text-[10px]' };
+    } else {
+      return { name: 'text-sm', info: 'text-[10px]', status: 'text-[9px]' };
+    }
+  };
+
+  const gridClasses = getGridClasses(students.length);
+  const textSize = getTextSize(students.length);
 
   return (
     <div className="w-full space-y-6">
       {/* 헤더 */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-800">📺 수업보기</h1>
-          <div className="flex items-center gap-4 mt-2 text-sm">
-            <span className="text-gray-500">총 {CLASSROOM_STUDENTS.length}명</span>
-            <span className="text-green-600">🟢 {statusCounts.learning}명 학습중</span>
-            <span className="text-blue-600">🔵 {statusCounts.online}명 접속</span>
-            <span className="text-gray-500">⚪ {statusCounts.offline}명 오프라인</span>
-          </div>
-        </div>
-
-        {/* 학생 선택 드롭다운 */}
-        <StudentSelector
-          students={CLASSROOM_STUDENTS.map((s) => ({
-            id: s.id,
-            name: s.name,
-            currentLevel: s.currentLevel,
-          }))}
-          selectedStudentId={selectedStudentId}
-          onSelect={setSelectedStudentId}
-        />
-      </div>
-
-      {/* 학생 선택 시: 빠른 접근 패널 */}
-      {selectedStudent && (
-        <StudentQuickAccess
-          studentName={selectedStudent.name}
-          currentLevel={selectedStudent.currentLevel}
-          currentDomain={selectedStudent.currentDomain}
-          currentUnit={selectedStudent.currentUnit}
-          onContinue={() => console.log('Continue learning:', selectedStudent)}
-          onViewDetails={() => setIsDetailModalOpen(true)}
-        />
-      )}
-
-      {/* 영역 필터 탭 */}
-      <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
-        {/* 전체 탭 */}
-        <button
-          onClick={() => setSelectedDomain('all')}
-          className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-all ${
-            selectedDomain === 'all'
-              ? 'bg-gray-800 text-white'
-              : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-          }`}
-        >
-          📚 전체 (36)
-        </button>
-
-        {/* 영역별 탭 */}
-        {DOMAINS.map((domain) => {
-          const config = DOMAIN_CONFIG[domain];
-          const isSelected = selectedDomain === domain;
-          const count = DOMAIN_LEVEL_COUNT[domain];
-
-          return (
-            <button
-              key={domain}
-              onClick={() => setSelectedDomain(domain)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-all ${
-                isSelected
-                  ? `${config.bgColor} ${config.color} ring-2 ring-offset-1`
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              {config.icon} {domain} ({count})
-            </button>
-          );
-        })}
-      </div>
-
-      {/* 레벨 맵 */}
-      <ClassroomLevelMap
-        students={CLASSROOM_STUDENTS}
-        selectedDomain={selectedDomain}
-        highlightStudentId={selectedStudentId}
-        onStudentClick={(id) => setSelectedStudentId(id)}
+      <ClassroomHeader
+        total={stats.total}
+        learning={stats.learning}
+        paused={stats.paused}
+        offline={stats.offline}
+        online={stats.online}
       />
 
-      {/* 학생 상세보기 모달 */}
-      {selectedStudentDetail && (
-        <StudentDetailModal
-          student={selectedStudentDetail}
-          isOpen={isDetailModalOpen}
-          onClose={() => setIsDetailModalOpen(false)}
+      {/* 학생 카드 그리드 */}
+      <div className="bg-white rounded-lg shadow p-6">
+        <div className={`grid ${gridClasses}`}>
+          {students.map((student) => (
+            <StudentCard
+              key={student.id}
+              student={student}
+              onClick={() => setSelectedStudent(student)}
+              textSize={textSize}
+            />
+          ))}
+        </div>
+
+        {/* 학생이 15명 미만일 때 안내 메시지 */}
+        {students.length < 15 && (
+          <div className="mt-6 text-center text-sm text-gray-500">
+            <p>현재 {students.length}명의 학생이 등록되어 있습니다.</p>
+          </div>
+        )}
+      </div>
+
+      {/* 학생 상세 슬라이드 패널 */}
+      {selectedStudent && (
+        <StudentDetailSlide
+          student={selectedStudent}
+          onClose={() => setSelectedStudent(null)}
         />
       )}
     </div>

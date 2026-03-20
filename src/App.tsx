@@ -3,12 +3,14 @@
  * 라우팅 설정 및 전체 앱 구조
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Layout } from './components/common';
 import FeedbackButton from './components/common/FeedbackButton';
 import BottomNav from './components/common/BottomNav';
+import AICobyFloatingButton from './components/aicoby/AICobyFloatingButton';
+import AICobyPanel from './components/aicoby/AICobyPanel';
 import {
   LearningStatusPage,
   LearningSettingsPage,
@@ -36,6 +38,8 @@ const queryClient = new QueryClient({
 });
 
 const App: React.FC = () => {
+  const [isAICobyOpen, setIsAICobyOpen] = useState(false);
+
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
@@ -57,6 +61,9 @@ const App: React.FC = () => {
           </Routes>
           <FeedbackButton />
           <BottomNav />
+          {/* AI코비 플로팅 버튼 및 패널 */}
+          <AICobyFloatingButton onClick={() => setIsAICobyOpen(true)} />
+          <AICobyPanel isOpen={isAICobyOpen} onClose={() => setIsAICobyOpen(false)} />
         </Layout>
       </BrowserRouter>
     </QueryClientProvider>
