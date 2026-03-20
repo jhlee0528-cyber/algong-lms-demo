@@ -1,6 +1,6 @@
 /**
  * AI코비 대시보드 트리거 카드
- * 4개 통계 박스 위에 우측 정렬로 배치되는 카드
+ * 주간 학습 현황 우측에 배치되는 카드 (노란색 회전 테두리 애니메이션)
  */
 
 import React from 'react';
@@ -14,19 +14,41 @@ const AICobyDashboardCard: React.FC<AICobyDashboardCardProps> = ({ onClick }) =>
   const todoCount = 4; // 할 일 개수
 
   return (
-    <button
-      onClick={onClick}
-      className="
-        relative w-full md:w-80 h-32
-        bg-gradient-to-br from-purple-500 to-indigo-600
-        text-white rounded-xl shadow-xl
-        hover:shadow-2xl hover:scale-[1.02]
-        transition-all duration-300
-        cursor-pointer
-        p-5
-        flex flex-col justify-between
-      "
-    >
+    <>
+      <style>{`
+        @keyframes rotate-glow {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+
+        .glow-border::before {
+          content: '';
+          position: absolute;
+          top: -3px;
+          right: -3px;
+          bottom: -3px;
+          left: -3px;
+          background: conic-gradient(from 0deg, transparent 0%, #fbbf24 50%, transparent 100%);
+          border-radius: inherit;
+          z-index: -1;
+          animation: rotate-glow 3s linear infinite;
+        }
+      `}</style>
+
+      <button
+        onClick={onClick}
+        className="
+          glow-border
+          relative w-full h-32
+          bg-gradient-to-br from-purple-500 to-indigo-600
+          text-white rounded-xl shadow-xl
+          hover:shadow-2xl hover:scale-[1.02]
+          transition-all duration-300
+          cursor-pointer
+          p-5
+          flex flex-col justify-between
+        "
+      >
       {/* 긴급 알림 뱃지 */}
       {urgentCount > 0 && (
         <div className="absolute -top-2 -right-2 w-7 h-7 bg-red-500 rounded-full flex items-center justify-center text-xs font-bold animate-pulse shadow-lg">
@@ -47,12 +69,12 @@ const AICobyDashboardCard: React.FC<AICobyDashboardCardProps> = ({ onClick }) =>
       <div className="flex items-center justify-around text-sm">
         <div className="flex items-center gap-1.5">
           <span className="text-red-300">🔴</span>
-          <span className="font-medium">긴급 {urgentCount}건</span>
+          <span className="font-medium text-yellow-300">긴급 {urgentCount}건</span>
         </div>
         <div className="w-px h-4 bg-white bg-opacity-30" />
         <div className="flex items-center gap-1.5">
           <span>📋</span>
-          <span className="font-medium">할 일 {todoCount}건</span>
+          <span className="font-medium text-yellow-300">할 일 {todoCount}건</span>
         </div>
       </div>
 

@@ -22,10 +22,16 @@ interface AICobyPanelProps {
 
 const AICobyPanel: React.FC<AICobyPanelProps> = ({ isOpen, onClose }) => {
   const [currentResponse, setCurrentResponse] = useState<CobyResponse | null>(null);
+  const [responseHistory, setResponseHistory] = useState<CobyResponse[]>([]);
   const navigate = useNavigate();
 
   // 사용자 입력 처리
   const handleUserInput = (input: string) => {
+    // 현재 응답이 있으면 히스토리에 추가
+    if (currentResponse) {
+      setResponseHistory(prev => [...prev, currentResponse]);
+    }
+
     // 키워드 매칭 (대소문자 무관, 부분 매칭)
     const lowerInput = input.toLowerCase();
 
@@ -48,6 +54,15 @@ const AICobyPanel: React.FC<AICobyPanelProps> = ({ isOpen, onClose }) => {
     setCurrentResponse(defaultResponse);
   };
 
+  // 뒤로가기 버튼 핸들러
+  const handleBackButton = () => {
+    if (responseHistory.length > 0) {
+      const previousResponse = responseHistory[responseHistory.length - 1];
+      setCurrentResponse(previousResponse);
+      setResponseHistory(prev => prev.slice(0, -1));
+    }
+  };
+
   // 자주 쓰는 요청 클릭
   const handleQuickAction = (path: string) => {
     navigate(path);
@@ -58,6 +73,14 @@ const AICobyPanel: React.FC<AICobyPanelProps> = ({ isOpen, onClose }) => {
   const handleResponseNavigate = () => {
     onClose();
     setCurrentResponse(null);
+    setResponseHistory([]);
+  };
+
+  // 패널 닫기 핸들러 (히스토리 초기화 포함)
+  const handleClose = () => {
+    onClose();
+    setCurrentResponse(null);
+    setResponseHistory([]);
   };
 
   if (!isOpen) return null;
@@ -67,7 +90,7 @@ const AICobyPanel: React.FC<AICobyPanelProps> = ({ isOpen, onClose }) => {
       {/* 배경 오버레이 */}
       <div
         className="fixed inset-0 bg-black bg-opacity-30 z-40 transition-opacity"
-        onClick={onClose}
+        onClick={handleClose}
       />
 
       {/* 사이드 패널 */}
@@ -76,6 +99,24 @@ const AICobyPanel: React.FC<AICobyPanelProps> = ({ isOpen, onClose }) => {
         <div className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-6 flex-shrink-0">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-3">
+              {/* 뒤로가기 버튼 (히스토리가 있을 때만 표시) */}
+              {responseHistory.length > 0 && (
+                <button
+                  onClick={handleBackButton}
+                  className="text-white hover:bg-white hover:bg-opacity-20 rounded-full p-2 transition-colors"
+                  title="이전 화면으로"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 19l-7-7 7-7"
+                    />
+                  </svg>
+                </button>
+              )}
+
               <div className="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center text-2xl">
                 🤖
               </div>
@@ -85,7 +126,7 @@ const AICobyPanel: React.FC<AICobyPanelProps> = ({ isOpen, onClose }) => {
               </div>
             </div>
             <button
-              onClick={onClose}
+              onClick={handleClose}
               className="text-white hover:bg-white hover:bg-opacity-20 rounded-full p-2 transition-colors"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -128,7 +169,7 @@ const AICobyPanel: React.FC<AICobyPanelProps> = ({ isOpen, onClose }) => {
         {/* 하단 닫기 버튼 */}
         <div className="border-t border-gray-200 p-4 flex-shrink-0 bg-gray-50">
           <button
-            onClick={onClose}
+            onClick={handleClose}
             className="w-full py-2.5 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium rounded-lg transition-colors"
           >
             ✕ 닫기

@@ -195,21 +195,26 @@ const LearningStatusPage: React.FC = () => {
         />
       </div>
 
-      {/* AI코비 카드 - 4개 통계 박스 위에 우측 정렬 */}
-      <div className="flex justify-end mb-3">
-        <AICobyDashboardCard onClick={() => setShowCobyPanel(true)} />
-      </div>
+      {/* 주간 학습 현황 + AI코비 나란히 배치 */}
+      <div className="flex flex-col md:flex-row gap-4">
+        {/* 주간 학습 현황 — 가로 폭 축소 */}
+        <div className="flex-1 min-w-0">
+          <DashboardStats
+            activeWeek={activeWeek}
+            onWeekChange={setActiveWeek}
+            summary={summary}
+            weekLabel={currentWeekData.weekLabel}
+            weekRange={formatWeekRange(currentWeekData.weekStart, currentWeekData.weekEnd)}
+            studentsList={studentsWithStats}
+            onStudentClick={handleShowDetail}
+          />
+        </div>
 
-      {/* 대시보드 통계 - 동기화된 주간 데이터 사용 */}
-      <DashboardStats
-        activeWeek={activeWeek}
-        onWeekChange={setActiveWeek}
-        summary={summary}
-        weekLabel={currentWeekData.weekLabel}
-        weekRange={formatWeekRange(currentWeekData.weekStart, currentWeekData.weekEnd)}
-        studentsList={studentsWithStats}
-        onStudentClick={handleShowDetail}
-      />
+        {/* AI코비 카드 — 우측 고정 너비 */}
+        <div className="w-full md:w-64 lg:w-72 flex-shrink-0">
+          <AICobyDashboardCard onClick={() => setShowCobyPanel(true)} />
+        </div>
+      </div>
 
       {/* 뷰 모드에 따른 컨텐츠 렌더링 */}
       {viewMode === 'unit' && (
