@@ -188,7 +188,7 @@ const Layout: React.FC<LayoutProps> = ({ children, user, studyRoomName = '알공
           </header>
 
           {/* 페이지 콘텐츠 */}
-          <div className="p-6">
+          <div className="p-3 md:p-6 pb-20 md:pb-6">
             {children}
           </div>
         </main>

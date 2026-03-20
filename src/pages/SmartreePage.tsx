@@ -182,7 +182,7 @@ const SmartreePage: React.FC = () => {
         )}
 
         {activeTab === 'quiz' && (
-          <div className="bg-white rounded-lg border p-8">
+          <div className="bg-white rounded-lg border p-4 md:p-8">
             <div className="max-w-2xl mx-auto text-center">
               <div className="text-6xl mb-6">📝</div>
               <h3 className="text-2xl font-bold text-gray-800 mb-4">
@@ -193,7 +193,7 @@ const SmartreePage: React.FC = () => {
                   ? '새로운 레슨을 학습하기 전 핵심 어휘를 미리 익히는 예습 퀴즈입니다.'
                   : '학습한 내용을 복습하고 장기 기억으로 전환하는 복습 퀴즈입니다.'}
               </p>
-              <div className="bg-blue-50 rounded-lg p-6 mb-6">
+              <div className="bg-blue-50 rounded-lg p-4 md:p-6 mb-4 md:mb-6">
                 <h4 className="font-semibold text-gray-800 mb-3">현재 선택된 레벨</h4>
                 <div className="text-3xl font-bold text-blue-600">{selectedLevel}</div>
                 <p className="text-sm text-gray-600 mt-2">
@@ -215,7 +215,7 @@ const SmartreePage: React.FC = () => {
         )}
 
         {activeTab === 'flashcard' && (
-          <div className="bg-white rounded-lg border p-8">
+          <div className="bg-white rounded-lg border p-4 md:p-8">
             <div className="max-w-2xl mx-auto text-center">
               <div className="text-6xl mb-6">🃏</div>
               <h3 className="text-2xl font-bold text-gray-800 mb-4">플래시카드</h3>
@@ -223,7 +223,7 @@ const SmartreePage: React.FC = () => {
                 단어와 뜻을 빠르게 암기할 수 있는 디지털 플래시카드입니다.
                 학습 데이터를 기반으로 자동으로 복습 주기를 관리합니다.
               </p>
-              <div className="bg-green-50 rounded-lg p-6 mb-6">
+              <div className="bg-green-50 rounded-lg p-4 md:p-6 mb-4 md:mb-6">
                 <h4 className="font-semibold text-gray-800 mb-3">현재 선택된 레벨</h4>
                 <div className="text-3xl font-bold text-green-600">{selectedLevel}</div>
                 <p className="text-sm text-gray-600 mt-2">
@@ -249,7 +249,7 @@ const SmartreePage: React.FC = () => {
         )}
 
         {activeTab === 'phonics' && (
-          <div className="bg-white rounded-lg border p-8">
+          <div className="bg-white rounded-lg border p-4 md:p-8">
             <div className="max-w-2xl mx-auto text-center">
               <div className="text-6xl mb-6">🔤</div>
               <h3 className="text-2xl font-bold text-gray-800 mb-4">파닉스</h3>
@@ -257,7 +257,7 @@ const SmartreePage: React.FC = () => {
                 영어 발음의 기초를 다지는 파닉스 학습 모듈입니다.
                 철자와 소리의 관계를 체계적으로 학습하여 읽기 능력을 향상시킵니다.
               </p>
-              <div className="bg-orange-50 rounded-lg p-6 mb-6">
+              <div className="bg-orange-50 rounded-lg p-4 md:p-6 mb-4 md:mb-6">
                 <h4 className="font-semibold text-gray-800 mb-3">학습 과정</h4>
                 <div className="flex items-center justify-center gap-3 text-sm">
                   <div className="bg-white rounded-lg px-4 py-2 shadow-sm">
@@ -291,7 +291,7 @@ const SmartreePage: React.FC = () => {
         )}
 
         {activeTab === 'sentence' && (
-          <div className="bg-white rounded-lg border p-8">
+          <div className="bg-white rounded-lg border p-4 md:p-8">
             <div className="max-w-2xl mx-auto text-center">
               <div className="text-6xl mb-6">📖</div>
               <h3 className="text-2xl font-bold text-gray-800 mb-4">문장 읽기</h3>
@@ -299,7 +299,7 @@ const SmartreePage: React.FC = () => {
                 레벨에 맞는 문장을 읽고 이해하는 연습을 하는 모듈입니다.
                 음성 인식 기술로 발음을 교정하고 유창성을 향상시킵니다.
               </p>
-              <div className="bg-pink-50 rounded-lg p-6 mb-6">
+              <div className="bg-pink-50 rounded-lg p-4 md:p-6 mb-4 md:mb-6">
                 <h4 className="font-semibold text-gray-800 mb-3">현재 선택된 레벨</h4>
                 <div className="text-3xl font-bold text-pink-600">{selectedLevel}</div>
                 <p className="text-sm text-gray-600 mt-2">

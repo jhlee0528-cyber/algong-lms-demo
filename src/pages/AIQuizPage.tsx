@@ -161,7 +161,7 @@ const AIQuizPage: React.FC = () => {
         </div>
 
         {/* Step content */}
-        <div className="bg-white rounded-xl shadow-lg p-8">
+        <div className="bg-white rounded-xl shadow-lg p-4 md:p-8">
           {currentStep === 1 && (
             <StepStudentSelect
               students={students}

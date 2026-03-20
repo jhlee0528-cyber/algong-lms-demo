@@ -18,17 +18,17 @@ const CurriculumPage: React.FC = () => {
   const dummyStudents: StudentWithStats[] = [];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-3 md:space-y-6">
       {/* 페이지 헤더 */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold text-gray-800">📚 커리큘럼</h1>
-          <p className="text-gray-500 mt-1">교재별 단원 진행 현황을 확인하세요</p>
+          <h1 className="text-lg md:text-2xl font-bold text-gray-800">📚 커리큘럼</h1>
+          <p className="text-sm md:text-base text-gray-500 mt-1">교재별 단원 진행 현황을 확인하세요</p>
         </div>
       </div>
 
       {/* CEFR 레벨 맵핑 차트 */}
-      <div className="bg-white rounded-lg shadow p-6">
+      <div className="bg-white rounded-lg shadow p-4 md:p-6">
         <CEFRLevelChart
           onLevelClick={(level) => {
             console.log('Selected level:', level);

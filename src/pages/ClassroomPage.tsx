@@ -45,7 +45,7 @@ const ClassroomPage: React.FC = () => {
   const textSize = getTextSize(students.length);
 
   return (
-    <div className="w-full space-y-6">
+    <div className="w-full space-y-3 md:space-y-6">
       {/* 헤더 */}
       <ClassroomHeader
         total={stats.total}
@@ -56,7 +56,7 @@ const ClassroomPage: React.FC = () => {
       />
 
       {/* 학생 카드 그리드 */}
-      <div className="bg-white rounded-lg shadow p-6">
+      <div className="bg-white rounded-lg shadow p-4 md:p-6">
         <div className={`grid ${gridClasses}`}>
           {students.map((student) => (
             <StudentCard
@@ -70,7 +70,7 @@ const ClassroomPage: React.FC = () => {
 
         {/* 학생이 15명 미만일 때 안내 메시지 */}
         {students.length < 15 && (
-          <div className="mt-6 text-center text-sm text-gray-500">
+          <div className="mt-4 md:mt-6 text-center text-sm text-gray-500">
             <p>현재 {students.length}명의 학생이 등록되어 있습니다.</p>
           </div>
         )}
