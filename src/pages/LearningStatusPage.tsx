@@ -12,6 +12,8 @@ import OnboardingTour from '../components/common/OnboardingTour';
 import ViewModeTabs from '../components/dashboard/ViewModeTabs';
 import TaskTypeView from '../components/dashboard/TaskTypeView';
 import PeriodView from '../components/dashboard/PeriodView';
+import AICobyDashboardCard from '../components/aicoby/AICobyDashboardCard';
+import AICobyPanel from '../components/aicoby/AICobyPanel';
 import type { ViewMode } from '../types/learningView';
 import { useWeeklyData } from '../hooks/useWeeklyData';
 
@@ -21,6 +23,7 @@ const LearningStatusPage: React.FC = () => {
   const [showDetailModal, setShowDetailModal] = useState(false);
   const [detailStudentId, setDetailStudentId] = useState<number | null>(null);
   const [showTour, setShowTour] = useState(false);
+  const [showCobyPanel, setShowCobyPanel] = useState(false);
 
   // TODO: teacherId는 실제로는 인증에서 가져와야 함
   const teacherId = 1;
@@ -192,6 +195,11 @@ const LearningStatusPage: React.FC = () => {
         />
       </div>
 
+      {/* AI코비 카드 - 4개 통계 박스 위에 우측 정렬 */}
+      <div className="flex justify-end mb-3">
+        <AICobyDashboardCard onClick={() => setShowCobyPanel(true)} />
+      </div>
+
       {/* 대시보드 통계 - 동기화된 주간 데이터 사용 */}
       <DashboardStats
         activeWeek={activeWeek}
@@ -241,13 +249,20 @@ const LearningStatusPage: React.FC = () => {
 
       {/* 온보딩 투어 */}
       {showTour && (
-        <OnboardingTour 
+        <OnboardingTour
           onComplete={handleTourComplete}
           onSkip={handleTourSkip}
         />
       )}
+
+      {/* AI코비 사이드 패널 */}
+      <AICobyPanel isOpen={showCobyPanel} onClose={() => setShowCobyPanel(false)} />
     </div>
   );
 };
+
+// 온보딩 투어 핸들러 추가
+const handleTourComplete = () => {};
+const handleTourSkip = () => {};
 
 export default LearningStatusPage;

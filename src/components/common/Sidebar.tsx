@@ -14,7 +14,7 @@ const menuItems: MenuItem[] = [
   { id: 'curriculum', label: '커리큘럼', icon: '📚', path: '/curriculum' },
   { id: 'learning-settings', label: '학습설정', icon: '✏️', path: '/learning-settings' },
   { id: 'class-view', label: '수업보기', icon: '📺', path: '/class-view' },
-  { id: 'smartree', label: '스마트리', icon: '🌳', path: '/smartree' },
+  { id: 'learning-materials', label: '학습자료', icon: '📖', path: '/learning-materials' },
 ];
 
 const Sidebar: React.FC = () => {

@@ -3,19 +3,19 @@
  * 라우팅 설정 및 전체 앱 구조
  */
 
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Layout } from './components/common';
 import FeedbackButton from './components/common/FeedbackButton';
 import BottomNav from './components/common/BottomNav';
-import AICobyFloatingButton from './components/aicoby/AICobyFloatingButton';
-import AICobyPanel from './components/aicoby/AICobyPanel';
 import {
   LearningStatusPage,
   LearningSettingsPage,
   SmartreePage,
 } from './pages';
+import LearningMaterialsPage from './pages/LearningMaterialsPage';
+import AIQuizPage from './pages/AIQuizPage';
 import CurriculumPage from './pages/CurriculumPage';
 import ClassroomPage from './pages/ClassroomPage';
 import DashboardPage from './pages/DashboardPage';
@@ -38,8 +38,6 @@ const queryClient = new QueryClient({
 });
 
 const App: React.FC = () => {
-  const [isAICobyOpen, setIsAICobyOpen] = useState(false);
-
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
@@ -56,14 +54,13 @@ const App: React.FC = () => {
             <Route path="/curriculum" element={<CurriculumPage />} />
             <Route path="/learning-settings" element={<LearningSettingsPage />} />
             <Route path="/class-view" element={<ClassroomPage />} />
+            <Route path="/learning-materials" element={<LearningMaterialsPage />} />
+            <Route path="/learning-materials/ai-quiz" element={<AIQuizPage />} />
             <Route path="/smartree" element={<SmartreePage />} />
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Routes>
           <FeedbackButton />
           <BottomNav />
-          {/* AI코비 플로팅 버튼 및 패널 */}
-          <AICobyFloatingButton onClick={() => setIsAICobyOpen(true)} />
-          <AICobyPanel isOpen={isAICobyOpen} onClose={() => setIsAICobyOpen(false)} />
         </Layout>
       </BrowserRouter>
     </QueryClientProvider>
