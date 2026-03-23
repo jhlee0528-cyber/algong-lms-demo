@@ -138,10 +138,11 @@ const ParentReportModal: React.FC<ParentReportModalProps> = ({ student, onClose 
             </div>
           </div>
 
-          {/* 리포트 미리보기 */}
+          {/* 리포트 미리보기 - 카카오톡 스타일 */}
           <div>
             <div className="flex items-center justify-between mb-3">
-              <label className="text-sm font-semibold text-gray-900">
+              <label className="text-sm font-semibold text-gray-900 flex items-center gap-2">
+                <span className="text-xl">💬</span>
                 {isEditing ? '리포트 수정' : '리포트 미리보기'}
               </label>
               <button
@@ -165,9 +166,26 @@ const ParentReportModal: React.FC<ParentReportModalProps> = ({ student, onClose 
                 placeholder="리포트 내용을 입력하세요..."
               />
             ) : (
-              <div className="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-lg p-6 border border-orange-200">
-                <div className="whitespace-pre-wrap text-sm text-gray-800 leading-relaxed">
-                  {reportText}
+              <div className="bg-[#B2C7D9] rounded-lg p-4">
+                {/* 카카오톡 알림톡 스타일 */}
+                <div className="bg-white rounded-lg shadow-sm">
+                  {/* 발신자 헤더 */}
+                  <div className="bg-yellow-400 px-4 py-2 rounded-t-lg flex items-center gap-2">
+                    <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+                      <span className="text-lg">🏫</span>
+                    </div>
+                    <div>
+                      <div className="font-semibold text-gray-900 text-sm">알공 공부방</div>
+                      <div className="text-xs text-gray-700">카카오 알림톡</div>
+                    </div>
+                  </div>
+
+                  {/* 메시지 본문 */}
+                  <div className="p-4 bg-white rounded-b-lg">
+                    <div className="whitespace-pre-wrap text-sm text-gray-800 leading-relaxed">
+                      {reportText}
+                    </div>
+                  </div>
                 </div>
               </div>
             )}
