@@ -80,7 +80,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
                 }
               `}
             >
-              <span className="mr-1">🎴</span>
+              <span className="mr-1">▦</span>
               <span className="hidden sm:inline">카드</span>
             </button>
           </div>
