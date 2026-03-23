@@ -58,13 +58,14 @@ const settingItems: SettingItem[] = [
     icon: '📝',
     path: '/diagnostic/001',
   },
-  {
-    id: 'grading',
-    title: 'AI 자동 채점',
-    description: '워크시트 자동 채점 시스템',
-    icon: '✅',
-    path: '/grading/ai',
-  },
+  // v3.0: 학원 운영 인프라 기능 숨김 (나중에 부활 가능)
+  // {
+  //   id: 'grading',
+  //   title: 'AI 자동 채점',
+  //   description: '워크시트 자동 채점 시스템',
+  //   icon: '✅',
+  //   path: '/grading/ai',
+  // },
   {
     id: 'reports',
     title: '리포트 템플릿',
@@ -152,7 +153,7 @@ const SettingsPage: React.FC = () => {
           <p className="text-sm text-gray-500">진단, 채점, 학부모 소통 관련 설정</p>
         </div>
         <div className="divide-y divide-gray-200">
-          {settingItems.slice(5, 8).map((item) => (
+          {settingItems.slice(5, 7).map((item) => (
             <button
               key={item.id}
               onClick={() => handleNavigate(item.path)}
@@ -187,7 +188,7 @@ const SettingsPage: React.FC = () => {
           <p className="text-sm text-gray-500">보상 및 동기부여 시스템 설정</p>
         </div>
         <div className="divide-y divide-gray-200">
-          {settingItems.slice(8).map((item) => (
+          {settingItems.slice(7).map((item) => (
             <button
               key={item.id}
               onClick={() => item.badge ? null : handleNavigate(item.path)}
