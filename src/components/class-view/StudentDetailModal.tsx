@@ -45,17 +45,17 @@ const StudentDetailModal: React.FC<StudentDetailModalProps> = ({ student, onClos
         {/* 헤더 */}
         <div className="sticky top-0 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-5 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-3xl font-bold border-2 border-white">
+            <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-3xl font-bold border-2 border-white shrink-0">
               {student.name[0]}
             </div>
-            <div>
-              <div className="flex items-center gap-3">
-                <h2 className="text-2xl font-bold">{student.name}</h2>
-                <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold ${getStatusBgColor(student.status)}`}>
+            <div className="min-w-0">
+              <div className="flex items-center gap-3 flex-wrap">
+                <h2 className="text-2xl font-bold whitespace-nowrap">{student.name}</h2>
+                <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold whitespace-nowrap shrink-0 ${getStatusBgColor(student.status)}`}>
                   {getStatusText(student.status)}
                 </span>
               </div>
-              <p className="text-blue-100">{student.grade}학년 · {student.subjects[0]?.currentLevel}</p>
+              <p className="text-blue-100 whitespace-nowrap">{student.grade}학년 · {student.subjects[0]?.currentLevel}</p>
             </div>
           </div>
           <button
@@ -75,22 +75,22 @@ const StudentDetailModal: React.FC<StudentDetailModalProps> = ({ student, onClos
               <span>📊</span>
               학습 통계
             </h3>
-            <div className="grid grid-cols-3 gap-4">
-              <div className="bg-blue-50 rounded-lg p-4 text-center">
-                <div className="text-sm text-gray-600 mb-1">현재 레벨</div>
-                <div className="text-2xl font-bold text-blue-600">
+            <div className="grid grid-cols-3 gap-3">
+              <div className="bg-blue-50 rounded-lg p-3 text-center min-w-0">
+                <div className="text-xs text-gray-600 mb-1 whitespace-nowrap">현재 레벨</div>
+                <div className="text-xl md:text-2xl font-bold text-blue-600 whitespace-nowrap">
                   {student.subjects[0]?.currentLevel}
                 </div>
               </div>
-              <div className="bg-purple-50 rounded-lg p-4 text-center">
-                <div className="text-sm text-gray-600 mb-1">출석률</div>
-                <div className="text-2xl font-bold text-purple-600">
+              <div className="bg-purple-50 rounded-lg p-3 text-center min-w-0">
+                <div className="text-xs text-gray-600 mb-1 whitespace-nowrap">출석률</div>
+                <div className="text-xl md:text-2xl font-bold text-purple-600 whitespace-nowrap">
                   {student.attendanceRate}%
                 </div>
               </div>
-              <div className="bg-orange-50 rounded-lg p-4 text-center">
-                <div className="text-sm text-gray-600 mb-1">독서 레벨</div>
-                <div className="text-2xl font-bold text-orange-600">
+              <div className="bg-orange-50 rounded-lg p-3 text-center min-w-0">
+                <div className="text-xs text-gray-600 mb-1 whitespace-nowrap">독서 레벨</div>
+                <div className="text-xl md:text-2xl font-bold text-orange-600 whitespace-nowrap">
                   Lv.{student.libraryProgress.readingLevel}
                 </div>
               </div>

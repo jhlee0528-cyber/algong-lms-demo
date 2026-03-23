@@ -81,14 +81,14 @@ const TableView: React.FC<TableViewProps> = ({ students, onStudentClick, onSendR
                         className={`
                           w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-purple-500
                           flex items-center justify-center text-white font-bold text-lg
-                          border-2 ${getStatusColor(student.status)}
+                          border-2 ${getStatusColor(student.status)} shrink-0
                         `}
                       >
                         {student.name[0]}
                       </div>
-                      <div>
-                        <div className="font-medium text-gray-900">{student.name}</div>
-                        <div className="text-xs text-gray-500">{student.grade}학년</div>
+                      <div className="min-w-0">
+                        <div className="font-medium text-gray-900 whitespace-nowrap">{student.name}</div>
+                        <div className="text-xs text-gray-500 whitespace-nowrap">{student.grade}학년</div>
                       </div>
                     </div>
                   </td>
@@ -96,7 +96,7 @@ const TableView: React.FC<TableViewProps> = ({ students, onStudentClick, onSendR
                   {/* 레벨 + 프로그레스바 */}
                   <td className="px-4 py-4 hidden md:table-cell">
                     <div className="space-y-1">
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 whitespace-nowrap">
                         {currentLevel}
                       </span>
                       <div className="w-24">
@@ -106,14 +106,14 @@ const TableView: React.FC<TableViewProps> = ({ students, onStudentClick, onSendR
                             style={{ width: `${avgProgress}%` }}
                           />
                         </div>
-                        <div className="text-[10px] text-gray-500 mt-0.5">{Math.round(avgProgress)}%</div>
+                        <div className="text-[10px] text-gray-500 mt-0.5 whitespace-nowrap">{Math.round(avgProgress)}%</div>
                       </div>
                     </div>
                   </td>
 
                   {/* 상태 배지 */}
                   <td className="px-4 py-4 text-center">
-                    <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold ${getStatusBgColor(student.status)}`}>
+                    <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold whitespace-nowrap ${getStatusBgColor(student.status)}`}>
                       {getStatusText(student.status)}
                     </span>
                   </td>
