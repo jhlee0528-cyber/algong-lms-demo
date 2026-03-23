@@ -91,7 +91,7 @@ export const mockStudents: Student[] = [
         startDate: '2025-09-01',
         progress: 78,
         recentScore: 85,
-        weakPoints: ['분수 나눗셈']
+        weakPoints: ['문맥 추론', '현재진행형']
       },
       {
         subjectId: 'math',
@@ -157,7 +157,7 @@ export const mockStudents: Student[] = [
         startDate: '2025-09-15',
         progress: 65,
         recentScore: 90,
-        weakPoints: ['과거형 동사']
+        weakPoints: ['과거형 동사', '의문문 어순', '지시어 연결']
       }
     ],
     attendance: [
@@ -201,7 +201,7 @@ export const mockStudents: Student[] = [
         startDate: '2025-10-01',
         progress: 45,
         recentScore: 70,
-        weakPoints: ['곱셈 구구단', '기초 문법']
+        weakPoints: ['이중모음 구분', '기초 사이트워드', 'be동사 활용']
       }
     ],
     attendance: [
@@ -244,7 +244,8 @@ export const mockStudents: Student[] = [
         currentLevel: 'Lv.16',
         startDate: '2025-08-15',
         progress: 82,
-        recentScore: 92
+        recentScore: 92,
+        weakPoints: ['th 발음', '강세 위치']
       }
     ],
     attendance: [
@@ -285,7 +286,8 @@ export const mockStudents: Student[] = [
         subjectName: '알공 영어',
         currentLevel: 'Lv.13',
         startDate: '2025-09-10',
-        progress: 70
+        progress: 70,
+        weakPoints: ['주제문 파악', '인칭대명사']
       }
     ],
     attendance: [
@@ -324,7 +326,8 @@ export const mockStudents: Student[] = [
         subjectName: '알공 영어',
         currentLevel: 'Lv.11',
         startDate: '2025-10-05',
-        progress: 60
+        progress: 60,
+        weakPoints: ['묵음 e 규칙', '단어 철자', '불규칙 복수형']
       }
     ],
     attendance: [],
@@ -357,7 +360,8 @@ export const mockStudents: Student[] = [
         subjectName: '알공 영어',
         currentLevel: 'Lv.17',
         startDate: '2025-08-20',
-        progress: 88
+        progress: 88,
+        weakPoints: ['억양 패턴', '빠른 발화 청취']
       }
     ],
     attendance: [],
@@ -390,7 +394,8 @@ export const mockStudents: Student[] = [
         subjectName: '알공 영어',
         currentLevel: 'Lv.9',
         startDate: '2025-10-15',
-        progress: 40
+        progress: 40,
+        weakPoints: ['연음 발음', '장단모음 혼동', '기초 사이트워드']
       }
     ],
     attendance: [],
@@ -423,7 +428,8 @@ export const mockStudents: Student[] = [
         subjectName: '알공 영어',
         currentLevel: 'Lv.14',
         startDate: '2025-09-05',
-        progress: 75
+        progress: 75,
+        weakPoints: ['읽기 속도', '핵심어 찾기']
       }
     ],
     attendance: [],
@@ -456,7 +462,8 @@ export const mockStudents: Student[] = [
         subjectName: '알공 영어',
         currentLevel: 'Lv.12',
         startDate: '2025-09-20',
-        progress: 68
+        progress: 68,
+        weakPoints: ['현재진행형', '동의어 혼동', '지시어 연결']
       }
     ],
     attendance: [],
@@ -489,7 +496,8 @@ export const mockStudents: Student[] = [
         subjectName: '알공 영어',
         currentLevel: 'Lv.15',
         startDate: '2025-08-25',
-        progress: 80
+        progress: 80,
+        weakPoints: ['문맥 추론', '주제문 파악']
       }
     ],
     attendance: [],
@@ -522,7 +530,8 @@ export const mockStudents: Student[] = [
         subjectName: '알공 영어',
         currentLevel: 'Lv.10',
         startDate: '2025-10-10',
-        progress: 50
+        progress: 50,
+        weakPoints: ['자음 블렌딩', 'be동사 활용']
       }
     ],
     attendance: [],
@@ -555,7 +564,8 @@ export const mockStudents: Student[] = [
         subjectName: '알공 영어',
         currentLevel: 'Lv.13',
         startDate: '2025-09-12',
-        progress: 72
+        progress: 72,
+        weakPoints: ['과거형 동사', '반의어 구분']
       }
     ],
     attendance: [],
@@ -588,7 +598,8 @@ export const mockStudents: Student[] = [
         subjectName: '알공 영어',
         currentLevel: 'Lv.11',
         startDate: '2025-09-25',
-        progress: 62
+        progress: 62,
+        weakPoints: ['이중모음 구분', '불규칙 복수형']
       }
     ],
     attendance: [],
@@ -622,7 +633,8 @@ export const mockStudents: Student[] = [
         subjectName: '알공 영어',
         currentLevel: 'Lv.16',
         startDate: '2025-08-30',
-        progress: 84
+        progress: 84,
+        weakPoints: ['r/l 구분', '축약형 듣기']
       }
     ],
     attendance: [],
@@ -655,7 +667,8 @@ export const mockStudents: Student[] = [
         subjectName: '알공 영어',
         currentLevel: 'Lv.12',
         startDate: '2025-10-12',
-        progress: 64
+        progress: 64,
+        weakPoints: ['의문문 어순', '읽기 속도', '단어 철자']
       }
     ],
     attendance: [],
@@ -688,7 +701,8 @@ export const mockStudents: Student[] = [
         subjectName: '알공 영어',
         currentLevel: 'Lv.14',
         startDate: '2025-09-18',
-        progress: 77
+        progress: 77,
+        weakPoints: ['핵심어 찾기', '인칭대명사']
       }
     ],
     attendance: [],
@@ -721,7 +735,8 @@ export const mockStudents: Student[] = [
         subjectName: '알공 영어',
         currentLevel: 'Lv.18',
         startDate: '2025-08-22',
-        progress: 85
+        progress: 85,
+        weakPoints: ['연음 처리', '유사 발음 구분']
       }
     ],
     attendance: [],
@@ -754,7 +769,8 @@ export const mockStudents: Student[] = [
         subjectName: '알공 영어',
         currentLevel: 'Lv.9',
         startDate: '2025-10-18',
-        progress: 42
+        progress: 42,
+        weakPoints: ['장단모음 혼동', '묵음 e 규칙', '단어 철자']
       }
     ],
     attendance: [],
@@ -787,7 +803,8 @@ export const mockStudents: Student[] = [
         subjectName: '알공 영어',
         currentLevel: 'Lv.13',
         startDate: '2025-09-08',
-        progress: 71
+        progress: 71,
+        weakPoints: ['문맥 추론', '과거형 동사', '지시어 연결']
       }
     ],
     attendance: [],

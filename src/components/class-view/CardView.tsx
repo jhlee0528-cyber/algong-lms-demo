@@ -134,6 +134,16 @@ const CardView: React.FC<CardViewProps> = ({ students, onStudentClick, onSendRep
                       style={{ width: `${subject.progress}%` }}
                     />
                   </div>
+                  {/* 약점 표시 (첫 번째 과목만) */}
+                  {idx === 0 && subject.weakPoints && subject.weakPoints.length > 0 && (
+                    <div className="flex items-center gap-1 mt-1.5">
+                      <span className="text-[10px] text-orange-600 whitespace-nowrap">⚠️</span>
+                      <span className="text-[10px] text-orange-700 truncate">
+                        {subject.weakPoints.slice(0, 2).join(', ')}
+                        {subject.weakPoints.length > 2 && '...'}
+                      </span>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

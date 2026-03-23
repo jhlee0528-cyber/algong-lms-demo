@@ -138,8 +138,16 @@ const StudentDetailModal: React.FC<StudentDetailModalProps> = ({ student, onClos
                     />
                   </div>
                   {subject.weakPoints && subject.weakPoints.length > 0 && (
-                    <div className="mt-2 text-xs text-gray-600">
-                      약점: {subject.weakPoints.join(', ')}
+                    <div className="mt-3 flex flex-wrap gap-1.5">
+                      {subject.weakPoints.map((weakness, wIdx) => (
+                        <span
+                          key={wIdx}
+                          className="inline-flex items-center gap-1 px-2 py-0.5 bg-orange-50 text-orange-700 border border-orange-200 rounded text-xs whitespace-nowrap"
+                        >
+                          <span>⚠️</span>
+                          {weakness}
+                        </span>
+                      ))}
                     </div>
                   )}
                 </div>

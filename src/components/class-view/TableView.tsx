@@ -118,7 +118,7 @@ const TableView: React.FC<TableViewProps> = ({ students, onStudentClick, onSendR
                     </div>
                   </td>
 
-                  {/* 레벨 + 프로그레스바 */}
+                  {/* 레벨 + 프로그레스바 + 약점 */}
                   <td className="px-4 py-4 hidden md:table-cell">
                     <div className="space-y-1">
                       <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 whitespace-nowrap">
@@ -133,6 +133,15 @@ const TableView: React.FC<TableViewProps> = ({ students, onStudentClick, onSendR
                         </div>
                         <div className="text-[10px] text-gray-500 mt-0.5 whitespace-nowrap">{Math.round(avgProgress)}%</div>
                       </div>
+                      {/* 약점 표시 (첫 번째 과목) */}
+                      {student.subjects[0]?.weakPoints && student.subjects[0].weakPoints.length > 0 && (
+                        <div className="flex items-center gap-1 mt-1">
+                          <span className="text-[10px] text-orange-600 whitespace-nowrap">⚠️</span>
+                          <span className="text-[10px] text-orange-700 truncate max-w-[80px]">
+                            {student.subjects[0].weakPoints.slice(0, 1).join(', ')}
+                          </span>
+                        </div>
+                      )}
                     </div>
                   </td>
 
