@@ -77,6 +77,7 @@ export const mockStudents: Student[] = [
     registeredDate: '2025-09-01',
     attendanceRate: 94,
     status: 'good',
+    avatar: '/avatars/avatar_01_김민수.png',
     libraryProgress: {
       readingLevel: 3,
       totalBooksRead: 12,
@@ -142,6 +143,7 @@ export const mockStudents: Student[] = [
     registeredDate: '2025-09-15',
     attendanceRate: 88,
     status: 'good',
+    avatar: '/avatars/avatar_02_이지은.png',
     libraryProgress: {
       readingLevel: 3,
       totalBooksRead: 15,
@@ -185,6 +187,7 @@ export const mockStudents: Student[] = [
     registeredDate: '2025-10-01',
     attendanceRate: 80,
     status: 'warning',
+    avatar: '/avatars/avatar_03_박준호.png',
     libraryProgress: {
       readingLevel: 2,
       totalBooksRead: 6,
@@ -228,6 +231,7 @@ export const mockStudents: Student[] = [
     registeredDate: '2025-08-15',
     attendanceRate: 96,
     status: 'good',
+    avatar: '/avatars/avatar_04_최서연.png',
     libraryProgress: {
       readingLevel: 4,
       totalBooksRead: 18,
@@ -269,6 +273,7 @@ export const mockStudents: Student[] = [
     registeredDate: '2025-09-10',
     attendanceRate: 90,
     status: 'good',
+    avatar: '/avatars/avatar_05_정현우.png',
     libraryProgress: {
       readingLevel: 3,
       totalBooksRead: 14,
@@ -307,6 +312,7 @@ export const mockStudents: Student[] = [
     registeredDate: '2025-10-05',
     attendanceRate: 85,
     status: 'good',
+    avatar: '/avatars/avatar_06_강소영.png',
     libraryProgress: {
       readingLevel: 2,
       totalBooksRead: 10,
@@ -339,6 +345,7 @@ export const mockStudents: Student[] = [
     registeredDate: '2025-08-20',
     attendanceRate: 98,
     status: 'good',
+    avatar: '/avatars/avatar_07_윤도현.png',
     libraryProgress: {
       readingLevel: 4,
       totalBooksRead: 20,
@@ -371,6 +378,7 @@ export const mockStudents: Student[] = [
     registeredDate: '2025-10-15',
     attendanceRate: 75,
     status: 'delayed',
+    avatar: '/avatars/avatar_08_임수진.png',
     libraryProgress: {
       readingLevel: 1,
       totalBooksRead: 2,
@@ -403,6 +411,7 @@ export const mockStudents: Student[] = [
     registeredDate: '2025-09-05',
     attendanceRate: 92,
     status: 'good',
+    avatar: '/avatars/avatar_09_한지훈.png',
     libraryProgress: {
       readingLevel: 3,
       totalBooksRead: 16,
@@ -435,6 +444,7 @@ export const mockStudents: Student[] = [
     registeredDate: '2025-09-20',
     attendanceRate: 87,
     status: 'good',
+    avatar: '/avatars/avatar_10_오나은.png',
     libraryProgress: {
       readingLevel: 3,
       totalBooksRead: 11,
@@ -467,6 +477,7 @@ export const mockStudents: Student[] = [
     registeredDate: '2025-08-25',
     attendanceRate: 95,
     status: 'good',
+    avatar: '/avatars/avatar_11_신동욱.png',
     libraryProgress: {
       readingLevel: 4,
       totalBooksRead: 17,
@@ -499,6 +510,7 @@ export const mockStudents: Student[] = [
     registeredDate: '2025-10-10',
     attendanceRate: 82,
     status: 'warning',
+    avatar: '/avatars/avatar_12_배미래.png',
     libraryProgress: {
       readingLevel: 1,
       totalBooksRead: 5,
@@ -531,6 +543,7 @@ export const mockStudents: Student[] = [
     registeredDate: '2025-09-12',
     attendanceRate: 91,
     status: 'good',
+    avatar: '/avatars/avatar_13_조성민.png',
     libraryProgress: {
       readingLevel: 3,
       totalBooksRead: 13,
@@ -563,6 +576,7 @@ export const mockStudents: Student[] = [
     registeredDate: '2025-09-25',
     attendanceRate: 86,
     status: 'good',
+    avatar: '/avatars/avatar_14_서하은.png',
     libraryProgress: {
       readingLevel: 2,
       totalBooksRead: 9,
@@ -595,6 +609,7 @@ export const mockStudents: Student[] = [
     registeredDate: '2025-08-30',
     attendanceRate: 93,
     status: 'good',
+    avatar: '/avatars/avatar_15_유예린.png',
     unpaidMonths: 1,
     libraryProgress: {
       readingLevel: 4,
@@ -628,6 +643,7 @@ export const mockStudents: Student[] = [
     registeredDate: '2025-10-12',
     attendanceRate: 89,
     status: 'good',
+    avatar: '/avatars/avatar_16_이준서.png',
     libraryProgress: {
       readingLevel: 3,
       totalBooksRead: 12,
@@ -660,6 +676,7 @@ export const mockStudents: Student[] = [
     registeredDate: '2025-09-18',
     attendanceRate: 93,
     status: 'good',
+    avatar: '/avatars/avatar_17_백서아.png',
     libraryProgress: {
       readingLevel: 3,
       totalBooksRead: 14,
@@ -692,6 +709,7 @@ export const mockStudents: Student[] = [
     registeredDate: '2025-08-22',
     attendanceRate: 97,
     status: 'good',
+    avatar: '/avatars/avatar_18_장민혁.png',
     libraryProgress: {
       readingLevel: 4,
       totalBooksRead: 20,
@@ -724,6 +742,7 @@ export const mockStudents: Student[] = [
     registeredDate: '2025-10-18',
     attendanceRate: 78,
     status: 'warning',
+    avatar: '/avatars/avatar_19_홍서윤.png',
     libraryProgress: {
       readingLevel: 1,
       totalBooksRead: 4,
@@ -756,6 +775,7 @@ export const mockStudents: Student[] = [
     registeredDate: '2025-09-08',
     attendanceRate: 91,
     status: 'good',
+    avatar: '/avatars/avatar_20_권태양.png',
     libraryProgress: {
       readingLevel: 3,
       totalBooksRead: 15,

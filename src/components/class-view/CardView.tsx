@@ -5,7 +5,7 @@
  * - 독서 현황
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import type { Student } from '../../data/mockStudents';
 
 interface CardViewProps {
@@ -38,6 +38,35 @@ const getProgressBarColor = (progress: number) => {
   return 'bg-red-500';
 };
 
+// 아바타 컴포넌트
+const StudentAvatar: React.FC<{ student: Student; size: string; statusColor: string }> = ({ student, size, statusColor }) => {
+  const [imageError, setImageError] = useState(false);
+
+  if (student.avatar && !imageError) {
+    return (
+      <img
+        src={student.avatar}
+        alt={student.name}
+        className={`${size} rounded-full object-cover border-2 ${statusColor} shrink-0`}
+        onError={() => setImageError(true)}
+      />
+    );
+  }
+
+  // 폴백: 이니셜 아바타
+  return (
+    <div
+      className={`
+        ${size} rounded-full bg-gradient-to-br from-blue-400 to-purple-500
+        flex items-center justify-center text-white font-bold text-xl
+        border-2 ${statusColor} shrink-0
+      `}
+    >
+      {student.name[0]}
+    </div>
+  );
+};
+
 const CardView: React.FC<CardViewProps> = ({ students, onStudentClick, onSendReport }) => {
   // 정렬: 관리필요 → 주의 → 정상
   const sortedStudents = [...students].sort((a, b) => {
@@ -65,15 +94,11 @@ const CardView: React.FC<CardViewProps> = ({ students, onStudentClick, onSendRep
             <div className="p-4 bg-gradient-to-r from-blue-50 to-purple-50 border-b border-gray-200">
               <div className="flex items-start justify-between mb-2">
                 {/* 아바타 */}
-                <div
-                  className={`
-                    w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-purple-500
-                    flex items-center justify-center text-white font-bold text-xl
-                    border-2 ${getStatusColor(student.status)} shrink-0
-                  `}
-                >
-                  {student.name[0]}
-                </div>
+                <StudentAvatar
+                  student={student}
+                  size="w-12 h-12"
+                  statusColor={getStatusColor(student.status)}
+                />
 
                 {/* 상태 배지 */}
                 <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold whitespace-nowrap shrink-0 ${getStatusBgColor(student.status)}`}>

@@ -5,7 +5,7 @@
  * - 관리필요 학생 상단 고정
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import type { Student } from '../../data/mockStudents';
 
 interface TableViewProps {
@@ -37,6 +37,35 @@ const getProgressColor = (status: string) => {
   if (status === 'good') return 'bg-green-500';
   if (status === 'warning') return 'bg-yellow-500';
   return 'bg-red-500';
+};
+
+// 아바타 컴포넌트
+const StudentAvatar: React.FC<{ student: Student; size: string; statusColor: string }> = ({ student, size, statusColor }) => {
+  const [imageError, setImageError] = useState(false);
+
+  if (student.avatar && !imageError) {
+    return (
+      <img
+        src={student.avatar}
+        alt={student.name}
+        className={`${size} rounded-full object-cover border-2 ${statusColor} shrink-0`}
+        onError={() => setImageError(true)}
+      />
+    );
+  }
+
+  // 폴백: 이니셜 아바타
+  return (
+    <div
+      className={`
+        ${size} rounded-full bg-gradient-to-br from-blue-400 to-purple-500
+        flex items-center justify-center text-white font-bold text-lg
+        border-2 ${statusColor} shrink-0
+      `}
+    >
+      {student.name[0]}
+    </div>
+  );
 };
 
 const TableView: React.FC<TableViewProps> = ({ students, onStudentClick, onSendReport }) => {
@@ -77,15 +106,11 @@ const TableView: React.FC<TableViewProps> = ({ students, onStudentClick, onSendR
                   {/* 학생 */}
                   <td className="px-4 py-4">
                     <div className="flex items-center gap-3">
-                      <div
-                        className={`
-                          w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-purple-500
-                          flex items-center justify-center text-white font-bold text-lg
-                          border-2 ${getStatusColor(student.status)} shrink-0
-                        `}
-                      >
-                        {student.name[0]}
-                      </div>
+                      <StudentAvatar
+                        student={student}
+                        size="w-10 h-10 md:w-10 md:h-10"
+                        statusColor={getStatusColor(student.status)}
+                      />
                       <div className="min-w-0">
                         <div className="font-medium text-gray-900 whitespace-nowrap">{student.name}</div>
                         <div className="text-xs text-gray-500 whitespace-nowrap">{student.grade}학년</div>

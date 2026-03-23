@@ -5,7 +5,7 @@
  * - 최근 활동 타임라인
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import type { Student } from '../../data/mockStudents';
 
 interface StudentDetailModalProps {
@@ -32,6 +32,29 @@ const getProgressBarColor = (progress: number) => {
   return 'bg-red-500';
 };
 
+// 아바타 컴포넌트
+const StudentAvatar: React.FC<{ student: Student; size: string }> = ({ student, size }) => {
+  const [imageError, setImageError] = useState(false);
+
+  if (student.avatar && !imageError) {
+    return (
+      <img
+        src={student.avatar}
+        alt={student.name}
+        className={`${size} rounded-full object-cover ring-4 ring-white backdrop-blur shrink-0`}
+        onError={() => setImageError(true)}
+      />
+    );
+  }
+
+  // 폴백: 이니셜 아바타
+  return (
+    <div className={`${size} rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-3xl font-bold border-2 border-white shrink-0`}>
+      {student.name[0]}
+    </div>
+  );
+};
+
 const StudentDetailModal: React.FC<StudentDetailModalProps> = ({ student, onClose, onSendReport }) => {
   return (
     <div
@@ -45,9 +68,7 @@ const StudentDetailModal: React.FC<StudentDetailModalProps> = ({ student, onClos
         {/* 헤더 */}
         <div className="sticky top-0 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-5 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-3xl font-bold border-2 border-white shrink-0">
-              {student.name[0]}
-            </div>
+            <StudentAvatar student={student} size="w-16 h-16 md:w-20 md:h-20" />
             <div className="min-w-0">
               <div className="flex items-center gap-3 flex-wrap">
                 <h2 className="text-2xl font-bold whitespace-nowrap">{student.name}</h2>
