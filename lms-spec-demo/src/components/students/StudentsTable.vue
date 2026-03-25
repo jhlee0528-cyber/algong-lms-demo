@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import StudentDetailDrawer from './StudentDetailDrawer.vue'
 
 // 신호등 상태 타입
 type TrafficLightStatus = 'green' | 'orange' | 'red'
@@ -92,9 +93,17 @@ const sendToStudent = (student: StudentProgress) => {
   }
 }
 
-// More 클릭 - 외부 링크로 이동
-const openLearningDetail = (studentId: number) => {
-  window.open(`https://manager.argong.ai/learning/${studentId}`, '_blank')
+// 학습 상세 패널
+const isDrawerOpen = ref(false)
+const selectedStudent = ref<StudentProgress | null>(null)
+
+const openDrawer = (student: StudentProgress) => {
+  selectedStudent.value = student
+  isDrawerOpen.value = true
+}
+
+const closeDrawer = () => {
+  isDrawerOpen.value = false
 }
 </script>
 
@@ -213,7 +222,7 @@ const openLearningDetail = (studentId: number) => {
               <td class="px-4 py-3 text-center text-sm text-gray-900">{{ student.learningTime }}분</td>
               <td class="px-4 py-3 text-center">
                 <button
-                  @click="openLearningDetail(student.id)"
+                  @click="openDrawer(student)"
                   class="text-algong-blue hover:text-algong-button font-medium text-sm underline"
                 >
                   More
@@ -298,13 +307,21 @@ const openLearningDetail = (studentId: number) => {
 
         <!-- More 버튼 -->
         <button
-          @click="openLearningDetail(student.id)"
+          @click="openDrawer(student)"
           class="w-full py-2 text-algong-blue hover:bg-blue-50 rounded-lg font-medium text-sm transition-colors"
         >
           학습상세 보기
         </button>
       </div>
     </div>
+
+    <!-- 학습 상세 패널 -->
+    <StudentDetailDrawer
+      v-if="selectedStudent"
+      :student="selectedStudent"
+      :is-open="isDrawerOpen"
+      @close="closeDrawer"
+    />
   </div>
 </template>
 
