@@ -1,21 +1,14 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, nextTick } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-
-interface Props {
-  studyRoomName?: string
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  studyRoomName: '알공 공부방'
-})
 
 const router = useRouter()
 const route = useRoute()
 
-// 기관 유형 (localStorage 저장)
-const institutionType = ref<string>('공부방')
-const institutionTypes = ['교습소', '공부방', '학원', '어학원']
+// 기관명 (localStorage 저장) - 토글 제거, 편집 가능하게 변경
+const academyName = ref<string>('알공공부방')
+const isEditingName = ref(false)
+const nameInputRef = ref<HTMLInputElement | null>(null)
 
 // 모달 상태
 const showSettings = ref(false)
@@ -38,18 +31,48 @@ const isActiveTab = (path: string) => {
   return route.path.startsWith(path)
 }
 
-// localStorage에서 기관 유형 불러오기
+// localStorage에서 기관명 불러오기
 onMounted(() => {
-  const saved = localStorage.getItem('institution-type')
-  if (saved && institutionTypes.includes(saved)) {
-    institutionType.value = saved
+  const saved = localStorage.getItem('academyName')
+  if (saved) {
+    academyName.value = saved
   }
 })
 
-// 기관 유형 변경
-const changeInstitutionType = (type: string) => {
-  institutionType.value = type
-  localStorage.setItem('institution-type', type)
+// 기관명 편집 시작
+const startEditingName = async () => {
+  isEditingName.value = true
+  await nextTick()
+  if (nameInputRef.value) {
+    nameInputRef.value.focus()
+    nameInputRef.value.select()
+  }
+}
+
+// 기관명 저장
+const saveAcademyName = () => {
+  const trimmed = academyName.value.trim()
+  if (trimmed) {
+    academyName.value = trimmed
+    localStorage.setItem('academyName', trimmed)
+  } else {
+    // 빈 값이면 기본값으로 복원
+    academyName.value = '알공공부방'
+    localStorage.setItem('academyName', '알공공부방')
+  }
+  isEditingName.value = false
+}
+
+// Enter 키 또는 외부 클릭 시 저장
+const handleNameKeydown = (e: KeyboardEvent) => {
+  if (e.key === 'Enter') {
+    saveAcademyName()
+  } else if (e.key === 'Escape') {
+    // ESC 키로 취소
+    const saved = localStorage.getItem('academyName')
+    academyName.value = saved || '알공공부방'
+    isEditingName.value = false
+  }
 }
 
 // 로그아웃
@@ -66,7 +89,7 @@ const handleLogout = () => {
     <!-- 헤더 -->
     <header class="bg-white border-b border-gray-200 sticky top-0 z-30">
       <div class="px-4 md:px-6">
-        <!-- 상단: 로고 + 기관명 + 세그먼트 토글 + 아이콘들 -->
+        <!-- 상단: 로고 + 기관명 + 아이콘들 -->
         <div class="h-16 flex items-center justify-between">
           <!-- 좌측: 로고 + 원장님 LMS -->
           <div class="flex items-center gap-3">
@@ -84,28 +107,40 @@ const handleLogout = () => {
             </div>
           </div>
 
-          <!-- 우측: 기관명 + 세그먼트 토글 + 아이콘들 -->
+          <!-- 우측: 기관명 (편집 가능) + 아이콘들 -->
           <div class="flex items-center gap-4">
-            <!-- 기관명 -->
-            <span class="hidden md:inline-block text-sm font-medium text-gray-700">
-              {{ studyRoomName }}
-            </span>
-
-            <!-- 세그먼트 토글 (기관 유형 선택) -->
-            <div class="hidden md:flex items-center bg-gray-100 rounded-lg p-1 gap-1">
-              <button
-                v-for="type in institutionTypes"
-                :key="type"
-                @click="changeInstitutionType(type)"
-                :class="[
-                  'px-3 py-1.5 text-xs font-medium rounded-md transition-all',
-                  institutionType === type
-                    ? 'bg-white text-algong-blue shadow-sm'
-                    : 'text-gray-600 hover:text-gray-900'
-                ]"
-              >
-                {{ type }}
-              </button>
+            <!-- 기관명 (편집 가능) -->
+            <div class="hidden md:flex items-center gap-2">
+              <template v-if="!isEditingName">
+                <span class="text-sm font-medium text-gray-700">
+                  {{ academyName }}
+                </span>
+                <button
+                  @click="startEditingName"
+                  class="p-1 text-gray-400 hover:text-algong-blue transition-colors"
+                  title="기관명 편집"
+                >
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                    />
+                  </svg>
+                </button>
+              </template>
+              <template v-else>
+                <input
+                  ref="nameInputRef"
+                  v-model="academyName"
+                  @blur="saveAcademyName"
+                  @keydown="handleNameKeydown"
+                  type="text"
+                  class="px-2 py-1 text-sm font-medium text-gray-700 border-2 border-algong-blue rounded focus:outline-none"
+                  maxlength="20"
+                />
+              </template>
             </div>
 
             <!-- 설정 아이콘 -->

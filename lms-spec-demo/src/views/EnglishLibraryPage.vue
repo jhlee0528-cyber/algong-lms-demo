@@ -12,6 +12,7 @@ import {
   Tooltip,
   Legend
 } from 'chart.js'
+import { students as studentsData, getStatusColor as getStatusColorHelper, type Student } from '@/data/students'
 
 // Chart.js 등록
 ChartJS.register(
@@ -25,15 +26,6 @@ ChartJS.register(
   Legend
 )
 
-// 학생 데이터 타입
-interface Student {
-  id: number
-  name: string
-  booksRead: number
-  averageScore: number
-  status: 'green' | 'orange' | 'red'
-}
-
 // 도서 데이터 타입
 interface Book {
   id: number
@@ -44,19 +36,8 @@ interface Book {
   readCount: number
 }
 
-// 학생 목록
-const students = ref<Student[]>([
-  { id: 1, name: '학민혁', booksRead: 12, averageScore: 92, status: 'green' },
-  { id: 2, name: '왕재군', booksRead: 10, averageScore: 88, status: 'green' },
-  { id: 3, name: '김지수', booksRead: 7, averageScore: 75, status: 'orange' },
-  { id: 4, name: '이서연', booksRead: 15, averageScore: 95, status: 'green' },
-  { id: 5, name: '박현우', booksRead: 4, averageScore: 65, status: 'red' },
-  { id: 6, name: '최소영', booksRead: 11, averageScore: 89, status: 'green' },
-  { id: 7, name: '정도현', booksRead: 6, averageScore: 70, status: 'orange' },
-  { id: 8, name: '강수진', booksRead: 13, averageScore: 93, status: 'green' },
-  { id: 9, name: '윤지훈', booksRead: 3, averageScore: 60, status: 'red' },
-  { id: 10, name: '한나은', booksRead: 9, averageScore: 87, status: 'green' },
-])
+// 학생 목록 (공유 데이터 import)
+const students = ref<Student[]>([...studentsData])
 
 // 좌측 사이드바 뷰 모드
 type ViewMode = 'class' | 'book'
@@ -178,7 +159,7 @@ const quizResultOptions = {
 // 주간 독서 랭킹
 const weeklyRanking = computed(() =>
   [...students.value]
-    .sort((a, b) => b.booksRead - a.booksRead)
+    .sort((a, b) => b.readingBooks - a.readingBooks)
     .slice(0, 5)
 )
 
@@ -342,15 +323,8 @@ const changeLevel = (level: LevelFilter) => {
   currentPage.value = 1 // 필터 변경 시 첫 페이지로 이동
 }
 
-// 신호등 색상
-const getStatusColor = (status: string) => {
-  switch (status) {
-    case 'green': return 'bg-algong-green'
-    case 'orange': return 'bg-algong-orange'
-    case 'red': return 'bg-algong-red'
-    default: return 'bg-gray-400'
-  }
-}
+// 신호등 색상 (import한 함수 사용)
+const getStatusColor = getStatusColorHelper
 
 // 학생 선택
 const selectStudent = (student: Student) => {
@@ -431,7 +405,7 @@ const formatStudentNumber = (index: number) => {
                   <div :class="['w-3 h-3 rounded-full', getStatusColor(student.status)]"></div>
                   <span class="text-sm font-medium text-gray-900">{{ student.name }}</span>
                 </div>
-                <span class="text-xs text-gray-500">{{ student.booksRead }}권</span>
+                <span class="text-xs text-gray-500">{{ student.readingBooks }}권</span>
               </button>
             </div>
           </div>
@@ -571,8 +545,8 @@ const formatStudentNumber = (index: number) => {
                       <span v-else>{{ index + 1 }}</span>
                     </td>
                     <td class="px-4 py-3 text-sm font-medium text-gray-900">{{ student.name }}</td>
-                    <td class="px-4 py-3 text-sm text-center text-gray-900">{{ student.booksRead }}권</td>
-                    <td class="px-4 py-3 text-sm text-center text-gray-900">{{ student.averageScore }}점</td>
+                    <td class="px-4 py-3 text-sm text-center text-gray-900">{{ student.readingBooks }}권</td>
+                    <td class="px-4 py-3 text-sm text-center text-gray-900">{{ student.accuracy }}점</td>
                     <td class="px-4 py-3 text-center">
                       <div class="flex items-center justify-center">
                         <div :class="['w-3 h-3 rounded-full', getStatusColor(student.status)]"></div>
@@ -626,11 +600,11 @@ const formatStudentNumber = (index: number) => {
             <div class="grid grid-cols-3 gap-4">
               <div class="text-center p-4 bg-blue-50 rounded-lg">
                 <p class="text-sm text-gray-600 mb-1">읽은 책</p>
-                <p class="text-2xl font-bold text-algong-blue">{{ selectedStudent.booksRead }}권</p>
+                <p class="text-2xl font-bold text-algong-blue">{{ selectedStudent.readingBooks }}권</p>
               </div>
               <div class="text-center p-4 bg-green-50 rounded-lg">
                 <p class="text-sm text-gray-600 mb-1">평균 점수</p>
-                <p class="text-2xl font-bold text-algong-green">{{ selectedStudent.averageScore }}점</p>
+                <p class="text-2xl font-bold text-algong-green">{{ selectedStudent.accuracy }}점</p>
               </div>
               <div class="text-center p-4 bg-orange-50 rounded-lg">
                 <p class="text-sm text-gray-600 mb-1">학습 상태</p>

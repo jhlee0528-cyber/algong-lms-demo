@@ -1,52 +1,68 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import StudentDetailDrawer from './StudentDetailDrawer.vue'
+import { students as studentsData, getStatusColor, getStatusLabel, type Student, type TrafficLightStatus } from '@/data/students'
 
-// 신호등 상태 타입
-type TrafficLightStatus = 'green' | 'orange' | 'red'
-
-interface StudentProgress {
-  id: number
-  name: string
-  progress: number // 학습진행률 (%)
-  accuracy: number // 정답률 (%)
-  learningTime: number // 학습시간 (분)
-  readingBooks: number // 독서 권수
-  status: TrafficLightStatus
-}
-
-// 더미 데이터 (20명)
-const students = ref<StudentProgress[]>([
-  { id: 1, name: '김민수', progress: 85, accuracy: 92, learningTime: 245, readingBooks: 5, status: 'green' },
-  { id: 2, name: '이지은', progress: 72, accuracy: 88, learningTime: 210, readingBooks: 4, status: 'green' },
-  { id: 3, name: '박준호', progress: 55, accuracy: 75, learningTime: 180, readingBooks: 3, status: 'orange' },
-  { id: 4, name: '최서연', progress: 91, accuracy: 95, learningTime: 280, readingBooks: 7, status: 'green' },
-  { id: 5, name: '정현우', progress: 38, accuracy: 65, learningTime: 120, readingBooks: 2, status: 'red' },
-  { id: 6, name: '강소영', progress: 78, accuracy: 89, learningTime: 230, readingBooks: 5, status: 'green' },
-  { id: 7, name: '윤도현', progress: 45, accuracy: 70, learningTime: 150, readingBooks: 2, status: 'orange' },
-  { id: 8, name: '임수진', progress: 88, accuracy: 93, learningTime: 260, readingBooks: 6, status: 'green' },
-  { id: 9, name: '한지훈', progress: 32, accuracy: 60, learningTime: 95, readingBooks: 1, status: 'red' },
-  { id: 10, name: '오나은', progress: 76, accuracy: 87, learningTime: 220, readingBooks: 4, status: 'green' },
-  { id: 11, name: '신동욱', progress: 62, accuracy: 78, learningTime: 190, readingBooks: 3, status: 'orange' },
-  { id: 12, name: '배미래', progress: 81, accuracy: 90, learningTime: 240, readingBooks: 5, status: 'green' },
-  { id: 13, name: '조성민', progress: 28, accuracy: 55, learningTime: 80, readingBooks: 1, status: 'red' },
-  { id: 14, name: '홍예린', progress: 93, accuracy: 96, learningTime: 290, readingBooks: 8, status: 'green' },
-  { id: 15, name: '송태현', progress: 58, accuracy: 76, learningTime: 175, readingBooks: 3, status: 'orange' },
-  { id: 16, name: '유하늘', progress: 74, accuracy: 86, learningTime: 215, readingBooks: 4, status: 'green' },
-  { id: 17, name: '문지원', progress: 35, accuracy: 62, learningTime: 110, readingBooks: 1, status: 'red' },
-  { id: 18, name: '양준혁', progress: 82, accuracy: 91, learningTime: 250, readingBooks: 6, status: 'green' },
-  { id: 19, name: '백서아', progress: 67, accuracy: 82, learningTime: 200, readingBooks: 3, status: 'orange' },
-  { id: 20, name: '남도윤', progress: 89, accuracy: 94, learningTime: 270, readingBooks: 7, status: 'green' },
-])
+// 학생 데이터 (공유 데이터 import)
+const students = ref<Student[]>([...studentsData])
 
 // 필터 상태
 type FilterStatus = 'all' | 'green' | 'orange' | 'red'
 const filterStatus = ref<FilterStatus>('all')
 
-// 필터링된 학생 목록
+// 정렬 상태
+type SortColumn = 'id' | 'name' | 'progress' | 'accuracy' | 'learningTime' | 'readingBooks' | null
+type SortOrder = 'asc' | 'desc' | null
+const sortColumn = ref<SortColumn>(null)
+const sortOrder = ref<SortOrder>(null)
+
+// 정렬 토글 함수
+const toggleSort = (column: SortColumn) => {
+  if (sortColumn.value === column) {
+    // 같은 컬럼 클릭: asc → desc → null
+    if (sortOrder.value === 'asc') {
+      sortOrder.value = 'desc'
+    } else if (sortOrder.value === 'desc') {
+      sortOrder.value = null
+      sortColumn.value = null
+    }
+  } else {
+    // 다른 컬럼 클릭: asc로 시작
+    sortColumn.value = column
+    sortOrder.value = 'asc'
+  }
+}
+
+// 필터링 및 정렬된 학생 목록
 const filteredStudents = computed(() => {
-  if (filterStatus.value === 'all') return students.value
-  return students.value.filter(s => s.status === filterStatus.value)
+  // 1. 필터링
+  let filtered = students.value
+  if (filterStatus.value !== 'all') {
+    filtered = filtered.filter(s => s.status === filterStatus.value)
+  }
+
+  // 2. 정렬
+  if (sortColumn.value && sortOrder.value) {
+    filtered = [...filtered].sort((a, b) => {
+      const col = sortColumn.value!
+      let aVal: number | string = a[col]
+      let bVal: number | string = b[col]
+
+      // 문자열 정렬 (이름)
+      if (typeof aVal === 'string' && typeof bVal === 'string') {
+        return sortOrder.value === 'asc'
+          ? aVal.localeCompare(bVal, 'ko')
+          : bVal.localeCompare(aVal, 'ko')
+      }
+
+      // 숫자 정렬
+      return sortOrder.value === 'asc'
+        ? (aVal as number) - (bVal as number)
+        : (bVal as number) - (aVal as number)
+    })
+  }
+
+  return filtered
 })
 
 // 통계
@@ -56,23 +72,6 @@ const stats = computed(() => ({
   orange: students.value.filter(s => s.status === 'orange').length,
   red: students.value.filter(s => s.status === 'red').length,
 }))
-
-// 신호등 색상
-const getStatusColor = (status: TrafficLightStatus) => {
-  switch (status) {
-    case 'green': return 'bg-algong-green'
-    case 'orange': return 'bg-algong-orange'
-    case 'red': return 'bg-algong-red'
-  }
-}
-
-const getStatusLabel = (status: TrafficLightStatus) => {
-  switch (status) {
-    case 'green': return '정상'
-    case 'orange': return '주의'
-    case 'red': return '관리필요'
-  }
-}
 
 // 전체 발송
 const sendToAll = () => {
@@ -87,7 +86,7 @@ const sendToAll = () => {
 }
 
 // 개별 발송
-const sendToStudent = (student: StudentProgress) => {
+const sendToStudent = (student: Student) => {
   if (confirm(`${student.name} 학생에게 발송하시겠습니까?`)) {
     alert(`${student.name} 학생에게 발송되었습니다.`)
   }
@@ -95,9 +94,9 @@ const sendToStudent = (student: StudentProgress) => {
 
 // 학습 상세 패널
 const isDrawerOpen = ref(false)
-const selectedStudent = ref<StudentProgress | null>(null)
+const selectedStudent = ref<Student | null>(null)
 
-const openDrawer = (student: StudentProgress) => {
+const openDrawer = (student: Student) => {
   selectedStudent.value = student
   isDrawerOpen.value = true
 }
@@ -180,14 +179,101 @@ const closeDrawer = () => {
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-50">
             <tr>
-              <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">번호</th>
-              <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">이름</th>
+              <!-- 번호 (정렬 가능) -->
+              <th
+                @click="toggleSort('id')"
+                class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-colors"
+                :class="{ 'text-algong-blue': sortColumn === 'id' }"
+              >
+                <div class="flex items-center gap-1">
+                  <span>번호</span>
+                  <span class="text-xs">
+                    <span v-if="sortColumn === 'id' && sortOrder === 'asc'">▲</span>
+                    <span v-else-if="sortColumn === 'id' && sortOrder === 'desc'">▼</span>
+                    <span v-else class="text-gray-300">▲▼</span>
+                  </span>
+                </div>
+              </th>
+              <!-- 이름 (정렬 가능) -->
+              <th
+                @click="toggleSort('name')"
+                class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-colors"
+                :class="{ 'text-algong-blue': sortColumn === 'name' }"
+              >
+                <div class="flex items-center gap-1">
+                  <span>이름</span>
+                  <span class="text-xs">
+                    <span v-if="sortColumn === 'name' && sortOrder === 'asc'">▲</span>
+                    <span v-else-if="sortColumn === 'name' && sortOrder === 'desc'">▼</span>
+                    <span v-else class="text-gray-300">▲▼</span>
+                  </span>
+                </div>
+              </th>
+              <!-- 상태 (정렬 불가) -->
               <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">상태</th>
-              <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">학습진행률</th>
-              <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">정답률</th>
-              <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">학습시간</th>
+              <!-- 학습진행률 (정렬 가능) -->
+              <th
+                @click="toggleSort('progress')"
+                class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-colors"
+                :class="{ 'text-algong-blue': sortColumn === 'progress' }"
+              >
+                <div class="flex items-center justify-center gap-1">
+                  <span>학습진행률</span>
+                  <span class="text-xs">
+                    <span v-if="sortColumn === 'progress' && sortOrder === 'asc'">▲</span>
+                    <span v-else-if="sortColumn === 'progress' && sortOrder === 'desc'">▼</span>
+                    <span v-else class="text-gray-300">▲▼</span>
+                  </span>
+                </div>
+              </th>
+              <!-- 정답률 (정렬 가능) -->
+              <th
+                @click="toggleSort('accuracy')"
+                class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-colors"
+                :class="{ 'text-algong-blue': sortColumn === 'accuracy' }"
+              >
+                <div class="flex items-center justify-center gap-1">
+                  <span>정답률</span>
+                  <span class="text-xs">
+                    <span v-if="sortColumn === 'accuracy' && sortOrder === 'asc'">▲</span>
+                    <span v-else-if="sortColumn === 'accuracy' && sortOrder === 'desc'">▼</span>
+                    <span v-else class="text-gray-300">▲▼</span>
+                  </span>
+                </div>
+              </th>
+              <!-- 학습시간 (정렬 가능) -->
+              <th
+                @click="toggleSort('learningTime')"
+                class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-colors"
+                :class="{ 'text-algong-blue': sortColumn === 'learningTime' }"
+              >
+                <div class="flex items-center justify-center gap-1">
+                  <span>학습시간</span>
+                  <span class="text-xs">
+                    <span v-if="sortColumn === 'learningTime' && sortOrder === 'asc'">▲</span>
+                    <span v-else-if="sortColumn === 'learningTime' && sortOrder === 'desc'">▼</span>
+                    <span v-else class="text-gray-300">▲▼</span>
+                  </span>
+                </div>
+              </th>
+              <!-- 독서량 (정렬 가능) - 순서 변경됨 -->
+              <th
+                @click="toggleSort('readingBooks')"
+                class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-colors"
+                :class="{ 'text-algong-blue': sortColumn === 'readingBooks' }"
+              >
+                <div class="flex items-center justify-center gap-1">
+                  <span>독서량</span>
+                  <span class="text-xs">
+                    <span v-if="sortColumn === 'readingBooks' && sortOrder === 'asc'">▲</span>
+                    <span v-else-if="sortColumn === 'readingBooks' && sortOrder === 'desc'">▼</span>
+                    <span v-else class="text-gray-300">▲▼</span>
+                  </span>
+                </div>
+              </th>
+              <!-- 학습상세 (정렬 불가) -->
               <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">학습상세</th>
-              <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">독서</th>
+              <!-- 발송 (정렬 불가) -->
               <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">발송</th>
             </tr>
           </thead>
@@ -220,6 +306,7 @@ const closeDrawer = () => {
               </td>
               <td class="px-4 py-3 text-center text-sm text-gray-900">{{ student.accuracy }}%</td>
               <td class="px-4 py-3 text-center text-sm text-gray-900">{{ student.learningTime }}분</td>
+              <td class="px-4 py-3 text-center text-sm text-gray-900">{{ student.readingBooks }}권</td>
               <td class="px-4 py-3 text-center">
                 <button
                   @click="openDrawer(student)"
@@ -228,16 +315,16 @@ const closeDrawer = () => {
                   More
                 </button>
               </td>
-              <td class="px-4 py-3 text-center text-sm text-gray-900">{{ student.readingBooks }}권</td>
               <td class="px-4 py-3 text-center">
                 <button
                   @click="sendToStudent(student)"
-                  class="p-2 text-gray-600 hover:text-algong-blue hover:bg-blue-50 rounded-lg transition-colors"
+                  class="inline-flex items-center gap-1.5 px-3 py-1.5 border-2 border-algong-blue text-algong-blue hover:bg-algong-blue hover:text-white rounded-lg transition-colors text-sm font-medium"
                   title="발송"
                 >
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
+                  <span>발송</span>
                 </button>
               </td>
             </tr>
@@ -266,11 +353,12 @@ const closeDrawer = () => {
           </div>
           <button
             @click="sendToStudent(student)"
-            class="p-2 text-gray-600 hover:text-algong-blue hover:bg-blue-50 rounded-lg transition-colors"
+            class="inline-flex items-center gap-1.5 px-3 py-1.5 border-2 border-algong-blue text-algong-blue hover:bg-algong-blue hover:text-white rounded-lg transition-colors text-sm font-medium"
           >
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
             </svg>
+            <span>발송</span>
           </button>
         </div>
 
@@ -300,7 +388,7 @@ const closeDrawer = () => {
             <p class="text-sm font-semibold text-gray-900">{{ student.learningTime }}분</p>
           </div>
           <div>
-            <p class="text-xs text-gray-500">독서</p>
+            <p class="text-xs text-gray-500">독서량</p>
             <p class="text-sm font-semibold text-gray-900">{{ student.readingBooks }}권</p>
           </div>
         </div>
