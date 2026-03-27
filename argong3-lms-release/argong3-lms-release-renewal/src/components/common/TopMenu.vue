@@ -154,6 +154,44 @@
         </div> -->
       </div>
     </div>
+
+    <!-- 모바일 하단 네비게이션 -->
+    <div class="mobile-bottom-nav">
+      <div
+        class="mobile-nav-item"
+        :class="{ active: route.path.startsWith('/dashboard') }"
+        @click="onClickTranfer('/dashboard')"
+      >
+        <span class="nav-icon">🏠</span>
+        <span class="nav-label">대시보드</span>
+      </div>
+      <div
+        class="mobile-nav-item"
+        :class="{ active: route.path.startsWith('/learning') }"
+        @click="onClickTranfer('/learning/status')"
+      >
+        <span class="nav-icon">📊</span>
+        <span class="nav-label">학습현황</span>
+      </div>
+      <div
+        v-show="currentSubject === 'eng' && user_info.publisher !== 'SP'"
+        class="mobile-nav-item"
+        :class="{ active: route.path.startsWith('/e-library') }"
+        @click="onClickTranfer('/e-library')"
+      >
+        <span class="nav-icon">📚</span>
+        <span class="nav-label">e-library</span>
+      </div>
+      <div
+        v-show="user_info.publisher === 'SP'"
+        class="mobile-nav-item"
+        :class="{ active: route.path.startsWith('/smartree') }"
+        @click="onClickTranfer('/smartree/contents/1')"
+      >
+        <span class="nav-icon">🌳</span>
+        <span class="nav-label">스마트리</span>
+      </div>
+    </div>
   </header>
 </template>
 
@@ -460,6 +498,96 @@ const changeSubject = async (subject) => {
     font-size: 14px;
     color: #67aeff;
     font-weight: 600;
+  }
+}
+
+/* 모바일 하단 네비게이션 */
+.mobile-bottom-nav {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .mobile-bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-top: 1px solid #e0e0e0;
+    z-index: 1000;
+    padding: 8px 0 12px;
+    justify-content: space-around;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  .mobile-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    .nav-icon {
+      font-size: 20px;
+      filter: grayscale(100%);
+      opacity: 0.5;
+    }
+
+    .nav-label {
+      font-size: 10px;
+      color: #9a9a9a;
+      font-weight: 500;
+    }
+
+    &.active {
+      .nav-icon {
+        filter: none;
+        opacity: 1;
+      }
+      .nav-label {
+        color: #258aff;
+        font-weight: 700;
+      }
+    }
+  }
+
+  /* 탑 메뉴 PC 네비 숨기기 */
+  nav {
+    display: none;
+  }
+
+  .wrap-menu {
+    padding: 12px 16px;
+    flex-wrap: wrap;
+  }
+
+  .setting-wrap {
+    font-size: 12px;
+    gap: 8px;
+
+    .body1 {
+      font-size: 12px;
+    }
+
+    .dropdown {
+      font-size: 11px;
+      max-width: 120px;
+    }
+  }
+
+  .subject-toggle {
+    margin-left: 0;
+    padding: 4px;
+
+    > div {
+      padding: 4px 8px;
+
+      p {
+        font-size: 12px;
+      }
+    }
   }
 }
 </style>

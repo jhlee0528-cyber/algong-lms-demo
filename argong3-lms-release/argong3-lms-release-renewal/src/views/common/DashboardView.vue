@@ -1138,4 +1138,154 @@ const confirmSend = () => {
     opacity: 0.9;
   }
 }
+
+/* 모바일 반응형 */
+@media (max-width: 767px) {
+  .dashboard-container {
+    padding: 16px;
+    padding-bottom: 80px;
+  }
+
+  .header-row {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+
+    .headline {
+      font-size: 22px;
+    }
+
+    .total-students {
+      font-size: 13px;
+    }
+  }
+
+  /* 신호등 카드: 3열 → 1열 세로 스택 */
+  .status-cards {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  /* 각 카드 높이 축소 */
+  .status-card {
+    padding: 20px;
+  }
+
+  .card-title {
+    font-size: 16px;
+  }
+
+  .card-desc {
+    font-size: 12px;
+  }
+
+  .card-count {
+    font-size: 28px;
+  }
+
+  /* 카드 내 원그래프 크기 축소 */
+  .gauge-circle {
+    width: 90px;
+    height: 90px;
+  }
+
+  .gauge-center {
+    width: 70px;
+    height: 70px;
+    font-size: 18px;
+  }
+
+  .gauge-label {
+    font-size: 12px;
+  }
+
+  /* 추세 섹션 */
+  .card-trend-section {
+    .trend-label {
+      font-size: 12px;
+    }
+
+    .trend-bars {
+      height: 60px;
+    }
+
+    .trend {
+      font-size: 12px;
+    }
+  }
+
+  /* 학생 목록 섹션 */
+  .students-section {
+    .section-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+
+      h3 {
+        font-size: 18px;
+      }
+    }
+
+    .view-toggle {
+      gap: 6px;
+
+      button {
+        padding: 6px 12px;
+        font-size: 12px;
+      }
+    }
+  }
+
+  /* 테이블 헤더 및 행 */
+  .table-header,
+  .table-row {
+    font-size: 12px;
+    padding: 12px 8px;
+  }
+
+  /* 학생 카드 모바일 */
+  .student-card {
+    padding: 16px;
+
+    .student-name {
+      font-size: 14px;
+    }
+
+    .student-level {
+      font-size: 11px;
+    }
+  }
+
+  /* SMS 모달 */
+  .modal-overlay {
+    padding: 16px;
+  }
+
+  .modal-container {
+    max-width: 95%;
+    max-height: 90vh;
+  }
+
+  .modal-header {
+    padding: 16px 20px;
+
+    h3 {
+      font-size: 16px;
+    }
+  }
+
+  .modal-content {
+    padding: 16px 20px;
+  }
+
+  .modal-footer {
+    padding: 16px 20px;
+    gap: 8px;
+
+    button {
+      padding: 8px 16px;
+      font-size: 13px;
+    }
+  }
+}
 </style>

@@ -1922,4 +1922,212 @@ const getSubjectTooltip = (levelRange) => {
   font-weight: 700;
   color: var(--main-blue);
 }
+
+/* 모바일 반응형 */
+@media (max-width: 767px) {
+  .inner {
+    padding: 16px;
+    padding-bottom: 80px;
+  }
+
+  /* 커리큘럼 카드 */
+  .curriculum-container {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .level-distribution {
+    width: 100%;
+  }
+
+  .timeline-container {
+    height: 180px;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .timeline-item {
+    min-width: 60px;
+  }
+
+  /* 과목 선택 바 */
+  .subject-selection-container {
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .subject-tabs {
+    flex-wrap: wrap;
+    gap: 6px;
+    width: 100%;
+  }
+
+  .subject-tab {
+    padding: 8px 16px;
+    font-size: 13px;
+    flex: 1;
+    min-width: 100px;
+  }
+
+  .avg-progress-bar-horizontal {
+    width: 100%;
+    justify-content: space-between;
+    padding: 12px 16px;
+  }
+
+  .avg-label {
+    font-size: 13px;
+  }
+
+  .avg-percent {
+    font-size: 16px;
+  }
+
+  .progress-bar-wrapper {
+    width: 100px;
+  }
+
+  /* 필터 컨테이너 */
+  .filter-container {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 16px;
+  }
+
+  .filter-group {
+    gap: 6px;
+
+    button {
+      padding: 6px 12px;
+      font-size: 12px;
+    }
+  }
+
+  .search-box {
+    width: 100%;
+    max-width: 100%;
+
+    input {
+      font-size: 13px;
+    }
+  }
+
+  /* 뷰 토글 버튼 숨기기 */
+  .view-toggle {
+    display: none !important;
+  }
+
+  /* 테이블 뷰 숨기기, 카드 뷰만 표시 */
+  .table-container {
+    display: none !important;
+  }
+
+  .card-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  /* 학생 카드 */
+  .student-card {
+    padding: 14px;
+
+    .student-header {
+      .student-number {
+        font-size: 11px;
+      }
+
+      .student-name {
+        font-size: 14px;
+      }
+    }
+
+    .student-level {
+      padding: 3px 8px;
+      font-size: 11px;
+    }
+
+    .student-info {
+      gap: 6px;
+
+      .info-label {
+        font-size: 11px;
+      }
+
+      .info-value {
+        font-size: 13px;
+      }
+    }
+
+    .progress-info {
+      gap: 6px;
+
+      .progress-label {
+        font-size: 11px;
+      }
+
+      .progress-percent {
+        font-size: 13px;
+      }
+    }
+  }
+
+  /* SMS 모달 */
+  .modal-overlay {
+    padding: 16px;
+  }
+
+  .sms-modal {
+    max-width: 95%;
+    max-height: 90vh;
+  }
+
+  .sms-header {
+    padding: 16px 20px;
+
+    h3 {
+      font-size: 16px;
+    }
+  }
+
+  .sms-body {
+    padding: 16px 20px;
+  }
+
+  .sms-footer {
+    padding: 16px 20px;
+    gap: 8px;
+
+    button {
+      padding: 8px 16px;
+      font-size: 13px;
+    }
+  }
+
+  /* 테이블 (모바일에서는 숨김 처리) */
+  .table-header,
+  .table-row {
+    font-size: 11px;
+    padding: 10px 6px;
+  }
+
+  .table-row {
+    .student-name-cell {
+      font-size: 12px;
+    }
+  }
+}
+
+/* 태블릿 (768px ~ 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .card-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  .subject-tab {
+    flex: none;
+    min-width: 120px;
+  }
+}
 </style>

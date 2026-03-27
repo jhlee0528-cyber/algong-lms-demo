@@ -2018,4 +2018,273 @@ table {
 .info-tooltip-wrap:hover .info-tooltip {
   display: block;
 }
+
+/* 모바일 반응형 */
+@media (max-width: 767px) {
+  .report-wrap {
+    padding: 16px;
+    padding-bottom: 80px;
+  }
+
+  .report-header {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 16px;
+
+    .headline1 {
+      font-size: 20px;
+    }
+
+    .btn-parent-report {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  /* 좌우 2단 → 상하 1단으로 변경 */
+  .flex.report-layout,
+  .flex-column-gap {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* WrapContent 기본 너비 조정 */
+  .white-wrap {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 20px 16px;
+  }
+
+  /* 제목 크기 조정 */
+  .headline2 {
+    font-size: 16px;
+  }
+
+  .headline3-bold {
+    font-size: 14px;
+  }
+
+  /* 단원별 차트 영역 */
+  .flex.chart-section {
+    flex-direction: column;
+    gap: 16px;
+
+    .item {
+      width: 100%;
+    }
+  }
+
+  .circle {
+    width: 100px;
+    height: 100px;
+
+    p {
+      font-size: 28px;
+    }
+
+    span {
+      font-size: 13px;
+    }
+  }
+
+  /* 학습 영역별 그리드 */
+  .section-grid,
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .section-item {
+    .section-title {
+      font-size: 11px;
+    }
+
+    .section-score {
+      font-size: 16px;
+    }
+
+    .section-status {
+      font-size: 10px;
+    }
+  }
+
+  /* 차트 영역 */
+  canvas {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  /* 포트폴리오 박스 */
+  .portfolio-grid,
+  .flex.portfolio-section {
+    flex-direction: column;
+    gap: 12px;
+
+    .portfolio-box {
+      width: 100%;
+    }
+  }
+
+  /* 학부모 리포트 모달 */
+  .report-modal-overlay {
+    padding: 16px;
+  }
+
+  .report-modal-container {
+    width: 95%;
+    max-width: 95%;
+    max-height: 90vh;
+  }
+
+  .report-modal-header {
+    padding: 16px 20px;
+
+    h3 {
+      font-size: 16px;
+    }
+  }
+
+  .report-modal-body {
+    padding: 20px 16px;
+    max-height: calc(90vh - 140px);
+  }
+
+  .report-page {
+    padding: 20px 16px;
+  }
+
+  .report-section {
+    margin-bottom: 24px;
+
+    .section-title {
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+
+    .section-content {
+      font-size: 12px;
+      line-height: 1.6;
+    }
+  }
+
+  .teacher-comment-box {
+    padding: 16px;
+
+    .comment-title {
+      font-size: 13px;
+    }
+  }
+
+  .teacher-comment-textarea {
+    font-size: 12px;
+    min-height: 100px;
+  }
+
+  .report-modal-footer {
+    padding: 12px 16px;
+    gap: 8px;
+
+    button {
+      padding: 8px 16px;
+      font-size: 13px;
+      flex: 1;
+    }
+  }
+
+  /* 캐릭터 프로필 */
+  .character {
+    width: 120px;
+    height: 120px;
+    margin-top: -20px;
+    margin-left: -15px;
+  }
+
+  .select-student {
+    .selectBox {
+      width: 140px;
+      height: 32px;
+      font-size: 13px;
+      padding: 0 15px;
+    }
+
+    .nickname {
+      font-size: 13px;
+    }
+  }
+
+  .stone-wrap {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .stoneDiv {
+      h6 {
+        font-size: 14px;
+      }
+
+      .listenStone,
+      .readStone,
+      .speakStone,
+      .writeStone,
+      .goldStone {
+        width: 30px;
+        height: 30px;
+      }
+
+      .stoneAllSentence {
+        font-size: 11px;
+      }
+    }
+  }
+
+  .pie-chart {
+    width: 50px;
+    height: 50px;
+
+    span {
+      width: 38px;
+      height: 38px;
+      font-size: 16px;
+    }
+  }
+
+  .progress-wrap {
+    gap: 8px;
+
+    p {
+      font-size: 13px;
+    }
+  }
+}
+
+/* 태블릿 (768px ~ 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .report-wrap {
+    padding: 20px;
+  }
+
+  .flex.report-layout {
+    flex-direction: column;
+  }
+
+  .white-wrap {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .section-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .portfolio-grid {
+    flex-wrap: wrap;
+
+    .portfolio-box {
+      flex: 1;
+      min-width: 200px;
+    }
+  }
+}
 </style>

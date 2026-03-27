@@ -120,3 +120,189 @@ button {
   -ms-user-select: none;
   user-select: none;
 }
+
+/* 모바일 반응형 공통 스타일 */
+@media (max-width: 767px) {
+  html,
+  body {
+    font-size: 14px;
+  }
+
+  /* 카드 공통 패딩 축소 */
+  .card {
+    padding: 16px !important;
+    border-radius: 12px !important;
+  }
+
+  /* 모달 전체 너비 */
+  .modal-container {
+    width: 95% !important;
+    margin: 0 auto;
+  }
+
+  /* 알공 코파일럿 버튼 위치 조정 */
+  .copilot-btn,
+  #copilot-button,
+  .floating-button {
+    bottom: 80px !important;
+    right: 16px !important;
+    width: 50px !important;
+    height: 50px !important;
+  }
+
+  /* 헤드라인 크기 축소 */
+  .headline,
+  .headline1 {
+    font-size: 20px !important;
+  }
+
+  .headline2 {
+    font-size: 16px !important;
+  }
+
+  .headline3,
+  .headline3-bold {
+    font-size: 14px !important;
+  }
+
+  /* 바디 텍스트 */
+  .body1 {
+    font-size: 13px !important;
+  }
+
+  .body2 {
+    font-size: 12px !important;
+  }
+
+  /* 버튼 크기 조정 */
+  button,
+  .btn {
+    font-size: 13px !important;
+    padding: 8px 16px !important;
+  }
+
+  /* WrapContent 컴포넌트 */
+  .white-wrap,
+  .wrap-content {
+    padding: 16px !important;
+    border-radius: 12px !important;
+  }
+
+  /* 인풋 필드 */
+  input,
+  select,
+  textarea {
+    font-size: 14px !important;
+  }
+
+  /* 테이블 스크롤 */
+  .table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* 스크롤바 숨기기 (모바일) */
+  .table-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* 페이지 컨테이너 하단 여백 (하단 네비 공간) */
+  .container,
+  .page-container,
+  .main-container {
+    padding-bottom: 80px !important;
+  }
+
+  /* 그리드 레이아웃 조정 */
+  .grid-3 {
+    grid-template-columns: 1fr !important;
+  }
+
+  .grid-2 {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Flex 레이아웃 간격 조정 */
+  .flex-gap {
+    gap: 12px !important;
+  }
+
+  /* 여백 조정 */
+  .mt-20 {
+    margin-top: 12px !important;
+  }
+
+  .mb-20 {
+    margin-bottom: 12px !important;
+  }
+
+  .p-20 {
+    padding: 12px !important;
+  }
+
+  /* 아이콘 크기 조정 */
+  .icon {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  /* 차트 반응형 */
+  canvas {
+    max-width: 100% !important;
+  }
+
+  /* 드롭다운 */
+  .dropdown,
+  .select-box {
+    font-size: 13px !important;
+  }
+
+  /* 태그/배지 */
+  .tag,
+  .badge {
+    font-size: 11px !important;
+    padding: 4px 8px !important;
+  }
+
+  /* 구분선 */
+  .divider,
+  .border-1 {
+    margin: 16px 0 !important;
+  }
+}
+
+/* 태블릿 반응형 */
+@media (min-width: 768px) and (max-width: 1023px) {
+  html,
+  body {
+    font-size: 16px;
+  }
+
+  .headline,
+  .headline1 {
+    font-size: 24px !important;
+  }
+
+  .headline2 {
+    font-size: 18px !important;
+  }
+
+  /* 그리드 2열로 */
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* 카드 패딩 */
+  .card {
+    padding: 18px !important;
+  }
+}
+
+/* 큰 화면 (1440px 이상) */
+@media (min-width: 1440px) {
+  .container,
+  .page-container {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+}
