@@ -352,6 +352,53 @@
             </tbody>
           </table>
         </div>
+
+        <!-- 모바일 전용 학생 목록 -->
+        <div class="mobile-student-list">
+          <div
+            v-for="(student, i) in filteredInfos"
+            :key="i"
+            class="mobile-student-item"
+          >
+            <!-- 상단: 번호 + 이름 + 레벨 배지 + 발송 버튼 -->
+            <div class="msi-top">
+              <span class="msi-num">{{ String(student.attendanceNumber).padStart(2,'0') }}</span>
+              <span class="msi-name">{{ student.name }}</span>
+              <div
+                class="msi-level"
+                :style="{ borderColor: getLevelColor(student.level) }"
+              >
+                Lv.{{ getLevelNumber(student.level) }}
+              </div>
+              <button
+                class="msi-send"
+                :class="{ active: student.smsActive }"
+                @click="toggleSms(student)"
+              >
+                <svg width="13" height="10" viewBox="0 0 20 16" fill="currentColor">
+                  <path d="M18 0H2C0.9 0 0 0.9 0 2L0 14C0 15.1 0.9 16 2 16H18C19.1 16 20 15.1 20 14V2C20 0.9 19.1 0 18 0ZM18 4L10 9L2 4V2L10 7L18 2V4Z"/>
+                </svg>
+              </button>
+            </div>
+
+            <!-- 하단: 진행률 바 + 정답률 + 학습시간 -->
+            <div class="msi-bottom">
+              <div class="msi-progress-wrap">
+                <span class="msi-progress-num">{{ student.finishedPercent }}%</span>
+                <div class="msi-progress-bar">
+                  <div
+                    :style="{
+                      width: student.finishedPercent + '%',
+                      backgroundColor: getStatusColor(student.finishedPercent)
+                    }"
+                  ></div>
+                </div>
+              </div>
+              <span class="msi-stat">정답 {{ student.correctPercent }}%</span>
+              <span class="msi-stat">{{ parseInt(student.studyTime/60)||student.studyTime }}분</span>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div v-show="!infos.length" class="card loading-skeleton"></div>
@@ -1969,6 +2016,11 @@ const getSubjectTooltip = (levelRange) => {
   }
 }
 
+/* 모바일 학생 목록 */
+.mobile-student-list {
+  display: none;
+}
+
 /* 모바일 반응형 */
 @media (max-width: 767px) {
   .inner {
@@ -2168,11 +2220,15 @@ const getSubjectTooltip = (levelRange) => {
   .filter-container {
     flex-direction: column;
     gap: 8px;
-    padding: 16px;
     align-items: stretch;
   }
 
-  .filter-buttons,
+  .filter-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+
   .filter-group {
     display: flex;
     flex-wrap: nowrap;
@@ -2188,16 +2244,17 @@ const getSubjectTooltip = (levelRange) => {
   }
 
   .filter-btn {
-    flex-shrink: 0;
     white-space: nowrap;
-    padding: 8px 14px;
-    font-size: 13px;
-    min-width: auto;
+    padding: 8px 6px;
+    font-size: 12px;
+    text-align: center;
+    justify-content: center;
   }
 
   .btn-send-all {
     width: 100%;
-    text-align: center;
+    padding: 10px;
+    font-size: 13px;
   }
 
   .search-box {
@@ -2214,62 +2271,120 @@ const getSubjectTooltip = (levelRange) => {
     display: none !important;
   }
 
-  /* 테이블 완전 숨김 */
+  /* 테이블 및 카드 그리드 숨기기 */
   table.table-style,
   .table-container,
-  .table-body-scroll {
+  .table-body-scroll,
+  .card-grid {
     display: none !important;
   }
 
-  /* 카드 그리드 강제 표시 */
-  .card-grid {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
+  /* 모바일 학생 목록 */
+  .mobile-student-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
   }
 
-  /* 학생 카드 */
-  .student-card {
-    padding: 14px;
+  .mobile-student-item {
+    background: white;
+    border-radius: 12px;
+    padding: 12px 14px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
 
-    .student-header {
-      .student-number {
-        font-size: 11px;
-      }
+  .msi-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
 
-      .student-name {
-        font-size: 14px;
-      }
+  .msi-num {
+    font-size: 12px;
+    color: #9a9a9a;
+    min-width: 20px;
+  }
+
+  .msi-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #292929;
+    flex: 1;
+  }
+
+  .msi-level {
+    font-size: 11px;
+    font-weight: 700;
+    color: #292929;
+    padding: 2px 8px;
+    border-radius: 6px;
+    border: 2px solid;
+    background: white;
+  }
+
+  .msi-send {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1.5px solid #e0e0e0;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #9a9a9a;
+    flex-shrink: 0;
+
+    &.active {
+      background: #258aff;
+      border-color: #258aff;
+      color: white;
     }
+  }
 
-    .student-level {
-      padding: 3px 8px;
-      font-size: 11px;
+  .msi-bottom {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .msi-progress-wrap {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .msi-progress-num {
+    font-size: 12px;
+    font-weight: 600;
+    color: #292929;
+    min-width: 32px;
+  }
+
+  .msi-progress-bar {
+    flex: 1;
+    height: 6px;
+    background: #f0f0f0;
+    border-radius: 3px;
+    overflow: hidden;
+
+    div {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.3s;
     }
+  }
 
-    .student-info {
-      gap: 6px;
-
-      .info-label {
-        font-size: 11px;
-      }
-
-      .info-value {
-        font-size: 13px;
-      }
-    }
-
-    .progress-info {
-      gap: 6px;
-
-      .progress-label {
-        font-size: 11px;
-      }
-
-      .progress-percent {
-        font-size: 13px;
-      }
-    }
+  .msi-stat {
+    font-size: 11px;
+    color: #525252;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 
   /* SMS 모달 */

@@ -252,12 +252,12 @@
               <button
                 class="btn-send-icon"
                 :class="{ active: student.smsActive }"
-                @click="toggleSms(student)"
-                style="padding:4px 10px; font-size:12px;"
+                @click.stop="toggleSms(student)"
               >
-                <svg width="16" height="12" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M18 0H2C0.9 0 0.00999999 0.9 0.00999999 2L0 14C0 15.1 0.9 16 2 16H18C19.1 16 20 15.1 20 14V2C20 0.9 19.1 0 18 0ZM18 4L10 9L2 4V2L10 7L18 2V4Z" />
+                <svg width="14" height="11" viewBox="0 0 20 16" fill="currentColor">
+                  <path d="M18 0H2C0.9 0 0 0.9 0 2L0 14C0 15.1 0.9 16 2 16H18C19.1 16 20 15.1 20 14V2C20 0.9 19.1 0 18 0ZM18 4L10 9L2 4V2L10 7L18 2V4Z"/>
                 </svg>
+                발송
               </button>
             </div>
           </div>
@@ -1385,6 +1385,25 @@ const confirmSend = () => {
 
     .student-level {
       font-size: 11px;
+    }
+  }
+
+  .btn-send-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1.5px solid #e0e0e0;
+    background: white;
+    font-size: 12px;
+    color: #525252;
+    cursor: pointer;
+
+    &.active {
+      background: #258aff;
+      border-color: #258aff;
+      color: white;
     }
   }
 
