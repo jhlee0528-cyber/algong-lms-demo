@@ -375,8 +375,8 @@
                 :class="{ active: student.smsActive }"
                 @click="toggleSms(student)"
               >
-                <svg width="13" height="10" viewBox="0 0 20 16" fill="currentColor">
-                  <path d="M18 0H2C0.9 0 0 0.9 0 2L0 14C0 15.1 0.9 16 2 16H18C19.1 16 20 15.1 20 14V2C20 0.9 19.1 0 18 0ZM18 4L10 9L2 4V2L10 7L18 2V4Z"/>
+                <svg width="16" height="13" viewBox="0 0 20 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill="currentColor" d="M18 0H2C0.9 0 0 0.9 0 2L0 14C0 15.1 0.9 16 2 16H18C19.1 16 20 15.1 20 14V2C20 0.9 19.1 0 18 0ZM18 4L10 9L2 4V2L10 7L18 2V4Z"/>
                 </svg>
               </button>
             </div>
@@ -2164,17 +2164,22 @@ const getSubjectTooltip = (levelRange) => {
     display: none;
   }
 
-  /* 과목 선택 카드 */
+  /* 과목 선택 카드 wrapper */
+  .subject-selection-wrap,
+  .subject-card,
   .subject-selection-card {
-    padding: 14px 12px !important;
-    overflow: hidden;
+    overflow: visible !important;
+    padding: 12px !important;
   }
 
   .subject-selection-container {
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-    box-sizing: border-box;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    width: 100% !important;
+    overflow: visible !important;
+    box-sizing: border-box !important;
+    padding: 0 4px !important;
   }
 
   .subject-label {
@@ -2186,22 +2191,24 @@ const getSubjectTooltip = (levelRange) => {
   /* 과목 탭 2줄 그리드 */
   .subject-tabs {
     display: grid !important;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
-    width: 100%;
-    overflow: visible;
-    flex-wrap: unset;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6px !important;
+    width: 100% !important;
+    overflow: visible !important;
+    flex-wrap: unset !important;
   }
 
   .subject-tab {
-    flex-shrink: unset;
-    white-space: nowrap;
-    padding: 8px 4px;
-    font-size: 12px;
-    text-align: center;
-    justify-content: center;
-    width: 100%;
-    box-sizing: border-box;
+    flex-shrink: unset !important;
+    white-space: nowrap !important;
+    padding: 8px 4px !important;
+    font-size: 12px !important;
+    text-align: center !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    min-width: unset !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
   }
 
   /* 평균 진행률 박스 */
@@ -2209,6 +2216,20 @@ const getSubjectTooltip = (levelRange) => {
     width: 100%;
     box-sizing: border-box;
     padding: 10px 12px;
+  }
+
+  /* SVG 아이콘 표시 강제 */
+  .msi-send svg {
+    fill: currentColor !important;
+    display: block;
+  }
+
+  .msi-send {
+    color: #9A9A9A;
+  }
+
+  .msi-send.active {
+    color: white;
   }
 
   .avg-label {

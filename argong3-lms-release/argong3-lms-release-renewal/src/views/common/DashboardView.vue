@@ -261,7 +261,7 @@
                       @click="toggleSms(student)"
                     >
                       <svg width="16" height="13" viewBox="0 0 20 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M18 0H2C0.9 0 0 0.9 0 2L0 14C0 15.1 0.9 16 2 16H18C19.1 16 20 15.1 20 14V2C20 0.9 19.1 0 18 0ZM18 4L10 9L2 4V2L10 7L18 2V4Z"/>
+                        <path fill="currentColor" d="M18 0H2C0.9 0 0 0.9 0 2L0 14C0 15.1 0.9 16 2 16H18C19.1 16 20 15.1 20 14V2C20 0.9 19.1 0 18 0ZM18 4L10 9L2 4V2L10 7L18 2V4Z"/>
                       </svg>
                     </button>
                   </td>
@@ -299,8 +299,8 @@
                 :class="{ active: student.smsActive }"
                 @click.stop="toggleSms(student)"
               >
-                <svg width="14" height="11" viewBox="0 0 20 16" fill="currentColor">
-                  <path d="M18 0H2C0.9 0 0 0.9 0 2L0 14C0 15.1 0.9 16 2 16H18C19.1 16 20 15.1 20 14V2C20 0.9 19.1 0 18 0ZM18 4L10 9L2 4V2L10 7L18 2V4Z"/>
+                <svg width="16" height="13" viewBox="0 0 20 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill="currentColor" d="M18 0H2C0.9 0 0 0.9 0 2L0 14C0 15.1 0.9 16 2 16H18C19.1 16 20 15.1 20 14V2C20 0.9 19.1 0 18 0ZM18 4L10 9L2 4V2L10 7L18 2V4Z"/>
                 </svg>
                 발송
               </button>
@@ -1236,117 +1236,151 @@ const confirmSend = () => {
     overflow: hidden;
   }
 
+  /* 대시보드 전체 */
   .dashboard-container {
-    padding: 8px 12px 70px;
+    padding: 8px 12px 70px !important;
   }
 
   .header-row {
-    margin-bottom: 6px;
-    .headline { font-size: 16px !important; }
-    .total-students { font-size: 11px; }
+    margin-bottom: 6px !important;
   }
 
+  .header-row .headline {
+    font-size: 16px !important;
+  }
+
+  .total-students {
+    font-size: 11px !important;
+  }
+
+  /* 카드 3개 세로 배치 */
   .status-cards {
-    grid-template-columns: 1fr;
-    gap: 6px;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 6px !important;
   }
 
-  /* 카드 전체 패딩 최소화 */
+  /* 카드 패딩 최소화 */
   .status-card {
     padding: 10px 14px !important;
-    gap: 6px !important;
-    border-radius: 12px !important;
+    min-height: unset !important;
+    height: auto !important;
   }
 
-  /* 상단 영역 가로 배치 */
+  /* 카드 내부 상단: 가로 배치 */
   .card-upper {
+    display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
-    gap: 8px;
-    flex-wrap: nowrap !important;
+    gap: 8px !important;
   }
 
+  /* 카드 아이콘 */
+  .status-dot,
   .status-icon {
+    width: 20px !important;
+    height: 20px !important;
     font-size: 20px !important;
-    flex-shrink: 0;
+    flex-shrink: 0 !important;
   }
 
   .card-info {
     flex: 1;
   }
 
+  /* 카드 제목 */
   .card-title {
     font-size: 13px !important;
-    font-weight: 700;
     margin: 0 !important;
+    line-height: 1.2 !important;
   }
 
+  /* 카드 설명 */
   .card-desc {
     font-size: 10px !important;
-    color: #9A9A9A;
     margin: 0 !important;
+    line-height: 1.2 !important;
   }
 
+  /* 학생 수 */
   .card-count {
     font-size: 20px !important;
-    font-weight: 700;
-    margin: 0 !important;
-    margin-left: auto !important;
-    flex-shrink: 0;
+    font-weight: 700 !important;
+    margin: 0 0 0 auto !important;
+    flex-shrink: 0 !important;
   }
 
-  /* 구분선 + 게이지 영역 */
-  .card-gauge-section {
-    padding-top: 6px !important;
-    margin-top: 0 !important;
-    border-top: 1px solid #f0f0f0;
-    gap: 0 !important;
-  }
-
-  /* 원그래프 완전 숨기기 */
+  /* 원그래프/추세 전부 숨기기 */
   .progress-gauge,
   .gauge-circle,
-  .gauge-label,
+  .gauge-wrap,
   .card-trend-section,
+  .trend-section,
   .participation-detail,
-  .trend {
+  .weekly-trend,
+  canvas {
     display: none !important;
   }
 
-  /* 프로그레스바 스타일 최소화 */
+  /* 구분선 아래 게이지 바 영역 */
+  .card-gauge-section {
+    padding-top: 8px !important;
+    margin-top: 0 !important;
+    border-top: 1px solid #f0f0f0 !important;
+  }
+
+  /* 게이지 바 레이블 */
+  .gauge-label {
+    display: none !important;
+  }
+
+  /* 모바일 게이지 바 */
   .mobile-gauge-bar {
     display: block !important;
     padding: 2px 0 !important;
-    margin: 0 !important;
   }
 
   .mobile-gauge-label {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 4px;
-    font-size: 10px;
-    color: #525252;
+    display: flex !important;
+    justify-content: space-between !important;
+    font-size: 10px !important;
+    color: #525252 !important;
+    margin-bottom: 4px !important;
   }
 
   .mobile-gauge-value {
-    font-size: 12px;
-    font-weight: 700;
-    color: #292929;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    color: #292929 !important;
   }
 
   .mobile-gauge-track {
-    width: 100%;
-    height: 6px;
-    background: #f0f0f0;
-    border-radius: 3px;
-    overflow: hidden;
+    width: 100% !important;
+    height: 6px !important;
+    background: #f0f0f0 !important;
+    border-radius: 3px !important;
+    overflow: hidden !important;
   }
 
   .mobile-gauge-fill {
-    height: 100%;
-    border-radius: 3px;
-    background: #3D90EF;
+    height: 100% !important;
+    border-radius: 3px !important;
+    background: #3D90EF !important;
+  }
+
+  /* SVG 아이콘 표시 강제 */
+  .btn-send-icon svg,
+  .msi-send svg {
+    fill: currentColor !important;
+    display: block;
+  }
+
+  .btn-send-icon {
+    color: #9A9A9A;
+  }
+
+  .btn-send-icon.active {
+    color: white;
   }
 
   /* 하단 학생 목록은 스크롤로 확인 */
