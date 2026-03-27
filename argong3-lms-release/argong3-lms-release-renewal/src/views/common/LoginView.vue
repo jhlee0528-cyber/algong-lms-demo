@@ -98,6 +98,11 @@
             >{{ langlist[$store.state.lang]["로그인"] }}</v-btn
           >
 
+          <div class="demo-divider">개발 데모용</div>
+          <button class="btn-auto-login" @click="autoLogin">
+            🔓 데모 자동 로그인
+          </button>
+
           <div>
             <div
               @click="whalelogin()"
@@ -521,6 +526,14 @@ export default {
       }
       const data = { id: this.id, password: this.pw, check: this.autocheck };
       this.$store.dispatch("LOGIN", data);
+    },
+    autoLogin() {
+      this.id = "lmsdapm05";
+      this.pw = "000000";
+
+      setTimeout(() => {
+        this.login();
+      }, 300);
     },
     whalelogin() {
       this.whaleloginflag = true;
@@ -951,5 +964,43 @@ input[type="checkbox"] {
 
 .codedone {
   filter: brightness(0.8);
+}
+
+.demo-divider {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 20px 0 12px;
+  color: #9a9a9a;
+  font-size: 12px;
+  font-family: notosansregular;
+}
+
+.demo-divider::before,
+.demo-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #e0e0e0;
+}
+
+.btn-auto-login {
+  width: 400px;
+  padding: 12px;
+  border-radius: 10px;
+  border: 2px dashed #3d90ef;
+  background: #f0f7ff;
+  color: #3d90ef;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: notosans;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-auto-login:hover {
+  background: #3d90ef;
+  color: white;
+  border-style: solid;
 }
 </style>
