@@ -83,6 +83,25 @@
             </div>
           </div>
 
+          <!-- 모바일 전용 심플 커리큘럼 -->
+          <div class="curriculum-simple-mobile">
+            <div
+              v-for="(group, index) in levelGroups"
+              :key="index"
+              class="simple-step"
+              :style="{ '--step-color': group.color }"
+            >
+              <!-- CEFR 원형 배지 -->
+              <div class="simple-badge" :style="{ backgroundColor: group.color }">
+                {{ group.cefr }}
+              </div>
+              <!-- 연결선 -->
+              <div class="simple-line" :style="{ backgroundColor: group.color }"></div>
+              <!-- 레벨 텍스트 -->
+              <div class="simple-label">{{ group.range }}</div>
+            </div>
+          </div>
+
           <!-- 우측: 학생 레벨 분포 -->
           <div class="level-distribution">
             <div class="distribution-header">
@@ -1933,6 +1952,11 @@ const getSubjectTooltip = (levelRange) => {
   color: var(--main-blue);
 }
 
+/* 모바일 전용 심플 커리큘럼 */
+.curriculum-simple-mobile {
+  display: none;
+}
+
 /* 모바일 반응형 */
 @media (max-width: 767px) {
   .inner {
@@ -1952,43 +1976,111 @@ const getSubjectTooltip = (levelRange) => {
 
   /* 타임라인 차트 숨기기 */
   .curriculum-timeline {
-    display: none;
+    display: none !important;
   }
 
   .timeline-container {
     display: none;
   }
 
+  /* 모바일 심플 커리큘럼 표시 */
+  .curriculum-simple-mobile {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 0;
+    padding: 16px 8px 8px;
+    height: 140px;
+    position: relative;
+  }
+
+  .simple-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    flex: 1;
+    position: relative;
+  }
+
+  /* CEFR 원형 배지 */
+  .simple-badge {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 4px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    flex-shrink: 0;
+  }
+
+  /* 계단형 선 - 각 스텝별로 높이가 다름 */
+  .simple-step:nth-child(1) .simple-line {
+    height: 20px;
+  }
+  .simple-step:nth-child(2) .simple-line {
+    height: 36px;
+  }
+  .simple-step:nth-child(3) .simple-line {
+    height: 52px;
+  }
+  .simple-step:nth-child(4) .simple-line {
+    height: 68px;
+  }
+  .simple-step:nth-child(5) .simple-line {
+    height: 84px;
+  }
+  .simple-step:nth-child(6) .simple-line {
+    height: 100px;
+  }
+
+  .simple-line {
+    width: 100%;
+    border-radius: 4px 4px 0 0;
+  }
+
+  /* 레벨 텍스트 */
+  .simple-label {
+    font-size: 9px;
+    font-weight: 700;
+    color: #525252;
+    margin-top: 4px;
+    text-align: center;
+    white-space: nowrap;
+  }
+
   /* 레벨 분포만 표시, 전체 너비로 확장 */
   .level-distribution {
     width: 100%;
-    margin-top: 0;
+    margin-top: 12px;
   }
 
   .distribution-grid {
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    gap: 8px;
   }
 
   .distribution-item {
-    padding: 12px;
+    padding: 10px 8px;
     text-align: center;
   }
 
   .distribution-level {
-    font-size: 12px;
+    font-size: 11px;
   }
 
   .distribution-count {
-    font-size: 18px;
+    font-size: 16px;
   }
 
-  /* 커리큘럼 카드 타이틀 옆에 안내 추가 */
+  /* 커리큘럼 타이틀 안내 문구 제거 */
   .distribution-title::after {
-    content: ' (전체 커리큘럼은 PC에서 확인하세요)';
-    font-size: 11px;
-    color: #9a9a9a;
-    font-weight: 400;
+    display: none;
   }
 
   /* 과목 선택 바 */
