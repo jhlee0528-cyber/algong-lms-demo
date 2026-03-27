@@ -1322,10 +1322,16 @@ const confirmSend = () => {
   .weekly-trend,
   canvas {
     display: none !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
   }
 
   /* 구분선 아래 게이지 바 영역 */
   .card-gauge-section {
+    height: auto !important;
+    min-height: unset !important;
     padding-top: 8px !important;
     margin-top: 0 !important;
     border-top: 1px solid #f0f0f0 !important;
@@ -1339,7 +1345,9 @@ const confirmSend = () => {
   /* 모바일 게이지 바 */
   .mobile-gauge-bar {
     display: block !important;
-    padding: 2px 0 !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 4px 0 !important;
   }
 
   .mobile-gauge-label {
@@ -1387,7 +1395,7 @@ const confirmSend = () => {
 
   /* 하단 학생 목록은 스크롤로 확인 */
   .students-section {
-    margin-top: 12px;
+    margin-top: 8px !important;
 
     .section-header {
       flex-direction: column;
@@ -1419,13 +1427,14 @@ const confirmSend = () => {
   .students-mobile-list {
     display: flex !important;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px !important;
   }
 
   .student-mobile-card {
     background: white;
     border-radius: 10px;
-    padding: 14px 16px;
+    padding: 12px 14px !important;
+    margin: 0 !important;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
   }
 

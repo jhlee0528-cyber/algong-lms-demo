@@ -266,27 +266,49 @@ header {
   margin-left: auto;
 }
 
-/* 모바일 코파일럿 버튼 */
-.mobile-copilot-btn {
-  display: none;
-}
-
+/* 모바일 헤더 레이아웃 */
 @media (max-width: 767px) {
-  .mobile-copilot-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: #258AFF;
-    cursor: pointer;
-    flex-shrink: 0;
-    box-shadow: 0 2px 8px rgba(37,138,255,0.4);
+  .wrap-menu {
+    flex-wrap: nowrap !important;
+    gap: 4px !important;
+    padding: 8px 12px !important;
+    align-items: center !important;
   }
 
-  /* 기존 플로팅 버튼은 모바일에서 숨기기 */
-  .floating-button {
-    display: none !important;
+  /* 알공 교습소 텍스트 */
+  .setting-wrap p.body1 {
+    white-space: nowrap !important;
+    font-size: 11px !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* 설정/도움말 아이콘 */
+  .setting-wrap {
+    gap: 4px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .setting,
+  .question {
+    width: 28px !important;
+    height: 28px !important;
+    background-size: contain !important;
+  }
+
+  /* 로그아웃 */
+  .logout {
+    width: 28px !important;
+    height: 28px !important;
+    background-size: contain !important;
+  }
+
+  /* 드롭다운 */
+  .wrap_dropdown {
+    max-width: 120px !important;
+  }
+
+  .dropdown {
+    font-size: 11px !important;
+    padding: 4px 8px !important;
   }
 }

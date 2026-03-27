@@ -57,25 +57,19 @@ export default {
     };
   },
   mounted() {
-    const pos = this.getPositionFromLocalStorage();
     const isMobile = window.innerWidth <= 767;
 
-    if (pos) {
-      this.top = pos.top;
-      this.left = pos.left;
-
-      // 모바일에서 하단 네비 위로 조정
-      if (isMobile && this.top > window.innerHeight - 140) {
-        this.top = window.innerHeight - 140;
-      }
+    if (isMobile) {
+      // 모바일: CSS fixed로 처리하므로 JS 위치 계산 비활성화
+      this.top = 14;
+      this.left = window.innerWidth - 126; // right: 90px 위치
     } else {
-      // 기본 위치
-      if (isMobile) {
-        // 모바일: 우측 하단 (하단 네비 위)
-        this.top = window.innerHeight - 140;
-        this.left = window.innerWidth - 72;
+      // PC: 기존 로직
+      const pos = this.getPositionFromLocalStorage();
+      if (pos) {
+        this.top = pos.top;
+        this.left = pos.left;
       } else {
-        // PC: 우측 상단
         this.top = 100;
         this.left = window.innerWidth - 92;
       }
@@ -94,6 +88,7 @@ export default {
   },
   methods: {
     startDrag(event) {
+      if (window.innerWidth <= 767) return; // 모바일에서는 드래그 비활성화
       this.dragging = true;
       this.startX = event.clientX - this.left;
       this.startY = event.clientY - this.top;
@@ -215,13 +210,19 @@ export default {
 /* 모바일 반응형 */
 @media (max-width: 767px) {
   .floating-button {
-    width: 48px;
-    height: 48px;
+    display: flex !important;
+    position: fixed !important;
+    top: 14px !important;
+    right: 90px !important;
+    width: 36px !important;
+    height: 36px !important;
+    z-index: 1100 !important;
+    box-shadow: 0 2px 8px rgba(37,138,255,0.4) !important;
   }
 
   .floating-button svg {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
   }
 
   /* 모바일에서 툴팁 숨김 */
