@@ -2177,25 +2177,21 @@ const getSubjectTooltip = (levelRange) => {
   }
 
   .subject-tabs {
-    display: flex;
-    flex-wrap: nowrap !important;
-    overflow-x: auto;
-    gap: 8px;
-    padding-bottom: 4px;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    overflow-x: visible;
+    flex-wrap: unset;
   }
 
   .subject-tab {
-    flex-shrink: 0;
-    padding: 8px 16px;
-    font-size: 13px;
+    flex-shrink: unset;
     white-space: nowrap;
-    min-width: auto;
+    padding: 8px 4px;
+    font-size: 12px;
+    text-align: center;
+    justify-content: center;
+    width: 100%;
   }
 
   .avg-progress-bar-horizontal {
