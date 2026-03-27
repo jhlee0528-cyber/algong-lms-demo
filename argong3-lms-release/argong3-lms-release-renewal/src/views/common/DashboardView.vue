@@ -260,8 +260,8 @@
                       :class="{ active: student.smsActive }"
                       @click="toggleSms(student)"
                     >
-                      <svg width="20" height="16" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M18 0H2C0.9 0 0.00999999 0.9 0.00999999 2L0 14C0 15.1 0.9 16 2 16H18C19.1 16 20 15.1 20 14V2C20 0.9 19.1 0 18 0ZM18 4L10 9L2 4V2L10 7L18 2V4Z" />
+                      <svg width="16" height="13" viewBox="0 0 20 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 0H2C0.9 0 0 0.9 0 2L0 14C0 15.1 0.9 16 2 16H18C19.1 16 20 15.1 20 14V2C20 0.9 19.1 0 18 0ZM18 4L10 9L2 4V2L10 7L18 2V4Z"/>
                       </svg>
                     </button>
                   </td>
@@ -1237,44 +1237,37 @@ const confirmSend = () => {
   }
 
   .dashboard-container {
-    padding: 12px 16px 80px;
+    padding: 8px 12px 70px;
   }
 
   .header-row {
-    flex-direction: column;
-    gap: 12px;
-    align-items: flex-start;
-    margin-bottom: 10px;
-
-    .headline {
-      font-size: 18px !important;
-    }
-
-    .total-students {
-      font-size: 12px;
-    }
+    margin-bottom: 6px;
+    .headline { font-size: 16px !important; }
+    .total-students { font-size: 11px; }
   }
 
-  /* 3개 카드 간격 */
   .status-cards {
     grid-template-columns: 1fr;
-    gap: 8px;
+    gap: 6px;
   }
 
+  /* 카드 전체 패딩 최소화 */
   .status-card {
-    padding: 14px 16px;
-    gap: 8px;
+    padding: 10px 14px !important;
+    gap: 6px !important;
+    border-radius: 12px !important;
   }
 
+  /* 상단 영역 가로 배치 */
   .card-upper {
     flex-direction: row !important;
-    align-items: center;
+    align-items: center !important;
     gap: 8px;
-    flex-wrap: nowrap;
+    flex-wrap: nowrap !important;
   }
 
   .status-icon {
-    font-size: 22px;
+    font-size: 20px !important;
     flex-shrink: 0;
   }
 
@@ -1283,80 +1276,77 @@ const confirmSend = () => {
   }
 
   .card-title {
-    font-size: 14px;
+    font-size: 13px !important;
     font-weight: 700;
-    margin: 0;
+    margin: 0 !important;
   }
 
   .card-desc {
-    font-size: 10px;
-    color: #9a9a9a;
-    margin: 0;
+    font-size: 10px !important;
+    color: #9A9A9A;
+    margin: 0 !important;
   }
 
   .card-count {
-    font-size: 22px;
+    font-size: 20px !important;
     font-weight: 700;
-    margin-left: auto;
+    margin: 0 !important;
+    margin-left: auto !important;
     flex-shrink: 0;
   }
 
-  /* 원그래프 관련 요소 숨기기 */
+  /* 구분선 + 게이지 영역 */
+  .card-gauge-section {
+    padding-top: 6px !important;
+    margin-top: 0 !important;
+    border-top: 1px solid #f0f0f0;
+    gap: 0 !important;
+  }
+
+  /* 원그래프 완전 숨기기 */
   .progress-gauge,
   .gauge-circle,
+  .gauge-label,
   .card-trend-section,
-  .participation-detail {
+  .participation-detail,
+  .trend {
     display: none !important;
   }
 
-  /* gauge-label (기존 텍스트) 숨기기 */
-  .gauge-label {
-    display: none !important;
-  }
-
-  /* 모바일 게이지 바 표시 */
+  /* 프로그레스바 스타일 최소화 */
   .mobile-gauge-bar {
-    display: block;
-    width: 100%;
-    padding: 4px 0;
+    display: block !important;
+    padding: 2px 0 !important;
+    margin: 0 !important;
   }
 
   .mobile-gauge-label {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 5px;
-    font-size: 11px;
+    margin-bottom: 4px;
+    font-size: 10px;
     color: #525252;
   }
 
   .mobile-gauge-value {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
     color: #292929;
   }
 
   .mobile-gauge-track {
     width: 100%;
-    height: 8px;
+    height: 6px;
     background: #f0f0f0;
-    border-radius: 4px;
+    border-radius: 3px;
     overflow: hidden;
   }
 
   .mobile-gauge-fill {
     height: 100%;
-    border-radius: 4px;
-    background: #3d90ef;
-    transition: width 0.3s ease;
-  }
-
-  /* 카드 전체 레이아웃 축소 */
-  .card-gauge-section {
-    padding-top: 8px;
-    margin-top: 0;
-    border-top: 1px solid #f0f0f0;
-    gap: 0;
+    border-radius: 3px;
+    background: #3D90EF;
   }
 
   /* 하단 학생 목록은 스크롤로 확인 */
