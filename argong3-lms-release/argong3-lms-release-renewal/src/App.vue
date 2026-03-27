@@ -232,20 +232,21 @@ export default {
 .appdiv {
   width: 100%;
   background: #f5f5f5;
+  box-sizing: border-box;
 }
 
 /* PC 화면 (브라우저 너비가 1400px 이상일 때) */
 @media screen and (min-width: 1400px) {
   .appdiv {
-    min-width: 1400px;
+    max-width: 100%;
   }
 }
 
 /* 모바일/태블릿 화면 (브라우저 너비가 1399px 이하일 때) */
 @media screen and (max-width: 1399px) {
   .appdiv {
-    /* 모바일에서 화면이 축소되지 않도록 너비를 자동으로 조절 */
-    min-width: 100%;
+    width: 100%;
+    max-width: 100%;
   }
 }
 </style>

@@ -1018,11 +1018,14 @@ const getSubjectTooltip = (levelRange) => {
   padding: 100px 0;
 }
 .inner {
-  width: 1280px;
+  width: 100%;
+  max-width: 1280px;
   margin: 0 auto;
+  padding: 0 20px;
   display: flex;
   flex-direction: column;
   gap: 30px;
+  box-sizing: border-box;
 }
 .card {
   width: 100%;
@@ -1111,12 +1114,13 @@ const getSubjectTooltip = (levelRange) => {
 }
 
 .table-style {
-  width: 1215px;
+  width: 100%;
   border-spacing: 0;
   border-radius: 16px;
   box-shadow: 0 0 0 1px var(--chart-blue-bg);
   overflow: hidden;
   text-align: center;
+  table-layout: auto;
 
   thead {
     background-color: var(--main-lightblue);
@@ -1143,6 +1147,12 @@ const getSubjectTooltip = (levelRange) => {
   tr:last-child td {
     border-bottom: none;
   }
+}
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .updown {
