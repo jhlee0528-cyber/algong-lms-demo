@@ -1954,7 +1954,19 @@ const getSubjectTooltip = (levelRange) => {
 
 /* 모바일 전용 심플 커리큘럼 */
 .curriculum-simple-mobile {
-  display: none;
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  padding: 40px 0 0 0;
+  height: 160px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .curriculum-simple-mobile {
+    display: none;
+  }
 }
 
 /* 모바일 반응형 */
@@ -1986,27 +1998,50 @@ const getSubjectTooltip = (levelRange) => {
   /* 모바일 심플 커리큘럼 표시 */
   .curriculum-simple-mobile {
     display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    gap: 0;
-    padding: 16px 8px 8px;
-    height: 140px;
-    position: relative;
   }
 
   .simple-step {
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
-    flex: 1;
     position: relative;
+    height: 100%;
   }
 
-  /* CEFR 원형 배지 */
+  /* 핵심: 선처럼 보이게 - 두께 얇게, 너비 100% */
+  .simple-step:nth-child(1) .simple-line {
+    height: 18px;
+  }
+  .simple-step:nth-child(2) .simple-line {
+    height: 36px;
+  }
+  .simple-step:nth-child(3) .simple-line {
+    height: 54px;
+  }
+  .simple-step:nth-child(4) .simple-line {
+    height: 72px;
+  }
+  .simple-step:nth-child(5) .simple-line {
+    height: 90px;
+  }
+  .simple-step:nth-child(6) .simple-line {
+    height: 108px;
+  }
+
+  .simple-line {
+    width: 100%;
+    border-radius: 3px 3px 0 0;
+    box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.4),
+                inset 1px 0 0 rgba(255, 255, 255, 0.4);
+  }
+
+  /* CEFR 원 - 선 바로 위에 위치 */
   .simple-badge {
-    width: 32px;
-    height: 32px;
+    position: absolute;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -2014,37 +2049,30 @@ const getSubjectTooltip = (levelRange) => {
     font-size: 8px;
     font-weight: 700;
     color: white;
-    margin-bottom: 4px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-    flex-shrink: 0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    z-index: 2;
   }
 
-  /* 계단형 선 - 각 스텝별로 높이가 다름 */
-  .simple-step:nth-child(1) .simple-line {
-    height: 20px;
+  .simple-step:nth-child(1) .simple-badge {
+    bottom: 18px;
   }
-  .simple-step:nth-child(2) .simple-line {
-    height: 36px;
+  .simple-step:nth-child(2) .simple-badge {
+    bottom: 36px;
   }
-  .simple-step:nth-child(3) .simple-line {
-    height: 52px;
+  .simple-step:nth-child(3) .simple-badge {
+    bottom: 54px;
   }
-  .simple-step:nth-child(4) .simple-line {
-    height: 68px;
+  .simple-step:nth-child(4) .simple-badge {
+    bottom: 72px;
   }
-  .simple-step:nth-child(5) .simple-line {
-    height: 84px;
+  .simple-step:nth-child(5) .simple-badge {
+    bottom: 90px;
   }
-  .simple-step:nth-child(6) .simple-line {
-    height: 100px;
-  }
-
-  .simple-line {
-    width: 100%;
-    border-radius: 4px 4px 0 0;
+  .simple-step:nth-child(6) .simple-badge {
+    bottom: 108px;
   }
 
-  /* 레벨 텍스트 */
+  /* 레벨 텍스트 - 선 아래 */
   .simple-label {
     font-size: 9px;
     font-weight: 700;
@@ -2052,6 +2080,7 @@ const getSubjectTooltip = (levelRange) => {
     margin-top: 4px;
     text-align: center;
     white-space: nowrap;
+    letter-spacing: -0.3px;
   }
 
   /* 레벨 분포만 표시, 전체 너비로 확장 */
