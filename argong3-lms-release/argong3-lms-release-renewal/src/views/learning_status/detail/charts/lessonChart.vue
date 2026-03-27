@@ -42,7 +42,7 @@ export default {
         labels: this.chartData.lessons,
         datasets: [
           {
-            label: "반 평균",
+            label: "전국 평균",
             data: this.chartData.classValue,
             backgroundColor: "#CAE3FF",
             borderColor: "#CAE3FF",

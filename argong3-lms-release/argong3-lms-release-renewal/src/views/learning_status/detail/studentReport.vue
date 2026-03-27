@@ -80,7 +80,15 @@
 
     <!-- 단원별 -->
     <WrapContent>
-      <h6 class="headline2">단원별</h6>
+      <h6 class="headline2">
+        단원별
+        <span class="info-tooltip-wrap">
+          <span class="info-icon">ⓘ</span>
+          <div class="info-tooltip">
+            전국 알공 교습소 동일 레벨<br>학생들의 평균입니다.
+          </div>
+        </span>
+      </h6>
       <div class="flex">
         <div class="item">
           <p class="headline3-bold">평균 점수</p>
@@ -1961,5 +1969,53 @@ table {
     font-size: 13px;
     padding: 16px;
   }
+}
+
+/* 툴팁 스타일 */
+.info-tooltip-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.info-icon {
+  font-size: 13px;
+  color: #9A9A9A;
+  cursor: pointer;
+  font-style: normal;
+}
+
+.info-tooltip {
+  display: none;
+  position: absolute;
+  bottom: 130%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: white;
+  font-size: 11px;
+  line-height: 1.6;
+  padding: 8px 12px;
+  border-radius: 8px;
+  white-space: nowrap;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  font-weight: 400;
+}
+
+.info-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: #333;
+}
+
+.info-tooltip-wrap:hover .info-tooltip {
+  display: block;
 }
 </style>
