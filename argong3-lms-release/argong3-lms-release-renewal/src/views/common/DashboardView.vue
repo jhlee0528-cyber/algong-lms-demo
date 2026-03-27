@@ -22,6 +22,21 @@
 
           <div class="card-gauge-section">
             <p class="gauge-label">평균 학습진행률</p>
+
+            <!-- 모바일 전용 프로그레스바 -->
+            <div class="mobile-gauge-bar">
+              <div class="mobile-gauge-label">
+                <span>평균 학습진행률</span>
+                <span class="mobile-gauge-value">{{ dummyData.avgProgress }}%</span>
+              </div>
+              <div class="mobile-gauge-track">
+                <div
+                  class="mobile-gauge-fill"
+                  :style="{ width: dummyData.avgProgress + '%' }"
+                ></div>
+              </div>
+            </div>
+
             <div class="progress-gauge">
               <div
                 class="gauge-circle"
@@ -77,6 +92,21 @@
 
           <div class="card-gauge-section">
             <p class="gauge-label">이번 주 학습 참여율</p>
+
+            <!-- 모바일 전용 프로그레스바 -->
+            <div class="mobile-gauge-bar">
+              <div class="mobile-gauge-label">
+                <span>이번 주 참여율</span>
+                <span class="mobile-gauge-value">{{ dummyData.weeklyParticipation }}%</span>
+              </div>
+              <div class="mobile-gauge-track">
+                <div
+                  class="mobile-gauge-fill"
+                  :style="{ width: dummyData.weeklyParticipation + '%' }"
+                ></div>
+              </div>
+            </div>
+
             <div class="progress-gauge">
               <div
                 class="gauge-circle"
@@ -132,6 +162,21 @@
 
           <div class="card-gauge-section">
             <p class="gauge-label">평균 정답률</p>
+
+            <!-- 모바일 전용 프로그레스바 -->
+            <div class="mobile-gauge-bar">
+              <div class="mobile-gauge-label">
+                <span>평균 정답률</span>
+                <span class="mobile-gauge-value">{{ dummyData.avgCorrectRate }}%</span>
+              </div>
+              <div class="mobile-gauge-track">
+                <div
+                  class="mobile-gauge-fill"
+                  :style="{ width: dummyData.avgCorrectRate + '%' }"
+                ></div>
+              </div>
+            </div>
+
             <div class="progress-gauge">
               <div
                 class="gauge-circle"
@@ -703,6 +748,11 @@ const confirmSend = () => {
   font-family: notosans;
 }
 
+/* 모바일 게이지 바 기본 숨김 */
+.mobile-gauge-bar {
+  display: none;
+}
+
 /* 추세 섹션 */
 .card-trend-section {
   display: flex;
@@ -1187,17 +1237,14 @@ const confirmSend = () => {
   }
 
   .dashboard-container {
-    padding: 12px 16px;
-    padding-bottom: 70px;
-    height: calc(100vh - 70px);
-    overflow-y: auto;
+    padding: 12px 16px 80px;
   }
 
   .header-row {
     flex-direction: column;
     gap: 12px;
     align-items: flex-start;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 
     .headline {
       font-size: 18px !important;
@@ -1208,28 +1255,26 @@ const confirmSend = () => {
     }
   }
 
-  /* 3개 카드 한 화면에 */
+  /* 3개 카드 간격 */
   .status-cards {
     grid-template-columns: 1fr;
     gap: 8px;
   }
 
   .status-card {
-    padding: 12px 16px;
+    padding: 14px 16px;
     gap: 8px;
   }
 
-  /* 카드 상단 영역 가로 배치로 변경 */
   .card-upper {
     flex-direction: row !important;
     align-items: center;
-    flex-wrap: wrap;
     gap: 8px;
+    flex-wrap: nowrap;
   }
 
-  /* 신호등 원 크기 축소 */
   .status-icon {
-    font-size: 24px;
+    font-size: 22px;
     flex-shrink: 0;
   }
 
@@ -1239,63 +1284,79 @@ const confirmSend = () => {
 
   .card-title {
     font-size: 14px;
+    font-weight: 700;
     margin: 0;
   }
 
   .card-desc {
-    font-size: 11px;
+    font-size: 10px;
+    color: #9a9a9a;
     margin: 0;
   }
 
   .card-count {
+    font-size: 22px;
+    font-weight: 700;
     margin-left: auto;
-    font-size: 24px;
-    margin: 0;
+    flex-shrink: 0;
   }
 
-  /* 구분선 */
+  /* 원그래프 관련 요소 숨기기 */
+  .progress-gauge,
+  .gauge-circle,
+  .card-trend-section,
+  .participation-detail {
+    display: none !important;
+  }
+
+  /* gauge-label (기존 텍스트) 숨기기 */
+  .gauge-label {
+    display: none !important;
+  }
+
+  /* 모바일 게이지 바 표시 */
+  .mobile-gauge-bar {
+    display: block;
+    width: 100%;
+    padding: 4px 0;
+  }
+
+  .mobile-gauge-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+    font-size: 11px;
+    color: #525252;
+  }
+
+  .mobile-gauge-value {
+    font-size: 13px;
+    font-weight: 700;
+    color: #292929;
+  }
+
+  .mobile-gauge-track {
+    width: 100%;
+    height: 8px;
+    background: #f0f0f0;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .mobile-gauge-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: #3d90ef;
+    transition: width 0.3s ease;
+  }
+
+  /* 카드 전체 레이아웃 축소 */
   .card-gauge-section {
     padding-top: 8px;
-    margin-top: 4px;
-    gap: 6px;
-  }
-
-  .gauge-label {
-    font-size: 11px;
-  }
-
-  /* 원그래프 크기 대폭 축소 */
-  .gauge-circle {
-    width: 64px !important;
-    height: 64px !important;
-  }
-
-  .gauge-center {
-    width: 48px !important;
-    height: 48px !important;
-    font-size: 13px !important;
-  }
-
-  /* 추세 바 축소 */
-  .card-trend-section {
-    gap: 4px;
-  }
-
-  .trend-label-text {
-    font-size: 11px;
-  }
-
-  .trend-bars {
-    height: 40px !important;
-    gap: 3px !important;
-  }
-
-  .trend {
-    font-size: 11px;
-  }
-
-  .trend-label {
-    font-size: 11px;
+    margin-top: 0;
+    border-top: 1px solid #f0f0f0;
+    gap: 0;
   }
 
   /* 하단 학생 목록은 스크롤로 확인 */
