@@ -1,0 +1,242 @@
+[
+  {
+    "unit":1,
+    "unitName":"It Is an Apple",
+    "category":"Single Sounds: A, B, C"
+  },
+  {
+    "unit":2,
+    "unitName":"It Is a Dog",
+    "category":"Single Sounds: D, E, F"
+  },
+  {
+    "unit":3,
+    "unitName":"This Is a Hat",
+    "category":"Single Sounds: G, H, I"
+  },
+  {
+    "unit":4,
+    "unitName":"This Is a Jet",
+    "category":"Single Sounds: J, K, L"
+  },
+  {
+    "unit":5,
+    "unitName":"I See a Mouse",
+    "category":"Single Sounds: M, N, O"
+  },
+  {
+    "unit":6,
+    "unitName":"I See a Panda",
+    "category":"Single Sounds: P, Q, R"
+  },
+  {
+    "unit":7,
+    "unitName":"Look at the Sun",
+    "category":"Single Sounds: S, T, U, V"
+  },
+  {
+    "unit":8,
+    "unitName":"Look at the Watch",
+    "category":"Single Sounds: W, X, Y, Z"
+  },
+  {
+    "unit":9,
+    "unitName":"Where Is the Cap?",
+    "category":"Short Vowel 'a': -am, -ap"
+  },
+  {
+    "unit":10,
+    "unitName":"Where Is the Man?",
+    "category":"Short Vowel 'a': -an, -at"
+  },
+  {
+    "unit":11,
+    "unitName":"The Jet Is Here",
+    "category":"Short Vowel 'e': -et, -ed, -en"
+  },
+  {
+    "unit":12,
+    "unitName":"I Have a Wig",
+    "category":"Short Vowel 'i': -ib, -id, -ig, -in"
+  },
+  {
+    "unit":13,
+    "unitName":"I Can Hit the Ball",
+    "category":"Short Vowel 'i': -ip, -it, -ix"
+  },
+  {
+    "unit":14,
+    "unitName":"A Fox Is in the Box",
+    "category":"Short Vowel 'o': -ot, -ox, -op, -og"
+  },
+  {
+    "unit":15,
+    "unitName":"There Is a Bug",
+    "category":"Short Vowel 'u': -ug, -ub, -up"
+  },
+  {
+    "unit":16,
+    "unitName":"I Can Run Fast",
+    "category":"Short Vowel 'u': -un, -ud, -ut"
+  },
+  {
+    "unit":17,
+    "unitName":"I Like to Bake a Cake",
+    "category":"Long Vowel 'a': a_e (magic e)"
+  },
+  {
+    "unit":18,
+    "unitName":"What Is Your Name?",
+    "category":"Long Vowel 'a': a_e Practice"
+  },
+  {
+    "unit":19,
+    "unitName":"Let's Hike",
+    "category":"Long Vowel 'i': i_e (magic e)"
+  },
+  {
+    "unit":20,
+    "unitName":"Let's Fly a Kite",
+    "category":"Long Vowel 'i': i_e Practice"
+  },
+  {
+    "unit":21,
+    "unitName":"Look at My Nose",
+    "category":"Long Vowel 'o': o_e (magic e)"
+  },
+  {
+    "unit":22,
+    "unitName":"Look at the Hole",
+    "category":"Long Vowel 'o': o_e Practice"
+  },
+  {
+    "unit":23,
+    "unitName":"Listen to the Tune",
+    "category":"Long Vowel 'u': u_e (magic e)"
+  },
+  {
+    "unit":24,
+    "unitName":"I Like June",
+    "category":"Long Vowel Review"
+  },
+  {
+    "unit":25,
+    "unitName":"What Color Is the Flag?",
+    "category":"Double Letter Consonants (1): bl, cl, fl"
+  },
+  {
+    "unit":26,
+    "unitName":"I See a Crab",
+    "category":"Double Letter Consonants (2): br, cr, fr"
+  },
+  {
+    "unit":27,
+    "unitName":"I Love My Glass",
+    "category":"Double Letter Consonants (3): gl, pl, sl"
+  },
+  {
+    "unit":28,
+    "unitName":"Where Is the Dress?",
+    "category":"Double Letter Consonants (4): dr, pr, tr"
+  },
+  {
+    "unit":29,
+    "unitName":"Can You Swim?",
+    "category":"Double Letter Consonants (5): sm, sn, st, sw"
+  },
+  {
+    "unit":30,
+    "unitName":"I Hear a Bang",
+    "category":"Double Letter Consonants (6): ng, nk"
+  },
+  {
+    "unit":31,
+    "unitName":"Look at the Ship",
+    "category":"Double Letter Consonants (7): sh, ch"
+  },
+  {
+    "unit":32,
+    "unitName":"This Is My Thumb",
+    "category":"Double Letter Consonants (8): th, wh"
+  },
+  {
+    "unit":33,
+    "unitName":"I Like the Bee",
+    "category":"Double Letter Vowels (1): ee, ea"
+  },
+  {
+    "unit":34,
+    "unitName":"Let's Do It",
+    "category":"Double Letter Vowels (2): oa, ow"
+  },
+  {
+    "unit":35,
+    "unitName":"It Rains Every Day",
+    "category":"Double Letter Vowels (3): ai, ay"
+  },
+  {
+    "unit":36,
+    "unitName":"I Feel Joy",
+    "category":"Double Letter Vowels (4): oi, oy"
+  },
+  {
+    "unit":37,
+    "unitName":"I See a Cow",
+    "category":"Double Letter Vowels (5): ow, ou"
+  },
+  {
+    "unit":38,
+    "unitName":"Look at the Girl",
+    "category":"Double Letter Vowels (6): ir, er, ur"
+  },
+  {
+    "unit":39,
+    "unitName":"I Love My Car",
+    "category":"Double Letter Vowels (7): ar, or"
+  },
+  {
+    "unit":40,
+    "unitName":"Look at the Moon",
+    "category":"Double Letter Vowels (8): oo"
+  },
+  {
+    "unit":41,
+    "unitName":"I Draw the Man",
+    "category":"Review: Short Vowels a / e"
+  },
+  {
+    "unit":42,
+    "unitName":"I Pick the Pot",
+    "category":"Review: Short Vowels i / o"
+  },
+  {
+    "unit":43,
+    "unitName":"I Point to the Sun",
+    "category":"Review: Short Vowel u"
+  },
+  {
+    "unit":44,
+    "unitName":"I Make a Cape",
+    "category":"Review: Long Vowel a"
+  },
+  {
+    "unit":45,
+    "unitName":"I See a Vine",
+    "category":"Review: Long Vowel i"
+  },
+  {
+    "unit":46,
+    "unitName":"I Hold the Rope",
+    "category":"Review: Long Vowel o"
+  },
+  {
+    "unit":47,
+    "unitName":"There Is a Mule",
+    "category":"Review: Long Vowel u"
+  },
+  {
+    "unit":48,
+    "unitName":"Where Is the Flute?",
+    "category":"Review: Double Letter Consonants 1"
+  }
+]

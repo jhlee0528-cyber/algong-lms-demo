@@ -1,0 +1,94 @@
+$text-color: #292929;
+$letter-spacing: -0.6px;
+
+@mixin text-style($font-family, $font-size, $font-weight, $line-height) {
+  font-family: $font-family;
+  font-size: $font-size;
+  font-weight: $font-weight;
+  line-height: $line-height;
+  color: $text-color;
+  letter-spacing: $letter-spacing;
+}
+
+/* Display Styles */
+.display1 { @include text-style("notosansregular", 36px, 400, 46px); }
+.display2 { @include text-style("notosansregular", 32px, 400, 42px); }
+.display3 { @include text-style("notosansregular", 28px, 400, 38px); }
+
+.display1-bold { @include text-style("notosans", 36px, 700, 46px); }
+.display2-bold { @include text-style("notosans", 32px, 700, 42px); }
+.display3-bold { @include text-style("notosans", 28px, 700, 38px); }
+
+/* Headline Styles */
+.headline { @include text-style("notosans", 24px, 700, 34px); }
+.headline1 { @include text-style("notosans", 22px, 700, 30px); }
+.headline2 { @include text-style("notosans", 20px, 700, 28px); }
+.headline3 { @include text-style("notosans", 18px, 700, 26px); }
+
+/* Body Styles */
+.body1 { @include text-style("notosansregular", 16px, 400, 24px); }
+.body2 { @include text-style("notosansregular", 14px, 400, 20px); }
+.body3 { @include text-style("notosansregular", 12px, 400, 18px); }
+
+.body1-bold { @include text-style("notosans", 16px, 700, 24px); }
+.body2-bold { @include text-style("notosans", 14px, 700, 20px); }
+.body3-bold { @include text-style("notosans", 12px, 700, 18px); }
+
+.title {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 28px;
+  letter-spacing: -0.6px;
+}
+
+.text {
+  display: block;
+  @include text-style("notosansregular", 16px, 400, 24px);
+  color: #66686B;
+  margin-top: 8px;
+}
+
+.content-subtitle {
+  font-size: 16px;
+  line-height: 24px;
+  font-family: notosansregular;
+  // color: var(--main-black);
+  color: #525252;
+  margin-top: 6px;
+  letter-spacing: -0.6px;
+}
+
+.text_center {
+  text-align: center;
+}
+
+.font_18_r {
+  font-size: 18px;
+  font-family: notosansregular;
+}
+
+.font_12_m {
+  font-size: 12px;
+  font-family: notosansmedium;
+}
+
+.font_14_m {
+  font-size: 14px;
+  font-family: notosansmedium;
+}
+
+.font_16_m {
+  font-size: 16px;
+  font-family: notosansmedium;
+}
+
+.font_18_m {
+  font-size: 18px;
+  font-family: notosansmedium;
+}
+
+.font_18_m_22 {
+  font-size: 18px;
+  font-family: notosansmedium;
+  line-height: 22px;
+}

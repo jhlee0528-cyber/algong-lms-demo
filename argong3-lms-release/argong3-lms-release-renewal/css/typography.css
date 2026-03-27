@@ -1,0 +1,209 @@
+/* Display Styles */
+.display1 {
+  font-family: "notosansregular";
+  font-size: 36px;
+  font-weight: 400;
+  line-height: 46px;
+  color: #292929;
+  letter-spacing: -0.6px;
+}
+
+.display2 {
+  font-family: "notosansregular";
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 42px;
+  color: #292929;
+  letter-spacing: -0.6px;
+}
+
+.display3 {
+  font-family: "notosansregular";
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 38px;
+  color: #292929;
+  letter-spacing: -0.6px;
+}
+
+.display1-bold {
+  font-family: "notosans";
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 46px;
+  color: #292929;
+  letter-spacing: -0.6px;
+}
+
+.display2-bold {
+  font-family: "notosans";
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 42px;
+  color: #292929;
+  letter-spacing: -0.6px;
+}
+
+.display3-bold {
+  font-family: "notosans";
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 38px;
+  color: #292929;
+  letter-spacing: -0.6px;
+}
+
+/* Headline Styles */
+.headline {
+  font-family: "notosans";
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 34px;
+  color: #292929;
+  letter-spacing: -0.6px;
+}
+
+.headline1 {
+  font-family: "notosans";
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 30px;
+  color: #292929;
+  letter-spacing: -0.6px;
+}
+
+.headline2 {
+  font-family: "notosans";
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 28px;
+  color: #292929;
+  letter-spacing: -0.6px;
+}
+
+.headline3 {
+  font-family: "notosans";
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 26px;
+  color: #292929;
+  letter-spacing: -0.6px;
+}
+
+/* Body Styles */
+.body1 {
+  font-family: "notosansregular";
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #292929;
+  letter-spacing: -0.6px;
+}
+
+.body2 {
+  font-family: "notosansregular";
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  color: #292929;
+  letter-spacing: -0.6px;
+}
+
+.body3 {
+  font-family: "notosansregular";
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  color: #292929;
+  letter-spacing: -0.6px;
+}
+
+.body1-bold {
+  font-family: "notosans";
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  color: #292929;
+  letter-spacing: -0.6px;
+}
+
+.body2-bold {
+  font-family: "notosans";
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+  color: #292929;
+  letter-spacing: -0.6px;
+}
+
+.body3-bold {
+  font-family: "notosans";
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 18px;
+  color: #292929;
+  letter-spacing: -0.6px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 28px;
+  letter-spacing: -0.6px;
+}
+
+.text {
+  display: block;
+  font-family: "notosansregular";
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #292929;
+  letter-spacing: -0.6px;
+  color: #66686B;
+  margin-top: 8px;
+}
+
+.content-subtitle {
+  font-size: 16px;
+  line-height: 24px;
+  font-family: notosansregular;
+  color: #525252;
+  margin-top: 6px;
+  letter-spacing: -0.6px;
+}
+
+.text_center {
+  text-align: center;
+}
+
+.font_18_r {
+  font-size: 18px;
+  font-family: notosansregular;
+}
+
+.font_12_m {
+  font-size: 12px;
+  font-family: notosansmedium;
+}
+
+.font_14_m {
+  font-size: 14px;
+  font-family: notosansmedium;
+}
+
+.font_16_m {
+  font-size: 16px;
+  font-family: notosansmedium;
+}
+
+.font_18_m {
+  font-size: 18px;
+  font-family: notosansmedium;
+}
+
+.font_18_m_22 {
+  font-size: 18px;
+  font-family: notosansmedium;
+  line-height: 22px;
+}

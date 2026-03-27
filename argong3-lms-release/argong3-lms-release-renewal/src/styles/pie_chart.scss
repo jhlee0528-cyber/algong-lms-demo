@@ -1,0 +1,28 @@
+.pie-chart {
+  display: inline-block;
+  position: relative;
+  border-radius: 50%;
+}
+.pie-chart .center {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: notosans;
+  background: white;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.pie-chart-title {
+  color: var(--main-black2);
+  font-size: 15px;
+}
+.status {
+  display: inline-block;
+  font-family: notosans;
+  font-size: 20px;
+  color: var(--main-black);
+  line-height: 90%;
+}

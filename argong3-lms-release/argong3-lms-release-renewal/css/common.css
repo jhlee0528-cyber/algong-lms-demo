@@ -1,0 +1,92 @@
+:root {
+  --main-black: #292929;
+  --main-black2: #525252;
+  --main-black3: #9a9a9a;
+  --main-blue: #3d90ef;
+  --main-green: #10d298;
+  --main-orange: #f88d10;
+  --main-lightblue: #f1f8ff;
+  --chart-blue-bg: #cae3ff;
+  --chart-gray-bg: #e5e5e5;
+  --padding1: 20px 26px;
+  --padding2: 32px;
+  --default-border-radius: 20px;
+  --small-border-radius: 14px;
+}
+
+html,
+body {
+  margin: 0;
+  font-family: "notosansregular";
+  font-size: 18px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+html {
+  position: relative !important;
+  overflow-x: auto !important;
+}
+
+div,
+input,
+section {
+  box-sizing: border-box;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+p,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+li,
+button,
+input,
+select {
+  margin: 0;
+  padding: 0;
+  letter-spacing: -0.025em;
+}
+
+ul,
+li {
+  list-style: none;
+}
+
+input,
+select {
+  background: transparent;
+}
+input::-moz-placeholder, select::-moz-placeholder {
+  color: #adadad;
+}
+input::placeholder,
+select::placeholder {
+  color: #adadad;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  padding: 0;
+}
+
+.noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}

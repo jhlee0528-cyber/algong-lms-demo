@@ -1,0 +1,156 @@
+.word-image,
+.sentence-image,
+.speech-image,
+.listening,
+.reading,
+.writing,
+.speaking,
+.AI_Chatbot,
+.listeningplant,
+.readingplant,
+.speakingplant,
+.writingplant,
+.gpt,
+.book,
+.free,
+.custommission,
+.mission-ai,
+.graph,
+.medical-check,
+.play {
+  background-position: center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+.word-image,
+.sentence-image,
+.speech-image {
+  width: 60px;
+  height: 60px;
+}
+
+.word-image {
+  background-image: url("../assets/image/word.png");
+}
+
+.sentence-image {
+  background-image: url("../assets/image/sentence.png");
+}
+
+.speech-image {
+  background-image: url("../assets/image/speech.png");
+}
+
+.listening,
+.reading,
+.writing,
+.speaking,
+.AI_Chatbot {
+  width: 24px;
+  height: 24px;
+  margin-right: 9px;
+}
+.listening {
+  background-image: url("../assets/image/Listening.png");
+}
+.reading {
+  background-image: url("../assets/image/Reading.png");
+}
+.writing {
+  background-image: url("../assets/image/Writing.png");
+}
+.speaking {
+  background-image: url("../assets/image/Speaking.png");
+}
+.AI_Chatbot {
+  background-image: url("../assets/image/AI_Chatbot.png");
+}
+
+.listeningplant,
+.readingplant,
+.speakingplant,
+.writingplant,
+.gpt,
+.book,
+.free,
+.custommission {
+  position: relative;
+  width: 72px;
+  height: 72px;
+}
+
+.listeningplant {
+  background-image: url("../assets/image/ListeningPlanet.png");
+}
+
+.readingplant {
+  background-image: url("../assets/image/ReadingPlanet.png");
+}
+
+.speakingplant {
+  background-image: url("../assets/image/SpeakingPlanet.png");
+}
+
+.writingplant {
+  background-image: url("../assets/image/WritingPlanet.png");
+}
+
+.gpt {
+  background-image: url("../assets/image/TextBook.png");
+}
+
+.book {
+  background-image: url("../assets/image/conicon.png");
+}
+
+.free {
+  background-image: url("../assets/image/tomytomy.png");
+}
+
+.custommission {
+  background-image: url("../assets/image/CustomMission.png");
+}
+
+.mission-ai,
+.graph,
+.medical-check {
+  width: 30px;
+  height: 30px;
+}
+.mission-ai {
+  background-image: url("../assets/image/mission-ai.png");
+}
+.graph {
+  background-image: url("../assets/image/graph.png");
+}
+.medical-check {
+  background-image: url("../assets/image/medical-check.png");
+}
+
+.play {
+  width: 20px;
+  height: 20px;
+  margin-right: 4px;
+  background-image: url("../assets/image/Btn_lightblue_play.png");
+}
+
+.emptybox {
+  width: 75px;
+  height: 75px;
+  background-image: url("../assets/image/emptybox2.png");
+  background-position: center;
+  background-size: 90%;
+  background-repeat: no-repeat;
+  margin: 0 auto 10px auto;
+}
+
+.nochat {
+  width: 75px;
+  height: 75px;
+  background-image: url("../assets/image/nochat.png");
+  background-position: center;
+  background-size: 90%;
+  background-repeat: no-repeat;
+  margin: 5px auto 0 auto;
+}

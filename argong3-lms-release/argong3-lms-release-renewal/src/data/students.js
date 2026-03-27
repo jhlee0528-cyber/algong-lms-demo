@@ -1,0 +1,358 @@
+// 실제 학생 데이터 (고정)
+
+// 이름 풀
+const maleNames = [
+  '김민준', '이준혁', '박서준', '최도윤', '정시우',
+  '강주원', '윤지호', '임현우', '한승민', '오태양',
+  '신동현', '류재원', '조성민', '문하준', '배준서'
+];
+
+const femaleNames = [
+  '김서연', '이지우', '박하은', '최수아', '정나은',
+  '강채원', '윤소율', '임지아', '한예린', '오서현',
+  '신유진', '류아인', '조하늘', '문소이', '배지아'
+];
+
+// 상태별 피드백 문장
+const feedbackPool = {
+  normal: [
+    '꾸준히 학습에 참여하고 있으며 전반적으로 우수한 성취를 보이고 있습니다.',
+    '학습 참여도와 정답률 모두 우수합니다. 이 페이스를 유지해 주세요!',
+    '매우 성실하게 학습하고 있습니다. 특히 정답률이 인상적입니다.'
+  ],
+  warning: [
+    '학습 참여는 하고 있으나 진행률 향상이 필요합니다. 조금 더 격려해 주세요.',
+    '정답률은 양호하나 학습 시간이 부족합니다. 규칙적인 학습 습관이 필요합니다.',
+    '지난 주 대비 참여율이 다소 감소했습니다. 가정에서 조금 더 관심 가져주시면 큰 도움이 됩니다.'
+  ],
+  danger: [
+    '학습 참여가 많이 부족합니다. 개별 면담을 통해 함께 해결책을 찾아보면 좋겠습니다.',
+    '이번 주 학습 참여가 저조합니다. 연락 주시면 빠르게 도움드리겠습니다.',
+    '학습 진행이 지연되고 있습니다. 언제든지 말씀해 주시면 맞춤 지도해 드리겠습니다.'
+  ]
+};
+
+// 레벨 그룹 매핑
+const levelGroupMap = {
+  'Lv.1-6': { subjects: ['Speaking 1', 'Phonics 1', 'Reading 1'] },
+  'Lv.7-12': { subjects: ['Speaking 2', 'Phonics 2', 'Reading 2'] },
+  'Lv.13-18': { subjects: ['Speaking 3', 'Phonics 3', 'Grammar 1'] },
+  'Lv.19-24': { subjects: ['Speaking 4', 'Reading 3', 'Writing 1'] },
+  'Lv.25-30': { subjects: ['Speaking 5', 'Grammar 2', 'Writing 2'] },
+  'Lv.31-36': { subjects: ['Speaking 6', 'Grammar 3', 'Writing 3'] }
+};
+
+// 레벨 그룹 결정 함수
+function getLevelGroup(level) {
+  if (level >= 1 && level <= 6) return 'Lv.1-6';
+  if (level >= 7 && level <= 12) return 'Lv.7-12';
+  if (level >= 13 && level <= 18) return 'Lv.13-18';
+  if (level >= 19 && level <= 24) return 'Lv.19-24';
+  if (level >= 25 && level <= 30) return 'Lv.25-30';
+  if (level >= 31 && level <= 36) return 'Lv.31-36';
+  return 'Lv.1-6';
+}
+
+// 학생 데이터 생성 헬퍼 함수
+function createStudent(branchCode, attendanceNumber, config) {
+  const { name, gender, level, status, finishedPercent, correctPercent, studyTime, readingCount, lastStudyDate } = config;
+  const levelGroup = getLevelGroup(level);
+  const subjects = levelGroupMap[levelGroup].subjects;
+
+  // 과목별 진도 (학습진행률 기준 ±10% 랜덤 변동)
+  const subjectData = subjects.map(subjectName => ({
+    name: subjectName,
+    progress: Math.min(100, Math.max(0, finishedPercent + (Math.random() * 20 - 10)))
+  }));
+
+  // 피드백 선택
+  const feedbacks = feedbackPool[status];
+  const feedback = feedbacks[attendanceNumber % feedbacks.length];
+
+  return {
+    id: `${branchCode}-${String(attendanceNumber).padStart(3, '0')}`,
+    attendanceNumber,
+    name,
+    gender,
+    level,
+    levelGroup,
+    status,
+    finishedPercent,
+    correctPercent,
+    studyTime,
+    readingCount,
+    smsActive: false,
+    lastStudyDate,
+    feedback,
+    subjectData
+  };
+}
+
+// 교습소별 학생 데이터
+export const branchStudents = {
+  '서울 금천구 1호점': [
+    // 정상 학생 18명 (Lv분포: 5,8,7,6,3,1)
+    createStudent('gk', 1, { name: maleNames[0], gender: 'M', level: 3, status: 'normal', finishedPercent: 85, correctPercent: 88, studyTime: 25, readingCount: 5, lastStudyDate: '2026-03-27' }),
+    createStudent('gk', 2, { name: femaleNames[0], gender: 'F', level: 5, status: 'normal', finishedPercent: 92, correctPercent: 90, studyTime: 30, readingCount: 6, lastStudyDate: '2026-03-27' }),
+    createStudent('gk', 3, { name: maleNames[1], gender: 'M', level: 2, status: 'normal', finishedPercent: 78, correctPercent: 82, studyTime: 22, readingCount: 4, lastStudyDate: '2026-03-26' }),
+    createStudent('gk', 4, { name: femaleNames[1], gender: 'F', level: 4, status: 'normal', finishedPercent: 88, correctPercent: 85, studyTime: 28, readingCount: 5, lastStudyDate: '2026-03-27' }),
+    createStudent('gk', 5, { name: maleNames[2], gender: 'M', level: 1, status: 'normal', finishedPercent: 82, correctPercent: 87, studyTime: 24, readingCount: 4, lastStudyDate: '2026-03-27' }),
+    createStudent('gk', 6, { name: femaleNames[2], gender: 'F', level: 9, status: 'normal', finishedPercent: 76, correctPercent: 80, studyTime: 20, readingCount: 3, lastStudyDate: '2026-03-26' }),
+    createStudent('gk', 7, { name: maleNames[3], gender: 'M', level: 8, status: 'normal', finishedPercent: 90, correctPercent: 92, studyTime: 32, readingCount: 7, lastStudyDate: '2026-03-27' }),
+    createStudent('gk', 8, { name: femaleNames[3], gender: 'F', level: 11, status: 'normal', finishedPercent: 84, correctPercent: 86, studyTime: 26, readingCount: 5, lastStudyDate: '2026-03-27' }),
+    createStudent('gk', 9, { name: maleNames[4], gender: 'M', level: 10, status: 'normal', finishedPercent: 79, correctPercent: 83, studyTime: 23, readingCount: 4, lastStudyDate: '2026-03-26' }),
+    createStudent('gk', 10, { name: femaleNames[4], gender: 'F', level: 7, status: 'normal', finishedPercent: 87, correctPercent: 89, studyTime: 27, readingCount: 6, lastStudyDate: '2026-03-27' }),
+    createStudent('gk', 11, { name: maleNames[5], gender: 'M', level: 12, status: 'normal', finishedPercent: 81, correctPercent: 84, studyTime: 24, readingCount: 4, lastStudyDate: '2026-03-26' }),
+    createStudent('gk', 12, { name: femaleNames[5], gender: 'F', level: 9, status: 'normal', finishedPercent: 75, correctPercent: 79, studyTime: 21, readingCount: 3, lastStudyDate: '2026-03-27' }),
+    createStudent('gk', 13, { name: maleNames[6], gender: 'M', level: 15, status: 'normal', finishedPercent: 83, correctPercent: 86, studyTime: 25, readingCount: 5, lastStudyDate: '2026-03-27' }),
+    createStudent('gk', 14, { name: femaleNames[6], gender: 'F', level: 17, status: 'normal', finishedPercent: 89, correctPercent: 91, studyTime: 29, readingCount: 6, lastStudyDate: '2026-03-27' }),
+    createStudent('gk', 15, { name: maleNames[7], gender: 'M', level: 14, status: 'normal', finishedPercent: 77, correctPercent: 81, studyTime: 22, readingCount: 4, lastStudyDate: '2026-03-26' }),
+    createStudent('gk', 16, { name: femaleNames[7], gender: 'F', level: 22, status: 'normal', finishedPercent: 86, correctPercent: 88, studyTime: 27, readingCount: 5, lastStudyDate: '2026-03-27' }),
+    createStudent('gk', 17, { name: maleNames[8], gender: 'M', level: 26, status: 'normal', finishedPercent: 80, correctPercent: 84, studyTime: 23, readingCount: 4, lastStudyDate: '2026-03-27' }),
+    createStudent('gk', 18, { name: femaleNames[8], gender: 'F', level: 32, status: 'normal', finishedPercent: 74, correctPercent: 78, studyTime: 20, readingCount: 3, lastStudyDate: '2026-03-26' }),
+
+    // 주의 학생 7명
+    createStudent('gk', 19, { name: maleNames[9], gender: 'M', level: 13, status: 'warning', finishedPercent: 58, correctPercent: 65, studyTime: 15, readingCount: 2, lastStudyDate: '2026-03-25' }),
+    createStudent('gk', 20, { name: femaleNames[9], gender: 'F', level: 16, status: 'warning', finishedPercent: 62, correctPercent: 68, studyTime: 16, readingCount: 2, lastStudyDate: '2026-03-24' }),
+    createStudent('gk', 21, { name: maleNames[10], gender: 'M', level: 18, status: 'warning', finishedPercent: 48, correctPercent: 58, studyTime: 12, readingCount: 1, lastStudyDate: '2026-03-23' }),
+    createStudent('gk', 22, { name: femaleNames[10], gender: 'F', level: 20, status: 'warning', finishedPercent: 65, correctPercent: 70, studyTime: 17, readingCount: 3, lastStudyDate: '2026-03-25' }),
+    createStudent('gk', 23, { name: maleNames[11], gender: 'M', level: 19, status: 'warning', finishedPercent: 55, correctPercent: 63, studyTime: 14, readingCount: 2, lastStudyDate: '2026-03-24' }),
+    createStudent('gk', 24, { name: femaleNames[11], gender: 'F', level: 21, status: 'warning', finishedPercent: 44, correctPercent: 55, studyTime: 11, readingCount: 1, lastStudyDate: '2026-03-23' }),
+    createStudent('gk', 25, { name: maleNames[12], gender: 'M', level: 27, status: 'warning', finishedPercent: 61, correctPercent: 67, studyTime: 15, readingCount: 2, lastStudyDate: '2026-03-25' }),
+
+    // 관리필요 학생 5명
+    createStudent('gk', 26, { name: femaleNames[12], gender: 'F', level: 23, status: 'danger', finishedPercent: 25, correctPercent: 42, studyTime: 6, readingCount: 0, lastStudyDate: '2026-03-20' }),
+    createStudent('gk', 27, { name: maleNames[13], gender: 'M', level: 24, status: 'danger', finishedPercent: 32, correctPercent: 48, studyTime: 8, readingCount: 1, lastStudyDate: '2026-03-21' }),
+    createStudent('gk', 28, { name: femaleNames[13], gender: 'F', level: 28, status: 'danger', finishedPercent: 18, correctPercent: 38, studyTime: 4, readingCount: 0, lastStudyDate: '2026-03-19' }),
+    createStudent('gk', 29, { name: maleNames[14], gender: 'M', level: 29, status: 'danger', finishedPercent: 38, correctPercent: 52, studyTime: 9, readingCount: 1, lastStudyDate: '2026-03-22' }),
+    createStudent('gk', 30, { name: femaleNames[14], gender: 'F', level: 30, status: 'danger', finishedPercent: 28, correctPercent: 45, studyTime: 7, readingCount: 0, lastStudyDate: '2026-03-20' })
+  ],
+
+  '서울 강남구 2호점': [
+    // 정상 학생 36명 (Lv분포: 2,4,7,12,11,9)
+    ...Array.from({ length: 36 }, (_, i) => {
+      const levelDist = [2,4,7,12,11,9];
+      let level = 1;
+      let sum = 0;
+      for (let j = 0; j < levelDist.length; j++) {
+        sum += levelDist[j];
+        if (i < sum) {
+          const groupStart = j * 6 + 1;
+          const offset = i - (sum - levelDist[j]);
+          level = groupStart + (offset % 6);
+          break;
+        }
+      }
+
+      return createStudent('gn', i + 1, {
+        name: i % 2 === 0 ? maleNames[i % maleNames.length] : femaleNames[i % femaleNames.length],
+        gender: i % 2 === 0 ? 'M' : 'F',
+        level,
+        status: 'normal',
+        finishedPercent: 75 + Math.floor(Math.random() * 20),
+        correctPercent: 80 + Math.floor(Math.random() * 15),
+        studyTime: 20 + Math.floor(Math.random() * 15),
+        readingCount: 3 + Math.floor(Math.random() * 5),
+        lastStudyDate: ['2026-03-27', '2026-03-26', '2026-03-25'][i % 3]
+      });
+    }),
+
+    // 주의 학생 7명
+    ...Array.from({ length: 7 }, (_, i) => {
+      const idx = 36 + i + 1;
+      return createStudent('gn', idx, {
+        name: i % 2 === 0 ? maleNames[(idx) % maleNames.length] : femaleNames[(idx) % femaleNames.length],
+        gender: i % 2 === 0 ? 'M' : 'F',
+        level: 13 + i,
+        status: 'warning',
+        finishedPercent: 45 + Math.floor(Math.random() * 20),
+        correctPercent: 58 + Math.floor(Math.random() * 12),
+        studyTime: 11 + Math.floor(Math.random() * 7),
+        readingCount: 1 + Math.floor(Math.random() * 2),
+        lastStudyDate: ['2026-03-25', '2026-03-24', '2026-03-23'][i % 3]
+      });
+    }),
+
+    // 관리필요 학생 2명
+    createStudent('gn', 44, { name: maleNames[14], gender: 'M', level: 21, status: 'danger', finishedPercent: 22, correctPercent: 40, studyTime: 5, readingCount: 0, lastStudyDate: '2026-03-19' }),
+    createStudent('gn', 45, { name: femaleNames[14], gender: 'F', level: 24, status: 'danger', finishedPercent: 35, correctPercent: 50, studyTime: 8, readingCount: 1, lastStudyDate: '2026-03-21' })
+  ],
+
+  '서울 마포구 3호점': [
+    // 정상 학생 7명 (Lv분포: 9,6,4,2,1,0)
+    createStudent('mp', 1, { name: maleNames[0], gender: 'M', level: 3, status: 'normal', finishedPercent: 82, correctPercent: 85, studyTime: 24, readingCount: 4, lastStudyDate: '2026-03-27' }),
+    createStudent('mp', 2, { name: femaleNames[0], gender: 'F', level: 4, status: 'normal', finishedPercent: 88, correctPercent: 90, studyTime: 28, readingCount: 5, lastStudyDate: '2026-03-27' }),
+    createStudent('mp', 3, { name: maleNames[1], gender: 'M', level: 1, status: 'normal', finishedPercent: 75, correctPercent: 80, studyTime: 20, readingCount: 3, lastStudyDate: '2026-03-26' }),
+    createStudent('mp', 4, { name: femaleNames[1], gender: 'F', level: 2, status: 'normal', finishedPercent: 79, correctPercent: 83, studyTime: 22, readingCount: 4, lastStudyDate: '2026-03-27' }),
+    createStudent('mp', 5, { name: maleNames[2], gender: 'M', level: 5, status: 'normal', finishedPercent: 86, correctPercent: 88, studyTime: 26, readingCount: 5, lastStudyDate: '2026-03-27' }),
+    createStudent('mp', 6, { name: femaleNames[2], gender: 'F', level: 9, status: 'normal', finishedPercent: 73, correctPercent: 78, studyTime: 19, readingCount: 3, lastStudyDate: '2026-03-26' }),
+    createStudent('mp', 7, { name: maleNames[3], gender: 'M', level: 8, status: 'normal', finishedPercent: 91, correctPercent: 93, studyTime: 31, readingCount: 6, lastStudyDate: '2026-03-27' }),
+
+    // 주의 학생 8명
+    ...Array.from({ length: 8 }, (_, i) => {
+      const idx = 7 + i + 1;
+      return createStudent('mp', idx, {
+        name: i % 2 === 0 ? maleNames[(idx) % maleNames.length] : femaleNames[(idx) % femaleNames.length],
+        gender: i % 2 === 0 ? 'M' : 'F',
+        level: [6, 7, 10, 11, 14, 15, 16, 18][i],
+        status: 'warning',
+        finishedPercent: 42 + Math.floor(Math.random() * 25),
+        correctPercent: 56 + Math.floor(Math.random() * 15),
+        studyTime: 10 + Math.floor(Math.random() * 8),
+        readingCount: 1 + Math.floor(Math.random() * 2),
+        lastStudyDate: ['2026-03-25', '2026-03-24', '2026-03-23', '2026-03-22'][i % 4]
+      });
+    }),
+
+    // 관리필요 학생 7명
+    ...Array.from({ length: 7 }, (_, i) => {
+      const idx = 15 + i + 1;
+      return createStudent('mp', idx, {
+        name: i % 2 === 0 ? maleNames[(idx) % maleNames.length] : femaleNames[(idx) % femaleNames.length],
+        gender: i % 2 === 0 ? 'M' : 'F',
+        level: [12, 13, 17, 19, 20, 21, 23][i],
+        status: 'danger',
+        finishedPercent: 12 + Math.floor(Math.random() * 25),
+        correctPercent: 36 + Math.floor(Math.random() * 16),
+        studyTime: 3 + Math.floor(Math.random() * 7),
+        readingCount: Math.floor(Math.random() * 2),
+        lastStudyDate: ['2026-03-20', '2026-03-19', '2026-03-18', '2026-03-17'][i % 4]
+      });
+    })
+  ],
+
+  '경기 수원시 5호점': [
+    // 정상 학생 22명 (Lv분포: 4,7,9,10,6,2)
+    ...Array.from({ length: 22 }, (_, i) => {
+      const levelDist = [4,7,9,10,6,2];
+      let level = 1;
+      let sum = 0;
+      for (let j = 0; j < levelDist.length; j++) {
+        sum += levelDist[j];
+        if (i < sum) {
+          const groupStart = j * 6 + 1;
+          const offset = i - (sum - levelDist[j]);
+          level = groupStart + (offset % 6);
+          break;
+        }
+      }
+
+      return createStudent('sw', i + 1, {
+        name: i % 2 === 0 ? maleNames[i % maleNames.length] : femaleNames[i % femaleNames.length],
+        gender: i % 2 === 0 ? 'M' : 'F',
+        level,
+        status: 'normal',
+        finishedPercent: 72 + Math.floor(Math.random() * 22),
+        correctPercent: 77 + Math.floor(Math.random() * 16),
+        studyTime: 19 + Math.floor(Math.random() * 15),
+        readingCount: 3 + Math.floor(Math.random() * 4),
+        lastStudyDate: ['2026-03-27', '2026-03-26', '2026-03-25'][i % 3]
+      });
+    }),
+
+    // 주의 학생 12명
+    ...Array.from({ length: 12 }, (_, i) => {
+      const idx = 22 + i + 1;
+      return createStudent('sw', idx, {
+        name: i % 2 === 0 ? maleNames[(idx) % maleNames.length] : femaleNames[(idx) % femaleNames.length],
+        gender: i % 2 === 0 ? 'M' : 'F',
+        level: 7 + i,
+        status: 'warning',
+        finishedPercent: 43 + Math.floor(Math.random() * 24),
+        correctPercent: 57 + Math.floor(Math.random() * 15),
+        studyTime: 11 + Math.floor(Math.random() * 7),
+        readingCount: 1 + Math.floor(Math.random() * 3),
+        lastStudyDate: ['2026-03-25', '2026-03-24', '2026-03-23'][i % 3]
+      });
+    }),
+
+    // 관리필요 학생 4명
+    ...Array.from({ length: 4 }, (_, i) => {
+      const idx = 34 + i + 1;
+      return createStudent('sw', idx, {
+        name: i % 2 === 0 ? maleNames[(idx) % maleNames.length] : femaleNames[(idx) % femaleNames.length],
+        gender: i % 2 === 0 ? 'M' : 'F',
+        level: 20 + i,
+        status: 'danger',
+        finishedPercent: 15 + Math.floor(Math.random() * 22),
+        correctPercent: 38 + Math.floor(Math.random() * 14),
+        studyTime: 4 + Math.floor(Math.random() * 6),
+        readingCount: Math.floor(Math.random() * 2),
+        lastStudyDate: ['2026-03-20', '2026-03-19', '2026-03-18'][i % 3]
+      });
+    })
+  ],
+
+  '부산 해운대구 9호점': [
+    // 정상 학생 25명 (Lv분포: 3,5,8,10,7,2)
+    ...Array.from({ length: 25 }, (_, i) => {
+      const levelDist = [3,5,8,10,7,2];
+      let level = 1;
+      let sum = 0;
+      for (let j = 0; j < levelDist.length; j++) {
+        sum += levelDist[j];
+        if (i < sum) {
+          const groupStart = j * 6 + 1;
+          const offset = i - (sum - levelDist[j]);
+          level = groupStart + (offset % 6);
+          break;
+        }
+      }
+
+      return createStudent('bs', i + 1, {
+        name: i % 2 === 0 ? maleNames[i % maleNames.length] : femaleNames[i % femaleNames.length],
+        gender: i % 2 === 0 ? 'M' : 'F',
+        level,
+        status: 'normal',
+        finishedPercent: 76 + Math.floor(Math.random() * 19),
+        correctPercent: 81 + Math.floor(Math.random() * 14),
+        studyTime: 21 + Math.floor(Math.random() * 14),
+        readingCount: 3 + Math.floor(Math.random() * 5),
+        lastStudyDate: ['2026-03-27', '2026-03-26', '2026-03-25'][i % 3]
+      });
+    }),
+
+    // 주의 학생 8명
+    ...Array.from({ length: 8 }, (_, i) => {
+      const idx = 25 + i + 1;
+      return createStudent('bs', idx, {
+        name: i % 2 === 0 ? maleNames[(idx) % maleNames.length] : femaleNames[(idx) % femaleNames.length],
+        gender: i % 2 === 0 ? 'M' : 'F',
+        level: 12 + i,
+        status: 'warning',
+        finishedPercent: 46 + Math.floor(Math.random() * 21),
+        correctPercent: 59 + Math.floor(Math.random() * 13),
+        studyTime: 12 + Math.floor(Math.random() * 6),
+        readingCount: 1 + Math.floor(Math.random() * 3),
+        lastStudyDate: ['2026-03-25', '2026-03-24', '2026-03-23'][i % 3]
+      });
+    }),
+
+    // 관리필요 학생 2명
+    createStudent('bs', 34, { name: maleNames[14], gender: 'M', level: 22, status: 'danger', finishedPercent: 24, correctPercent: 43, studyTime: 6, readingCount: 0, lastStudyDate: '2026-03-20' }),
+    createStudent('bs', 35, { name: femaleNames[14], gender: 'F', level: 26, status: 'danger', finishedPercent: 31, correctPercent: 48, studyTime: 7, readingCount: 1, lastStudyDate: '2026-03-21' })
+  ]
+};
+
+// 헬퍼 함수들
+export function getStudentsByBranch(branch) {
+  return branchStudents[branch] || [];
+}
+
+export function getStudentById(id) {
+  for (const students of Object.values(branchStudents)) {
+    const student = students.find(s => s.id === id);
+    if (student) return student;
+  }
+  return null;
+}
+
+export function getStudentsByStatus(branch, status) {
+  const students = getStudentsByBranch(branch);
+  return students.filter(s => s.status === status);
+}
+
+export function getStudentByAttendanceNumber(branch, attendanceNumber) {
+  const students = getStudentsByBranch(branch);
+  return students.find(s => s.attendanceNumber === attendanceNumber);
+}

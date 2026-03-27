@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudlms-web
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloudlms-web
+  template:
+    metadata:
+      labels:
+        app: cloudlms-web
+    spec:
+      containers:
+        - name: cloudlms-web-container
+          image: dnsoft-container-registry.ncr.gov-ntruss.com/cloudlms-web-image
+          imagePullPolicy: Always
+      imagePullSecrets:
+        - name: regcred
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloudlms-web-service
+  namespace: default
+spec:
+  selector:
+    app: cloudlms-web
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: LoadBalancer
