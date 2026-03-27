@@ -375,8 +375,11 @@
                 :class="{ active: student.smsActive }"
                 @click="toggleSms(student)"
               >
-                <svg width="16" height="13" viewBox="0 0 20 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                  <path fill="currentColor" d="M18 0H2C0.9 0 0 0.9 0 2L0 14C0 15.1 0.9 16 2 16H18C19.1 16 20 15.1 20 14V2C20 0.9 19.1 0 18 0ZM18 4L10 9L2 4V2L10 7L18 2V4Z"/>
+                <svg width="16" height="13" viewBox="0 0 20 16"
+                     fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+                     style="display:block;">
+                  <path fill="currentColor"
+                        d="M18 0H2C0.9 0 0 0.9 0 2L0 14C0 15.1 0.9 16 2 16H18C19.1 16 20 15.1 20 14V2C20 0.9 19.1 0 18 0ZM18 4L10 9L2 4V2L10 7L18 2V4Z"/>
                 </svg>
               </button>
             </div>
@@ -2355,22 +2358,27 @@ const getSubjectTooltip = (levelRange) => {
   }
 
   .msi-send {
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    border: 1.5px solid #e0e0e0;
-    background: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: #9a9a9a;
-    flex-shrink: 0;
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 8px !important;
+    border: 1.5px solid #e0e0e0 !important;
+    background: white !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    color: #9A9A9A !important;
+    flex-shrink: 0 !important;
+
+    svg {
+      fill: currentColor !important;
+      display: block !important;
+    }
 
     &.active {
-      background: #258aff;
-      border-color: #258aff;
-      color: white;
+      background: #258AFF !important;
+      border-color: #258AFF !important;
+      color: white !important;
     }
   }
 

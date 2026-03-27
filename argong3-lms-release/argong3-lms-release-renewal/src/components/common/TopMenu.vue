@@ -119,6 +119,14 @@
         </div>
 
         <div class="setting" @click="onClickTranfer('/setting')"></div>
+
+        <!-- 모바일 전용 코파일럿 버튼 (헤더 내 고정) -->
+        <div class="mobile-copilot-btn" @click="onClickCopilot">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+            <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+          </svg>
+        </div>
+
         <div class="relatvie">
           <div class="question" @click.stop="onClickQuestion()"></div>
           <div v-show="isQuestionOpen" class="wrap-questions" ref="QuestionRef">
@@ -343,6 +351,14 @@ const onClickTranfer = (navigate) => {
     window.location.reload();
   } else {
     router.push({ path: navigate });
+  }
+};
+
+const onClickCopilot = () => {
+  // FloatingChatButton 클릭 시뮬레이션
+  const floatingBtn = document.querySelector('.floating-button');
+  if (floatingBtn) {
+    floatingBtn.click();
   }
 };
 

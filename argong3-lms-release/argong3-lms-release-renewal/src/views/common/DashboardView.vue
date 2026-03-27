@@ -299,10 +299,12 @@
                 :class="{ active: student.smsActive }"
                 @click.stop="toggleSms(student)"
               >
-                <svg width="16" height="13" viewBox="0 0 20 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                  <path fill="currentColor" d="M18 0H2C0.9 0 0 0.9 0 2L0 14C0 15.1 0.9 16 2 16H18C19.1 16 20 15.1 20 14V2C20 0.9 19.1 0 18 0ZM18 4L10 9L2 4V2L10 7L18 2V4Z"/>
+                <svg width="14" height="11" viewBox="0 0 20 16"
+                     fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+                     style="flex-shrink:0; display:block;">
+                  <path d="M18 0H2C0.9 0 0 0.9 0 2L0 14C0 15.1 0.9 16 2 16H18C19.1 16 20 15.1 20 14V2C20 0.9 19.1 0 18 0ZM18 4L10 9L2 4V2L10 7L18 2V4Z"/>
                 </svg>
-                발송
+                <span>발송</span>
               </button>
             </div>
           </div>
@@ -1474,21 +1476,35 @@ const confirmSend = () => {
   }
 
   .btn-send-icon {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 6px 12px;
-    border-radius: 6px;
-    border: 1.5px solid #e0e0e0;
-    background: white;
-    font-size: 12px;
-    color: #525252;
-    cursor: pointer;
+    display: inline-flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 4px !important;
+    padding: 5px 10px !important;
+    border-radius: 6px !important;
+    border: 1.5px solid #e0e0e0 !important;
+    background: white !important;
+    font-size: 12px !important;
+    color: #525252 !important;
+    cursor: pointer !important;
+    white-space: nowrap !important;
+    min-width: 54px !important;
+    height: 30px !important;
+
+    svg {
+      fill: currentColor !important;
+      flex-shrink: 0 !important;
+    }
+
+    span {
+      flex-shrink: 0 !important;
+    }
 
     &.active {
-      background: #258aff;
-      border-color: #258aff;
-      color: white;
+      background: #258AFF !important;
+      border-color: #258AFF !important;
+      color: white !important;
     }
   }
 
