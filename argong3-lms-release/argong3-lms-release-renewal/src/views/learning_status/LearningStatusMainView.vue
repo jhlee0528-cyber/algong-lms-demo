@@ -2164,23 +2164,32 @@ const getSubjectTooltip = (levelRange) => {
     display: none;
   }
 
-  /* 과목 선택 바 */
+  /* 과목 선택 카드 */
+  .subject-selection-card {
+    padding: 14px 12px !important;
+    overflow: hidden;
+  }
+
   .subject-selection-container {
     flex-direction: column;
-    gap: 12px;
-    padding: 16px;
+    gap: 10px;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .subject-label {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
+    flex-shrink: 0;
   }
 
+  /* 과목 탭 2줄 그리드 */
   .subject-tabs {
     display: grid !important;
     grid-template-columns: repeat(3, 1fr);
     gap: 6px;
-    overflow-x: visible;
+    width: 100%;
+    overflow: visible;
     flex-wrap: unset;
   }
 
@@ -2192,12 +2201,14 @@ const getSubjectTooltip = (levelRange) => {
     text-align: center;
     justify-content: center;
     width: 100%;
+    box-sizing: border-box;
   }
 
+  /* 평균 진행률 박스 */
   .avg-progress-bar-horizontal {
     width: 100%;
-    justify-content: space-between;
-    padding: 12px 16px;
+    box-sizing: border-box;
+    padding: 10px 12px;
   }
 
   .avg-label {
