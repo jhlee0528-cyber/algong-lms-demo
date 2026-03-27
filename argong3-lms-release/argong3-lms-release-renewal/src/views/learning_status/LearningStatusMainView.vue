@@ -1943,36 +1943,52 @@ const getSubjectTooltip = (levelRange) => {
   /* 커리큘럼 카드 */
   .curriculum-container {
     flex-direction: column;
-    gap: 16px;
+    gap: 0;
   }
 
   .curriculum-card {
     overflow: visible !important;
   }
 
+  /* 타임라인 차트 숨기기 */
+  .curriculum-timeline {
+    display: none;
+  }
+
+  .timeline-container {
+    display: none;
+  }
+
+  /* 레벨 분포만 표시, 전체 너비로 확장 */
   .level-distribution {
     width: 100%;
-    margin-top: 16px;
+    margin-top: 0;
   }
 
   .distribution-grid {
     grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
   }
 
-  .curriculum-timeline {
-    overflow-x: auto;
-    overflow-y: visible;
-    -webkit-overflow-scrolling: touch;
+  .distribution-item {
+    padding: 12px;
+    text-align: center;
   }
 
-  .timeline-container {
-    min-width: 500px;
-    height: 200px;
-    overflow: visible !important;
+  .distribution-level {
+    font-size: 12px;
   }
 
-  .timeline-item {
-    min-width: 60px;
+  .distribution-count {
+    font-size: 18px;
+  }
+
+  /* 커리큘럼 카드 타이틀 옆에 안내 추가 */
+  .distribution-title::after {
+    content: ' (전체 커리큘럼은 PC에서 확인하세요)';
+    font-size: 11px;
+    color: #9a9a9a;
+    font-weight: 400;
   }
 
   /* 과목 선택 바 */
@@ -2029,18 +2045,38 @@ const getSubjectTooltip = (levelRange) => {
 
   /* 필터 컨테이너 */
   .filter-container {
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 8px;
     padding: 16px;
+    align-items: stretch;
   }
 
+  .filter-buttons,
   .filter-group {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
     gap: 6px;
+    padding-bottom: 4px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 
-    button {
-      padding: 6px 12px;
-      font-size: 12px;
+    &::-webkit-scrollbar {
+      display: none;
     }
+  }
+
+  .filter-btn {
+    flex-shrink: 0;
+    white-space: nowrap;
+    padding: 8px 14px;
+    font-size: 13px;
+    min-width: auto;
+  }
+
+  .btn-send-all {
+    width: 100%;
+    text-align: center;
   }
 
   .search-box {

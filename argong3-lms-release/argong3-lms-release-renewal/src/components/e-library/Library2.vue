@@ -304,4 +304,63 @@ export default {
   font-size: 14px;
   margin-right: 8px;
 }
+
+@media (max-width: 767px) {
+  .library-container {
+    margin-top: 0;
+    border-radius: 0;
+    max-width: 100%;
+  }
+
+  .bookList {
+    padding: 16px;
+    overflow-x: hidden;
+  }
+
+  .bookCase {
+    height: auto;
+    min-height: 500px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+    padding: 20px 10px;
+    gap: 20px 10px;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .bookWrap {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .library-book {
+    width: 70px;
+    height: 100px;
+  }
+
+  .library-book-text {
+    margin-top: 12px;
+    font-size: 11px;
+    line-height: 16px;
+  }
+
+  .chart_blue-bg {
+    width: 70px;
+    margin: 4px 0 2px 0;
+  }
+
+  .total {
+    padding: 0 10px;
+    font-size: 13px;
+  }
+
+  .total span {
+    font-size: 13px;
+  }
+
+  .v-pagination {
+    transform: scale(0.85);
+    transform-origin: left center;
+  }
+}
 </style>

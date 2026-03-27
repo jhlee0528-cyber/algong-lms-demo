@@ -138,6 +138,25 @@ button {
     font-size: 14px;
   }
 
+  /* 가로 스크롤 방지 */
+  body,
+  #app,
+  .app-container {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+  }
+
+  /* 모든 컨테이너 요소 가로 넘침 방지 */
+  .card,
+  .white-wrap,
+  .wrap-content,
+  .container,
+  .v-card {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+
   /* 카드 공통 패딩 축소 */
   .card {
     padding: 16px !important;
