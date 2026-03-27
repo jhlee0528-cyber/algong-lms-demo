@@ -1181,81 +1181,127 @@ const confirmSend = () => {
 
 /* 모바일 반응형 */
 @media (max-width: 767px) {
+  .dashboard-wrap {
+    height: 100vh;
+    overflow: hidden;
+  }
+
   .dashboard-container {
-    padding: 16px;
-    padding-bottom: 80px;
+    padding: 12px 16px;
+    padding-bottom: 70px;
+    height: calc(100vh - 70px);
+    overflow-y: auto;
   }
 
   .header-row {
     flex-direction: column;
     gap: 12px;
     align-items: flex-start;
+    margin-bottom: 8px;
 
     .headline {
-      font-size: 22px;
+      font-size: 18px !important;
     }
 
     .total-students {
-      font-size: 13px;
+      font-size: 12px;
     }
   }
 
-  /* 신호등 카드: 3열 → 1열 세로 스택 */
+  /* 3개 카드 한 화면에 */
   .status-cards {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 8px;
   }
 
-  /* 각 카드 높이 축소 */
   .status-card {
-    padding: 20px;
+    padding: 12px 16px;
+    gap: 8px;
+  }
+
+  /* 카드 상단 영역 가로 배치로 변경 */
+  .card-upper {
+    flex-direction: row !important;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* 신호등 원 크기 축소 */
+  .status-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+
+  .card-info {
+    flex: 1;
   }
 
   .card-title {
-    font-size: 16px;
+    font-size: 14px;
+    margin: 0;
   }
 
   .card-desc {
-    font-size: 12px;
+    font-size: 11px;
+    margin: 0;
   }
 
   .card-count {
-    font-size: 28px;
+    margin-left: auto;
+    font-size: 24px;
+    margin: 0;
   }
 
-  /* 카드 내 원그래프 크기 축소 */
-  .gauge-circle {
-    width: 90px;
-    height: 90px;
-  }
-
-  .gauge-center {
-    width: 70px;
-    height: 70px;
-    font-size: 18px;
+  /* 구분선 */
+  .card-gauge-section {
+    padding-top: 8px;
+    margin-top: 4px;
+    gap: 6px;
   }
 
   .gauge-label {
-    font-size: 12px;
+    font-size: 11px;
   }
 
-  /* 추세 섹션 */
+  /* 원그래프 크기 대폭 축소 */
+  .gauge-circle {
+    width: 64px !important;
+    height: 64px !important;
+  }
+
+  .gauge-center {
+    width: 48px !important;
+    height: 48px !important;
+    font-size: 13px !important;
+  }
+
+  /* 추세 바 축소 */
   .card-trend-section {
-    .trend-label {
-      font-size: 12px;
-    }
-
-    .trend-bars {
-      height: 60px;
-    }
-
-    .trend {
-      font-size: 12px;
-    }
+    gap: 4px;
   }
 
-  /* 학생 목록 섹션 */
+  .trend-label-text {
+    font-size: 11px;
+  }
+
+  .trend-bars {
+    height: 40px !important;
+    gap: 3px !important;
+  }
+
+  .trend {
+    font-size: 11px;
+  }
+
+  .trend-label {
+    font-size: 11px;
+  }
+
+  /* 하단 학생 목록은 스크롤로 확인 */
   .students-section {
+    margin-top: 12px;
+
     .section-header {
       flex-direction: column;
       align-items: flex-start;
