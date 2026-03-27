@@ -225,6 +225,43 @@
             </table>
           </div>
         </div>
+
+        <!-- 모바일용 카드 목록 -->
+        <div class="students-mobile-list" style="display:none">
+          <div
+            v-for="student in currentStudents"
+            :key="student.id"
+            class="student-mobile-card"
+          >
+            <div class="mobile-card-top">
+              <span class="mobile-name">{{ student.name }}</span>
+              <span class="mobile-progress">{{ student.progress }}%</span>
+            </div>
+            <div style="height:6px; border-radius:3px; background:#f0f0f0; margin:8px 0;">
+              <div
+                :style="{
+                  width: student.progress + '%',
+                  height: '100%',
+                  borderRadius: '3px',
+                  backgroundColor: student.color
+                }"
+              ></div>
+            </div>
+            <div class="mobile-card-bottom">
+              <span style="font-size:12px; color:#9A9A9A">{{ student.lastStudyDate }}</span>
+              <button
+                class="btn-send-icon"
+                :class="{ active: student.smsActive }"
+                @click="toggleSms(student)"
+                style="padding:4px 10px; font-size:12px;"
+              >
+                <svg width="16" height="12" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M18 0H2C0.9 0 0.00999999 0.9 0.00999999 2L0 14C0 15.1 0.9 16 2 16H18C19.1 16 20 15.1 20 14V2C20 0.9 19.1 0 18 0ZM18 4L10 9L2 4V2L10 7L18 2V4Z" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
       </WrapContent>
     </div>
 
@@ -1237,6 +1274,52 @@ const confirmSend = () => {
         font-size: 12px;
       }
     }
+  }
+
+  /* 기존 테이블 숨김 */
+  .students-table-wrapper,
+  .table-body-scroll {
+    display: none !important;
+  }
+
+  /* 모바일 카드 목록 표시 */
+  .students-mobile-list {
+    display: flex !important;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .student-mobile-card {
+    background: white;
+    border-radius: 10px;
+    padding: 14px 16px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  }
+
+  .mobile-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+  }
+
+  .mobile-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #292929;
+  }
+
+  .mobile-progress {
+    font-size: 15px;
+    font-weight: 700;
+    color: #3d90ef;
+  }
+
+  .mobile-card-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 6px;
   }
 
   /* 테이블 헤더 및 행 */

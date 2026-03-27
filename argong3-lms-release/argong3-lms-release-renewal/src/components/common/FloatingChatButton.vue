@@ -58,13 +58,27 @@ export default {
   },
   mounted() {
     const pos = this.getPositionFromLocalStorage();
+    const isMobile = window.innerWidth <= 767;
+
     if (pos) {
       this.top = pos.top;
       this.left = pos.left;
+
+      // 모바일에서 하단 네비 위로 조정
+      if (isMobile && this.top > window.innerHeight - 140) {
+        this.top = window.innerHeight - 140;
+      }
     } else {
-      // 우측 상단 기본 위치
-      this.top = 100; // top: 100px
-      this.left = window.innerWidth - 92; // right: 32px
+      // 기본 위치
+      if (isMobile) {
+        // 모바일: 우측 하단 (하단 네비 위)
+        this.top = window.innerHeight - 140;
+        this.left = window.innerWidth - 72;
+      } else {
+        // PC: 우측 상단
+        this.top = 100;
+        this.left = window.innerWidth - 92;
+      }
     }
 
     this.$emit("update-position", { top: this.top, left: this.left });
@@ -196,5 +210,23 @@ export default {
 .floating-button:hover .hover-tooltip {
   opacity: 1;
   visibility: visible;
+}
+
+/* 모바일 반응형 */
+@media (max-width: 767px) {
+  .floating-button {
+    width: 48px;
+    height: 48px;
+  }
+
+  .floating-button svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  /* 모바일에서 툴팁 숨김 */
+  .hover-tooltip {
+    display: none;
+  }
 }
 </style>

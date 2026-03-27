@@ -1946,14 +1946,29 @@ const getSubjectTooltip = (levelRange) => {
     gap: 16px;
   }
 
+  .curriculum-card {
+    overflow: visible !important;
+  }
+
   .level-distribution {
     width: 100%;
+    margin-top: 16px;
+  }
+
+  .distribution-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .curriculum-timeline {
+    overflow-x: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
   }
 
   .timeline-container {
-    height: 180px;
-    overflow-x: auto;
-    overflow-y: hidden;
+    min-width: 500px;
+    height: 200px;
+    overflow: visible !important;
   }
 
   .timeline-item {
@@ -1962,22 +1977,36 @@ const getSubjectTooltip = (levelRange) => {
 
   /* 과목 선택 바 */
   .subject-selection-container {
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 12px;
     padding: 16px;
   }
 
+  .subject-label {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
   .subject-tabs {
-    flex-wrap: wrap;
-    gap: 6px;
-    width: 100%;
+    display: flex;
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    gap: 8px;
+    padding-bottom: 4px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   .subject-tab {
+    flex-shrink: 0;
     padding: 8px 16px;
     font-size: 13px;
-    flex: 1;
-    min-width: 100px;
+    white-space: nowrap;
+    min-width: auto;
   }
 
   .avg-progress-bar-horizontal {
@@ -2028,11 +2057,14 @@ const getSubjectTooltip = (levelRange) => {
     display: none !important;
   }
 
-  /* 테이블 뷰 숨기기, 카드 뷰만 표시 */
-  .table-container {
+  /* 테이블 완전 숨김 */
+  table.table-style,
+  .table-container,
+  .table-body-scroll {
     display: none !important;
   }
 
+  /* 카드 그리드 강제 표시 */
   .card-grid {
     display: grid !important;
     grid-template-columns: 1fr 1fr;
