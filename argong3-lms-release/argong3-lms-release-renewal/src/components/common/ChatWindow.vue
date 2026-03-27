@@ -65,6 +65,24 @@ export default {
   },
   computed: {
     chatStyle() {
+      // 모바일: 화면 중앙 고정
+      if (window.innerWidth <= 767) {
+        return {
+          position: "fixed",
+          top: "60px",
+          left: "0",
+          right: "0",
+          bottom: "70px",
+          width: "100%",
+          maxWidth: "100%",
+          height: "auto",
+          transform: "none",
+          borderRadius: "0",
+          "z-index": 999,
+        };
+      }
+
+      // PC: 기존 로직
       const margin = 10;
       const width = 800;
       const height = 600;
@@ -338,5 +356,42 @@ export default {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+/* 모바일 최적화 */
+@media (max-width: 767px) {
+  .chat-window {
+    position: fixed !important;
+    top: 60px !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 70px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    transform: none !important;
+    border-radius: 0 !important;
+    z-index: 999 !important;
+  }
+
+  .chat-header {
+    border-radius: 0 !important;
+  }
+
+  .chat-messages {
+    padding: 10px !important;
+  }
+
+  .chat-input-area {
+    padding: 10px !important;
+  }
+
+  .chat-input-area input {
+    font-size: 14px !important;
+  }
+
+  .chat-input-area button {
+    font-size: 12px !important;
+    padding: 6px 12px !important;
+  }
 }
 </style>

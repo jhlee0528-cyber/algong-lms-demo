@@ -374,12 +374,16 @@
                 class="msi-send"
                 :class="{ active: student.smsActive }"
                 @click="toggleSms(student)"
+                title="문자 발송"
               >
-                <svg width="16" height="13" viewBox="0 0 20 16"
-                     fill="currentColor" xmlns="http://www.w3.org/2000/svg"
-                     style="display:block;">
-                  <path fill="currentColor"
-                        d="M18 0H2C0.9 0 0 0.9 0 2L0 14C0 15.1 0.9 16 2 16H18C19.1 16 20 15.1 20 14V2C20 0.9 19.1 0 18 0ZM18 4L10 9L2 4V2L10 7L18 2V4Z"/>
+                <svg
+                  width="16" height="13"
+                  viewBox="0 0 20 16"
+                  xmlns="http://www.w3.org/2000/svg"
+                  style="display:block; fill:currentColor;">
+                  <path
+                    d="M18 0H2C0.9 0 0 0.9 0 2L0 14C0 15.1 0.9 16 2 16H18C19.1 16 20 15.1 20 14V2C20 0.9 19.1 0 18 0ZM18 4L10 9L2 4V2L10 7L18 2V4Z"
+                    fill="currentColor"/>
                 </svg>
               </button>
             </div>
@@ -2369,10 +2373,11 @@ const getSubjectTooltip = (levelRange) => {
     cursor: pointer !important;
     color: #9A9A9A !important;
     flex-shrink: 0 !important;
+    padding: 0 !important;
 
     svg {
-      fill: currentColor !important;
       display: block !important;
+      fill: currentColor !important;
     }
 
     &.active {

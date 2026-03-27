@@ -454,4 +454,123 @@ aside {
 .menu-btn__active {
   background-color: var(--main-blue);
 }
+
+/* 모바일 최적화 */
+@media (max-width: 767px) {
+  /* e-library 전체 컨테이너 */
+  .wrap {
+    padding: 12px !important;
+    padding-bottom: 80px !important;
+    overflow-x: hidden !important;
+  }
+
+  .inner {
+    min-width: unset !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+
+  /* 도서 설정 카드 */
+  aside {
+    width: 100% !important;
+    gap: 12px !important;
+  }
+
+  .card {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 16px !important;
+    gap: 12px !important;
+  }
+
+  .btn-wrap {
+    gap: 10px !important;
+  }
+
+  .lessonsetbtn {
+    padding: 14px 12px !important;
+    background-size: 5% !important;
+  }
+
+  /* 학생 독서 현황 카드 */
+  .scroll-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    box-sizing: border-box !important;
+  }
+
+  .title {
+    padding: 16px !important;
+  }
+
+  .card-content {
+    width: 100% !important;
+    height: 300px !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    box-sizing: border-box !important;
+  }
+
+  .content-btn {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    height: auto !important;
+    min-height: 70px !important;
+    padding: 10px 12px !important;
+  }
+
+  /* 메인 콘텐츠 영역 */
+  .library-content {
+    width: 100% !important;
+    max-width: 100% !important;
+    float: none !important;
+    margin-left: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .content-view {
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 도서 목록 그리드 */
+  .book-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+
+  /* 필터/검색 영역 */
+  .wrap-status-menu {
+    width: 100% !important;
+    height: auto !important;
+    border-radius: 12px !important;
+    padding: 4px !important;
+  }
+
+  .menu-btn__active,
+  .menu-btn__deactive {
+    padding: 8px 16px !important;
+    font-size: 12px !important;
+  }
+
+  /* 텍스트 크기 */
+  .headline3 {
+    font-size: 14px !important;
+  }
+
+  .headline2 {
+    font-size: 14px !important;
+  }
+
+  .body1 {
+    font-size: 13px !important;
+  }
+
+  .body2 {
+    font-size: 11px !important;
+  }
+}
 </style>
