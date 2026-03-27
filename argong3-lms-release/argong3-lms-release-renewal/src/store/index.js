@@ -8,6 +8,7 @@ import {
   getLanguage2,
   getExpireInfo
 } from '../api/api-list-2.js'
+import { getBranchReadingStats } from '../data/students.js'
 
 async function getServerLang() {
   const token = getSaveCookie('info')
@@ -128,13 +129,26 @@ export default createStore({
     expire: await getExpireData(),
     // 지점 관련
     currentBranch: '서울 금천구 1호점',
-    branchData: {
-      '서울 금천구 1호점': { total: 30, normal: 18, warning: 7, danger: 5, avgProgress: 72, participation: 85, participatingStudents: 25, totalStudents: 30, correctRate: 82, trend: 3.5, levels: [5,8,7,6,3,1] },
-      '서울 강남구 2호점': { total: 45, normal: 36, warning: 7, danger: 2, avgProgress: 88, participation: 96, participatingStudents: 43, totalStudents: 45, correctRate: 92, trend: 6.8, levels: [2,4,7,12,11,9] },
-      '서울 마포구 3호점': { total: 22, normal: 7, warning: 8, danger: 7, avgProgress: 52, participation: 68, participatingStudents: 15, totalStudents: 22, correctRate: 65, trend: -3.2, levels: [9,6,4,2,1,0] },
-      '경기 수원시 5호점': { total: 38, normal: 22, warning: 12, danger: 4, avgProgress: 73, participation: 86, participatingStudents: 33, totalStudents: 38, correctRate: 79, trend: 4.1, levels: [4,7,9,10,6,2] },
-      '부산 해운대구 9호점': { total: 35, normal: 25, warning: 8, danger: 2, avgProgress: 81, participation: 91, participatingStudents: 32, totalStudents: 35, correctRate: 86, trend: 5.3, levels: [3,5,8,10,7,2] }
-    }
+    branchData: (() => {
+      const branches = {
+        '서울 금천구 1호점': { total: 30, normal: 18, warning: 7, danger: 5, avgProgress: 72, participation: 85, participatingStudents: 25, totalStudents: 30, correctRate: 82, trend: 3.5, levels: [5,8,7,6,3,1] },
+        '서울 강남구 2호점': { total: 45, normal: 36, warning: 7, danger: 2, avgProgress: 88, participation: 96, participatingStudents: 43, totalStudents: 45, correctRate: 92, trend: 6.8, levels: [2,4,7,12,11,9] },
+        '서울 마포구 3호점': { total: 22, normal: 7, warning: 8, danger: 7, avgProgress: 52, participation: 68, participatingStudents: 15, totalStudents: 22, correctRate: 65, trend: -3.2, levels: [9,6,4,2,1,0] },
+        '경기 수원시 5호점': { total: 38, normal: 22, warning: 12, danger: 4, avgProgress: 73, participation: 86, participatingStudents: 33, totalStudents: 38, correctRate: 79, trend: 4.1, levels: [4,7,9,10,6,2] },
+        '부산 해운대구 9호점': { total: 35, normal: 25, warning: 8, danger: 2, avgProgress: 81, participation: 91, participatingStudents: 32, totalStudents: 35, correctRate: 86, trend: 5.3, levels: [3,5,8,10,7,2] }
+      };
+
+      // 각 지점에 독서 통계 추가
+      Object.keys(branches).forEach(branchName => {
+        const readingStats = getBranchReadingStats(branchName);
+        branches[branchName] = {
+          ...branches[branchName],
+          ...readingStats
+        };
+      });
+
+      return branches;
+    })()
   },
   getters: {
     logCheck(state) {

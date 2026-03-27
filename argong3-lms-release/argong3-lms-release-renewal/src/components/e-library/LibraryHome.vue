@@ -174,7 +174,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeMount } from "vue";
+import { ref, onMounted, onBeforeMount, watch, computed } from "vue";
 import {
   lessonInfo,
   lessonStudentInfo,
@@ -182,7 +182,7 @@ import {
   userInfo,
 } from "../../api/api-list";
 
-import { schoolinfo, getLibraryStudentList } from "../../api/api-list-2";
+import { schoolinfo, getLibraryStudentList as getLibraryStudentListAPI } from "../../api/api-list-2";
 
 import ourReadingComponent from "./bookinfo/OurReading.vue";
 import StudentReadingComponent from "./bookinfo/StudentReading.vue";
@@ -198,6 +198,9 @@ import store from "../../store";
 
 import { library_ko } from "../../assets/translate/ko";
 import { library_vt } from "../../assets/translate/vt";
+
+// 더미 데이터 import
+import { getLibraryStudentList as getDummyLibraryStudentList } from "../../data/students.js";
 
 const langlist = ref({
   ko: library_ko,
@@ -216,6 +219,24 @@ const selectedStudent = ref(null);
 const loading = ref(true);
 const school = ref({
   payPlan: "p",
+});
+
+// computed로 현재 지점 추적
+const currentBranch = computed(() => store.state.currentBranch);
+
+// 학생 목록 로드 함수
+const loadStudentList = () => {
+  // 더미 데이터 모드 사용
+  const useDummyData = true; // 실제 배포 시 false로 변경 가능
+
+  if (useDummyData) {
+    infos.value = getDummyLibraryStudentList(currentBranch.value);
+  }
+};
+
+// 지점 변경 시 학생 목록 새로고침
+watch(currentBranch, () => {
+  loadStudentList();
 });
 
 onBeforeMount(async () => {
@@ -239,13 +260,10 @@ onMounted(async () => {
     const res100 = await userInfo();
     userinfo.value = res100.data.data;
 
-    const studentData = await getLibraryStudentList();
-
-    infos.value = studentData.data.data;
-    infos.value = infos.value.sort(
-      (a, b) => a.attendanceNumber - b.attendanceNumber
-    );
+    // 더미 데이터로 학생 목록 로드
+    loadStudentList();
   } catch (error) {
+    console.error('Failed to load user info:', error);
   } finally {
     loading.value = false;
   }

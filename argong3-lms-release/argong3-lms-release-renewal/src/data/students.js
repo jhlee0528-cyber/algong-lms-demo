@@ -356,3 +356,192 @@ export function getStudentByAttendanceNumber(branch, attendanceNumber) {
   const students = getStudentsByBranch(branch);
   return students.find(s => s.attendanceNumber === attendanceNumber);
 }
+
+// ==================== E-Library 더미 데이터 ====================
+
+// 도서 코드 풀 (실제 알공 도서 코드 형식)
+const bookCodes = [
+  'A001', 'A002', 'A003', 'A004', 'A005', 'A006', 'A007', 'A008', 'A009', 'A010',
+  'B001', 'B002', 'B003', 'B004', 'B005', 'B006', 'B007', 'B008', 'B009', 'B010',
+  'C001', 'C002', 'C003', 'C004', 'C005', 'C006', 'C007', 'C008', 'C009', 'C010',
+  'D001', 'D002', 'D003', 'D004', 'D005', 'D006', 'D007', 'D008', 'D009', 'D010'
+];
+
+// 도서 제목 풀
+const bookTitles = [
+  'The Cat in the Hat', 'Green Eggs and Ham', 'Where the Wild Things Are',
+  'Charlotte\'s Web', 'The Very Hungry Caterpillar', 'Goodnight Moon',
+  'Brown Bear, Brown Bear', 'Curious George', 'The Giving Tree',
+  'If You Give a Mouse a Cookie', 'The Rainbow Fish', 'Corduroy',
+  'Harold and the Purple Crayon', 'The Snowy Day', 'Caps for Sale',
+  'Make Way for Ducklings', 'The Tale of Peter Rabbit', 'Madeline',
+  'Where the Sidewalk Ends', 'The Polar Express', 'Alexander and the Terrible Day',
+  'The Little Engine That Could', 'Chicka Chicka Boom Boom', 'The Gruffalo',
+  'Room on the Broom', 'Stick Man', 'The Tiger Who Came to Tea',
+  'We\'re Going on a Bear Hunt', 'Guess How Much I Love You', 'Owl Babies',
+  'Dear Zoo', 'The Little Prince', 'Alice in Wonderland', 'The Secret Garden',
+  'Treasure Island', 'Peter Pan', 'The Jungle Book', 'Oliver Twist',
+  'Tom Sawyer', 'Robinson Crusoe'
+];
+
+// 학생별 독서 데이터 생성
+function generateStudentReadingData(student) {
+  const readingCount = student.readingCount || 0;
+
+  if (readingCount === 0) {
+    return {
+      recentBooks: [],
+      completedBooks: [],
+      totalBooks: 0,
+      totalCompleted: 0,
+      totalReading: 0
+    };
+  }
+
+  // 완독 책 생성 (readingCount 기준)
+  const completedBooks = [];
+  const usedBookIndices = new Set();
+
+  for (let i = 0; i < readingCount; i++) {
+    let bookIndex;
+    do {
+      bookIndex = Math.floor(Math.random() * bookCodes.length);
+    } while (usedBookIndices.has(bookIndex));
+    usedBookIndices.add(bookIndex);
+
+    const completeCount = Math.floor(Math.random() * 3) + 1; // 1~3독
+    const daysAgo = Math.floor(Math.random() * 30); // 최근 30일 이내
+    const recentDate = new Date();
+    recentDate.setDate(recentDate.getDate() - daysAgo);
+
+    completedBooks.push({
+      bookCode: bookCodes[bookIndex],
+      bookTitle: bookTitles[bookIndex],
+      completeCount,
+      recentDate: recentDate.toISOString().split('T')[0],
+      totalPage: 20 + Math.floor(Math.random() * 30), // 20~50페이지
+      currentPage: null, // 완독 책은 currentPage null
+      progress: 100
+    });
+  }
+
+  // 읽고 있는 책 1~2권 추가 (status가 normal인 경우만)
+  const readingBooks = [];
+  if (student.status === 'normal' && Math.random() > 0.3) {
+    const numReading = Math.random() > 0.5 ? 1 : 2;
+
+    for (let i = 0; i < numReading; i++) {
+      let bookIndex;
+      do {
+        bookIndex = Math.floor(Math.random() * bookCodes.length);
+      } while (usedBookIndices.has(bookIndex));
+      usedBookIndices.add(bookIndex);
+
+      const totalPage = 20 + Math.floor(Math.random() * 30);
+      const currentPage = Math.floor(totalPage * (0.2 + Math.random() * 0.6)); // 20%~80% 진행
+      const progress = Math.floor((currentPage / totalPage) * 100);
+      const daysAgo = Math.floor(Math.random() * 7); // 최근 7일 이내
+      const recentDate = new Date();
+      recentDate.setDate(recentDate.getDate() - daysAgo);
+
+      readingBooks.push({
+        bookCode: bookCodes[bookIndex],
+        bookTitle: bookTitles[bookIndex],
+        completeCount: 0,
+        recentDate: recentDate.toISOString().split('T')[0],
+        totalPage,
+        currentPage,
+        progress
+      });
+    }
+  }
+
+  // 최근 읽은 책 3권 (완독 + 읽는중 합쳐서 최신순)
+  const allBooks = [...completedBooks, ...readingBooks].sort((a, b) =>
+    new Date(b.recentDate) - new Date(a.recentDate)
+  );
+  const recentBooks = allBooks.slice(0, 3);
+
+  return {
+    recentBooks,
+    completedBooks,
+    totalBooks: completedBooks.length + readingBooks.length,
+    totalCompleted: completedBooks.length,
+    totalReading: readingBooks.length
+  };
+}
+
+// 지점별 독서 통계 데이터 생성
+function generateBranchReadingStats(branchName) {
+  const students = getStudentsByBranch(branchName);
+
+  if (!students || students.length === 0) {
+    return {
+      totalBooks: 0,
+      avgBooksPerStudent: 0,
+      topReader: null,
+      popularBooks: []
+    };
+  }
+
+  // 전체 읽은 책 수
+  const totalBooks = students.reduce((sum, s) => sum + (s.readingCount || 0), 0);
+
+  // 학생당 평균 읽은 책 수
+  const avgBooksPerStudent = (totalBooks / students.length).toFixed(1);
+
+  // 최다 독서 학생
+  const topReader = students.reduce((top, current) => {
+    const currentCount = current.readingCount || 0;
+    const topCount = top?.readingCount || 0;
+    return currentCount > topCount ? current : top;
+  }, null);
+
+  // 인기 도서 Top 3 생성 (bookCode 기준)
+  const bookReadCounts = {};
+  students.forEach(student => {
+    const readingData = generateStudentReadingData(student);
+    readingData.completedBooks.forEach(book => {
+      if (!bookReadCounts[book.bookCode]) {
+        bookReadCounts[book.bookCode] = {
+          bookCode: book.bookCode,
+          bookTitle: book.bookTitle,
+          readCount: 0
+        };
+      }
+      bookReadCounts[book.bookCode].readCount += book.completeCount;
+    });
+  });
+
+  const popularBooks = Object.values(bookReadCounts)
+    .sort((a, b) => b.readCount - a.readCount)
+    .slice(0, 3);
+
+  return {
+    totalBooks,
+    avgBooksPerStudent: parseFloat(avgBooksPerStudent),
+    topReader,
+    popularBooks
+  };
+}
+
+// E-Library용 헬퍼 함수들
+export function getStudentReadingData(studentId) {
+  const student = getStudentById(studentId);
+  if (!student) return null;
+  return generateStudentReadingData(student);
+}
+
+export function getBranchReadingStats(branchName) {
+  return generateBranchReadingStats(branchName);
+}
+
+export function getLibraryStudentList(branchName) {
+  const students = getStudentsByBranch(branchName);
+  return students.map(student => ({
+    userId: student.id,
+    attendanceNumber: student.attendanceNumber,
+    name: student.name,
+    readingCount: student.readingCount || 0
+  }));
+}
