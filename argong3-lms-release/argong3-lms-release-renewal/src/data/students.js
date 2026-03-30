@@ -367,11 +367,16 @@ function seededRandom(seed) {
 
 // 학생 ID를 숫자 시드로 변환
 function getStudentSeed(studentId) {
+  // undefined, null, 빈값 방어
+  if (!studentId && studentId !== 0) return 42; // 기본 시드값
+
   if (typeof studentId === 'number') return studentId;
+
   // 문자열 ID를 숫자로 변환
+  const idStr = String(studentId); // 어떤 타입이든 문자열로 변환
   let hash = 0;
-  for (let i = 0; i < studentId.length; i++) {
-    const char = studentId.charCodeAt(i);
+  for (let i = 0; i < idStr.length; i++) {
+    const char = idStr.charCodeAt(i);
     hash = ((hash << 5) - hash) + char;
     hash = hash & hash; // Convert to 32bit integer
   }

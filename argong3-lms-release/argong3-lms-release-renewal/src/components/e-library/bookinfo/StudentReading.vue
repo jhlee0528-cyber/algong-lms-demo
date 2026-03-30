@@ -413,7 +413,14 @@ const backgroundVars = (bookCode) => {
 // };
 
 const changeData = async (id) => {
-  userId.value = props.student.id;
+  // ID가 없을 경우를 대비한 안전한 추출
+  const studentId = id
+                 || props.student?.userId
+                 || props.student?.id
+                 || props.student?.attendanceNumber
+                 || 1; // 최후 fallback
+
+  userId.value = studentId;
   name.value = props.student.name;
 
   if (content.value === "all") {
@@ -429,13 +436,13 @@ const changeData = async (id) => {
 
   if (useDummyData) {
     // 더미 데이터 사용
-    const res = getStudentRacingResult(id);
+    const res = getStudentRacingResult(studentId);
     perfect.value = res.perfect || 0;
     good.value = res.good || 0;
     notbad.value = res.notbad || 0;
 
     if (store.state.lang === "ko") {
-      const res2 = getStudentLibraryLessonProgress(id);
+      const res2 = getStudentLibraryLessonProgress(studentId);
       let arr = [];
       for (let i = 0; i < res2.length; i++) {
         arr.push({
@@ -446,7 +453,7 @@ const changeData = async (id) => {
       progressData.value = arr;
     }
 
-    const res3 = getStudentLevelProgress(id);
+    const res3 = getStudentLevelProgress(studentId);
     levelData.value = [
       { name: "Level K", value: res3["-1"] },
       { name: "Starter", value: res3["0"] },
@@ -457,15 +464,15 @@ const changeData = async (id) => {
       { name: "Level 5", value: res3["5"] },
     ];
 
-    const res4 = getStudentRecentBooks(id);
+    const res4 = getStudentRecentBooks(studentId);
     recentBooks.value = res4;
 
-    const res5 = getStudentAllReadInfo(id);
+    const res5 = getStudentAllReadInfo(studentId);
     allReadInfo.value = res5;
 
     const branchName = store.state.currentBranch;
     const res6 = getClassMonthAverageUsage(branchName);
-    const res7 = getStudentMonthUsage(id);
+    const res7 = getStudentMonthUsage(studentId);
 
     classUsage.value = res6;
     studentUsage.value = res7;
@@ -669,7 +676,8 @@ function selectBook(bookCode, index) {
 onBeforeMount(() => {});
 
 onMounted(() => {
-  changeData(props.student.id);
+  const studentId = props.student?.userId || props.student?.id || 1;
+  changeData(studentId);
   renderCharts();
 });
 
@@ -692,10 +700,12 @@ onUnmounted(() => {
 });
 
 watch(
-  () => props.student.id,
+  () => props.student?.userId || props.student?.id,
   async (id) => {
-    content.value = "summary";
-    changeData(id);
+    if (id) {
+      content.value = "summary";
+      changeData(id);
+    }
   }
 );
 
