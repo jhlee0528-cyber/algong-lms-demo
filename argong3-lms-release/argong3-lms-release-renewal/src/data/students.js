@@ -53,17 +53,27 @@ function getLevelGroup(level) {
   return 'Lv.1-6';
 }
 
+// 간단한 시드 기반 난수 함수 (학생 기본 데이터용)
+function simpleSeededRandom(seed) {
+  const x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+}
+
 // 학생 데이터 생성 헬퍼 함수
 function createStudent(branchCode, attendanceNumber, config) {
   const { name, gender, level, status, finishedPercent, correctPercent, studyTime, readingCount, lastStudyDate } = config;
   const levelGroup = getLevelGroup(level);
   const subjects = levelGroupMap[levelGroup].subjects;
 
-  // 과목별 진도 (학습진행률 기준 ±10% 랜덤 변동)
-  const subjectData = subjects.map(subjectName => ({
-    name: subjectName,
-    progress: Math.min(100, Math.max(0, finishedPercent + (Math.random() * 20 - 10)))
-  }));
+  // 과목별 진도 (학습진행률 기준 ±10% 시드 기반 변동)
+  const subjectData = subjects.map((subjectName, index) => {
+    const seed = attendanceNumber * 100 + index;
+    const variation = simpleSeededRandom(seed) * 20 - 10; // -10 ~ +10
+    return {
+      name: subjectName,
+      progress: Math.min(100, Math.max(0, finishedPercent + variation))
+    };
+  });
 
   // 피드백 선택
   const feedbacks = feedbackPool[status];
@@ -149,10 +159,10 @@ export const branchStudents = {
         gender: i % 2 === 0 ? 'M' : 'F',
         level,
         status: 'normal',
-        finishedPercent: 75 + Math.floor(Math.random() * 20),
-        correctPercent: 80 + Math.floor(Math.random() * 15),
-        studyTime: 20 + Math.floor(Math.random() * 15),
-        readingCount: 3 + Math.floor(Math.random() * 5),
+        finishedPercent: 75 + Math.floor(simpleSeededRandom((i + 1) * 1000 + 1) * 20),
+        correctPercent: 80 + Math.floor(simpleSeededRandom((i + 1) * 1000 + 2) * 15),
+        studyTime: 20 + Math.floor(simpleSeededRandom((i + 1) * 1000 + 3) * 15),
+        readingCount: 3 + Math.floor(simpleSeededRandom((i + 1) * 1000 + 4) * 5),
         lastStudyDate: ['2026-03-27', '2026-03-26', '2026-03-25'][i % 3]
       });
     }),
@@ -165,10 +175,10 @@ export const branchStudents = {
         gender: i % 2 === 0 ? 'M' : 'F',
         level: 13 + i,
         status: 'warning',
-        finishedPercent: 45 + Math.floor(Math.random() * 20),
-        correctPercent: 58 + Math.floor(Math.random() * 12),
-        studyTime: 11 + Math.floor(Math.random() * 7),
-        readingCount: 1 + Math.floor(Math.random() * 2),
+        finishedPercent: 45 + Math.floor(simpleSeededRandom(idx * 1000 + 1) * 20),
+        correctPercent: 58 + Math.floor(simpleSeededRandom(idx * 1000 + 2) * 12),
+        studyTime: 11 + Math.floor(simpleSeededRandom(idx * 1000 + 3) * 7),
+        readingCount: 1 + Math.floor(simpleSeededRandom(idx * 1000 + 4) * 2),
         lastStudyDate: ['2026-03-25', '2026-03-24', '2026-03-23'][i % 3]
       });
     }),
@@ -196,10 +206,10 @@ export const branchStudents = {
         gender: i % 2 === 0 ? 'M' : 'F',
         level: [6, 7, 10, 11, 14, 15, 16, 18][i],
         status: 'warning',
-        finishedPercent: 42 + Math.floor(Math.random() * 25),
-        correctPercent: 56 + Math.floor(Math.random() * 15),
-        studyTime: 10 + Math.floor(Math.random() * 8),
-        readingCount: 1 + Math.floor(Math.random() * 2),
+        finishedPercent: 42 + Math.floor(simpleSeededRandom(idx * 1000 + 1) * 25),
+        correctPercent: 56 + Math.floor(simpleSeededRandom(idx * 1000 + 2) * 15),
+        studyTime: 10 + Math.floor(simpleSeededRandom(idx * 1000 + 3) * 8),
+        readingCount: 1 + Math.floor(simpleSeededRandom(idx * 1000 + 4) * 2),
         lastStudyDate: ['2026-03-25', '2026-03-24', '2026-03-23', '2026-03-22'][i % 4]
       });
     }),
@@ -212,10 +222,10 @@ export const branchStudents = {
         gender: i % 2 === 0 ? 'M' : 'F',
         level: [12, 13, 17, 19, 20, 21, 23][i],
         status: 'danger',
-        finishedPercent: 12 + Math.floor(Math.random() * 25),
-        correctPercent: 36 + Math.floor(Math.random() * 16),
-        studyTime: 3 + Math.floor(Math.random() * 7),
-        readingCount: Math.floor(Math.random() * 2),
+        finishedPercent: 12 + Math.floor(simpleSeededRandom(idx * 1000 + 1) * 25),
+        correctPercent: 36 + Math.floor(simpleSeededRandom(idx * 1000 + 2) * 16),
+        studyTime: 3 + Math.floor(simpleSeededRandom(idx * 1000 + 3) * 7),
+        readingCount: Math.floor(simpleSeededRandom(idx * 1000 + 4) * 2),
         lastStudyDate: ['2026-03-20', '2026-03-19', '2026-03-18', '2026-03-17'][i % 4]
       });
     })
@@ -242,10 +252,10 @@ export const branchStudents = {
         gender: i % 2 === 0 ? 'M' : 'F',
         level,
         status: 'normal',
-        finishedPercent: 72 + Math.floor(Math.random() * 22),
-        correctPercent: 77 + Math.floor(Math.random() * 16),
-        studyTime: 19 + Math.floor(Math.random() * 15),
-        readingCount: 3 + Math.floor(Math.random() * 4),
+        finishedPercent: 72 + Math.floor(simpleSeededRandom((i + 1) * 1000 + 1) * 22),
+        correctPercent: 77 + Math.floor(simpleSeededRandom((i + 1) * 1000 + 2) * 16),
+        studyTime: 19 + Math.floor(simpleSeededRandom((i + 1) * 1000 + 3) * 15),
+        readingCount: 3 + Math.floor(simpleSeededRandom((i + 1) * 1000 + 4) * 4),
         lastStudyDate: ['2026-03-27', '2026-03-26', '2026-03-25'][i % 3]
       });
     }),
@@ -258,10 +268,10 @@ export const branchStudents = {
         gender: i % 2 === 0 ? 'M' : 'F',
         level: 7 + i,
         status: 'warning',
-        finishedPercent: 43 + Math.floor(Math.random() * 24),
-        correctPercent: 57 + Math.floor(Math.random() * 15),
-        studyTime: 11 + Math.floor(Math.random() * 7),
-        readingCount: 1 + Math.floor(Math.random() * 3),
+        finishedPercent: 43 + Math.floor(simpleSeededRandom(idx * 1000 + 1) * 24),
+        correctPercent: 57 + Math.floor(simpleSeededRandom(idx * 1000 + 2) * 15),
+        studyTime: 11 + Math.floor(simpleSeededRandom(idx * 1000 + 3) * 7),
+        readingCount: 1 + Math.floor(simpleSeededRandom(idx * 1000 + 4) * 3),
         lastStudyDate: ['2026-03-25', '2026-03-24', '2026-03-23'][i % 3]
       });
     }),
@@ -274,10 +284,10 @@ export const branchStudents = {
         gender: i % 2 === 0 ? 'M' : 'F',
         level: 20 + i,
         status: 'danger',
-        finishedPercent: 15 + Math.floor(Math.random() * 22),
-        correctPercent: 38 + Math.floor(Math.random() * 14),
-        studyTime: 4 + Math.floor(Math.random() * 6),
-        readingCount: Math.floor(Math.random() * 2),
+        finishedPercent: 15 + Math.floor(simpleSeededRandom(idx * 1000 + 1) * 22),
+        correctPercent: 38 + Math.floor(simpleSeededRandom(idx * 1000 + 2) * 14),
+        studyTime: 4 + Math.floor(simpleSeededRandom(idx * 1000 + 3) * 6),
+        readingCount: Math.floor(simpleSeededRandom(idx * 1000 + 4) * 2),
         lastStudyDate: ['2026-03-20', '2026-03-19', '2026-03-18'][i % 3]
       });
     })
@@ -304,10 +314,10 @@ export const branchStudents = {
         gender: i % 2 === 0 ? 'M' : 'F',
         level,
         status: 'normal',
-        finishedPercent: 76 + Math.floor(Math.random() * 19),
-        correctPercent: 81 + Math.floor(Math.random() * 14),
-        studyTime: 21 + Math.floor(Math.random() * 14),
-        readingCount: 3 + Math.floor(Math.random() * 5),
+        finishedPercent: 76 + Math.floor(simpleSeededRandom((i + 1) * 1000 + 1) * 19),
+        correctPercent: 81 + Math.floor(simpleSeededRandom((i + 1) * 1000 + 2) * 14),
+        studyTime: 21 + Math.floor(simpleSeededRandom((i + 1) * 1000 + 3) * 14),
+        readingCount: 3 + Math.floor(simpleSeededRandom((i + 1) * 1000 + 4) * 5),
         lastStudyDate: ['2026-03-27', '2026-03-26', '2026-03-25'][i % 3]
       });
     }),
@@ -320,10 +330,10 @@ export const branchStudents = {
         gender: i % 2 === 0 ? 'M' : 'F',
         level: 12 + i,
         status: 'warning',
-        finishedPercent: 46 + Math.floor(Math.random() * 21),
-        correctPercent: 59 + Math.floor(Math.random() * 13),
-        studyTime: 12 + Math.floor(Math.random() * 6),
-        readingCount: 1 + Math.floor(Math.random() * 3),
+        finishedPercent: 46 + Math.floor(simpleSeededRandom(idx * 1000 + 1) * 21),
+        correctPercent: 59 + Math.floor(simpleSeededRandom(idx * 1000 + 2) * 13),
+        studyTime: 12 + Math.floor(simpleSeededRandom(idx * 1000 + 3) * 6),
+        readingCount: 1 + Math.floor(simpleSeededRandom(idx * 1000 + 4) * 3),
         lastStudyDate: ['2026-03-25', '2026-03-24', '2026-03-23'][i % 3]
       });
     }),
@@ -609,9 +619,9 @@ export function getWeeklyRanking(branchName) {
   startDate.setDate(today.getDate() - 7);
 
   const ranking = students
-    .map(student => ({
+    .map((student, index) => ({
       name: student.name,
-      weeklyBooks: Math.floor(Math.random() * 3) + 1 // 주간 1~3권
+      weeklyBooks: Math.floor(simpleSeededRandom(getStudentSeed(student.id) + 9000) * 3) + 1 // 주간 1~3권
     }))
     .sort((a, b) => b.weeklyBooks - a.weeklyBooks)
     .slice(0, 10);
@@ -642,14 +652,14 @@ export function getClassWeeklyPopularBooks(branchName) {
 
 // 단원별 진행률 (12단원)
 export function getClassLibraryLessonProgress() {
-  return Array.from({ length: 12 }, () => Math.floor(Math.random() * 30) + 10);
+  return Array.from({ length: 12 }, (_, i) => Math.floor(simpleSeededRandom(8000 + i) * 30) + 10);
 }
 
 // 퀴즈 평균 (Perfect, Good, Not Bad)
 export function getClassQuizAverage() {
   const total = 100;
-  const perfect = Math.floor(Math.random() * 30) + 20; // 20~50%
-  const good = Math.floor(Math.random() * 30) + 30; // 30~60%
+  const perfect = Math.floor(simpleSeededRandom(8100) * 30) + 20; // 20~50%
+  const good = Math.floor(simpleSeededRandom(8200) * 30) + 30; // 30~60%
   const notbad = total - perfect - good;
 
   return { perfect, good, notbad };
@@ -661,7 +671,7 @@ export function getClassMonthAllUsage() {
     const currentMonth = new Date().getMonth();
     // 현재 월까지만 데이터 있고, 이후는 0
     if (i > currentMonth) return 0;
-    return Math.floor(Math.random() * 30) + 10; // 10~40권
+    return Math.floor(simpleSeededRandom(8300 + i) * 30) + 10; // 10~40권
   });
 }
 
