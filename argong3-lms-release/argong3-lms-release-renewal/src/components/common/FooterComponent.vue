@@ -120,4 +120,54 @@ footer ul.info {
     }
   }
 }
+
+/* 모바일 최적화 */
+@media (max-width: 767px) {
+  footer {
+    min-width: unset !important;
+    width: 100% !important;
+    padding: 20px 16px !important;
+    box-sizing: border-box !important;
+  }
+
+  footer ul {
+    flex-direction: column !important;
+    gap: 8px !important;
+    align-items: flex-start !important;
+    width: 100% !important;
+  }
+
+  footer ul.privacy {
+    align-items: center !important;
+    margin-bottom: 10px !important;
+
+    li {
+      font-size: 13px !important;
+    }
+  }
+
+  footer ul.info {
+    width: 100% !important;
+    overflow: hidden !important;
+
+    li {
+      width: 100% !important;
+      white-space: normal !important;
+      word-break: break-all !important;
+      font-size: 11px !important;
+      text-align: left !important;
+      padding-left: 0 !important;
+      line-height: 1.8 !important;
+
+      &::before {
+        display: none !important;
+      }
+    }
+  }
+
+  footer h3 {
+    font-size: 11px !important;
+    margin-top: 16px !important;
+  }
+}
 </style>

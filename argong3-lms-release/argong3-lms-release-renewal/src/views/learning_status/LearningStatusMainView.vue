@@ -2428,36 +2428,80 @@ const getSubjectTooltip = (levelRange) => {
     flex-shrink: 0;
   }
 
-  /* SMS 모달 */
+  /* SMS 모달 - 하단 시트 형식 */
   .modal-overlay {
-    padding: 16px;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    z-index: 9999 !important;
+    display: flex !important;
+    align-items: flex-end !important;
+    background: rgba(0, 0, 0, 0.5) !important;
+    padding: 0 !important;
   }
 
-  .sms-modal {
-    max-width: 95%;
-    max-height: 90vh;
+  .modal-container {
+    position: relative !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: 85vh !important;
+    height: auto !important;
+    border-radius: 20px 20px 0 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    transform: none !important;
+    margin: 0 !important;
+    background: white !important;
   }
 
-  .sms-header {
-    padding: 16px 20px;
+  .modal-header {
+    flex-shrink: 0 !important;
+    padding: 16px 20px !important;
+    border-bottom: 1px solid #f0f0f0 !important;
 
     h3 {
-      font-size: 16px;
+      font-size: 16px !important;
     }
   }
 
-  .sms-body {
-    padding: 16px 20px;
+  .modal-body {
+    flex: 1 !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding: 16px 20px !important;
+    max-height: calc(85vh - 120px) !important;
   }
 
-  .sms-footer {
-    padding: 16px 20px;
-    gap: 8px;
+  .modal-footer {
+    flex-shrink: 0 !important;
+    padding: 12px 16px !important;
+    border-top: 1px solid #f0f0f0 !important;
+    background: white !important;
+    display: flex !important;
+    gap: 8px !important;
+    justify-content: flex-end !important;
 
     button {
-      padding: 8px 16px;
-      font-size: 13px;
+      padding: 10px 16px !important;
+      font-size: 13px !important;
+      flex: 1 !important;
+      max-width: 120px !important;
     }
+  }
+
+  /* 카카오톡 스타일 말풍선 */
+  .kakao-bubble {
+    max-width: 100% !important;
+    word-break: break-word !important;
+    font-size: 13px !important;
+    line-height: 1.6 !important;
+    padding: 14px 16px !important;
   }
 
   /* 테이블 (모바일에서는 숨김 처리) */

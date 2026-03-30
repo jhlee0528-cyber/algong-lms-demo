@@ -269,10 +269,61 @@ header {
 /* 모바일 헤더 레이아웃 */
 @media (max-width: 767px) {
   .wrap-menu {
-    flex-wrap: nowrap !important;
-    gap: 4px !important;
-    padding: 8px 12px !important;
+    flex-wrap: wrap !important;
+    gap: 6px 8px !important;
+    padding: 6px 10px !important;
     align-items: center !important;
+  }
+
+  /* 1행: 로고 + 영어/수학 토글 */
+  .nav-wrap {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    order: 1 !important;
+    flex-shrink: 1 !important;
+  }
+
+  .small-logo {
+    width: 90px !important;
+    height: 32px !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* 영어/수학 토글 크기 축소 */
+  .subject-toggle {
+    display: flex !important;
+    gap: 2px !important;
+    padding: 3px !important;
+    background-color: #eaf4ff !important;
+    border-radius: 8px !important;
+    margin-left: 0 !important;
+    flex-shrink: 0 !important;
+
+    > div {
+      padding: 4px 8px !important;
+      border-radius: 6px !important;
+
+      p {
+        font-size: 11px !important;
+        margin: 0 !important;
+      }
+    }
+  }
+
+  /* PC 네비게이션 숨김 */
+  nav {
+    display: none !important;
+  }
+
+  /* 2행: 알공 교습소 + 지점 드롭다운 + 아이콘들 */
+  .setting-wrap {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    order: 2 !important;
+    width: 100% !important;
+    flex-shrink: 0 !important;
   }
 
   /* 알공 교습소 텍스트 */
@@ -280,35 +331,42 @@ header {
     white-space: nowrap !important;
     font-size: 11px !important;
     flex-shrink: 0 !important;
-  }
-
-  /* 설정/도움말 아이콘 */
-  .setting-wrap {
-    gap: 4px !important;
-    flex-shrink: 0 !important;
-  }
-
-  .setting,
-  .question {
-    width: 28px !important;
-    height: 28px !important;
-    background-size: contain !important;
-  }
-
-  /* 로그아웃 */
-  .logout {
-    width: 28px !important;
-    height: 28px !important;
-    background-size: contain !important;
+    margin: 0 !important;
   }
 
   /* 드롭다운 */
   .wrap_dropdown {
-    max-width: 120px !important;
+    flex: 1 !important;
+    max-width: 140px !important;
+    margin-left: 0 !important;
   }
 
   .dropdown {
+    width: 100% !important;
     font-size: 11px !important;
     padding: 4px 8px !important;
+    height: 28px !important;
+  }
+
+  .arrow {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  /* 설정/도움말 아이콘 */
+  .setting,
+  .question {
+    width: 24px !important;
+    height: 24px !important;
+    background-size: contain !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* 로그아웃 */
+  .logout {
+    width: 24px !important;
+    height: 24px !important;
+    background-size: contain !important;
+    flex-shrink: 0 !important;
   }
 }

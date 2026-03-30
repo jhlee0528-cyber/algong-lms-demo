@@ -220,7 +220,7 @@
       </div>
 
       <!-- 관리필요 학생 빠른 목록 -->
-      <WrapContent v-if="dummyData" class="students-list">
+      <WrapContent v-if="dummyData" class="students-list" style="overflow: visible; padding-bottom: 0;">
         <div class="list-header">
           <h4>{{ currentTitle }}</h4>
           <span class="list-count">{{ currentCount }}명</span>
@@ -272,7 +272,7 @@
         </div>
 
         <!-- 모바일용 카드 목록 -->
-        <div class="students-mobile-list" style="display:none">
+        <div class="students-mobile-list" style="display:none;">
           <div
             v-for="student in currentStudents"
             :key="student.id"
@@ -310,6 +310,9 @@
           </div>
         </div>
       </WrapContent>
+
+      <!-- 모바일 하단 네비 여백 -->
+      <div class="mobile-bottom-spacer"></div>
     </div>
 
     <!-- 문자발송 확인 모달 -->
@@ -1232,15 +1235,30 @@ const confirmSend = () => {
 }
 
 /* 모바일 반응형 */
+/* 모바일 하단 네비 여백 */
+.mobile-bottom-spacer {
+  display: none;
+}
+
 @media (max-width: 767px) {
+  /* 모바일 하단 네비 여백 표시 */
+  .mobile-bottom-spacer {
+    display: block !important;
+    height: 140px !important;
+    width: 100% !important;
+    flex-shrink: 0 !important;
+  }
+
   .dashboard-wrap {
-    height: 100vh;
-    overflow: hidden;
+    height: auto !important;
+    overflow: visible !important;
   }
 
   /* 대시보드 전체 */
   .dashboard-container {
-    padding: 8px 12px 70px !important;
+    height: auto !important;
+    overflow-y: visible !important;
+    padding: 8px 12px 140px !important;
   }
 
   .header-row {
@@ -1353,15 +1371,18 @@ const confirmSend = () => {
   .mobile-gauge-label {
     display: flex !important;
     justify-content: space-between !important;
+    align-items: center !important;
+    margin-bottom: 4px !important;
     font-size: 10px !important;
     color: #525252 !important;
-    margin-bottom: 4px !important;
+    line-height: 1 !important;
   }
 
   .mobile-gauge-value {
     font-size: 12px !important;
     font-weight: 700 !important;
     color: #292929 !important;
+    line-height: 1 !important;
   }
 
   .mobile-gauge-track {
@@ -1396,6 +1417,8 @@ const confirmSend = () => {
   /* 하단 학생 목록은 스크롤로 확인 */
   .students-section {
     margin-top: 8px !important;
+    padding-bottom: 140px !important;
+    margin-bottom: 0 !important;
 
     .section-header {
       flex-direction: column;
@@ -1428,6 +1451,28 @@ const confirmSend = () => {
     display: flex !important;
     flex-direction: column;
     gap: 8px !important;
+    padding-bottom: 20px !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* WrapContent 컨테이너도 */
+  .students-section .white-wrap,
+  .students-section [class*="wrap-content"] {
+    padding-bottom: 90px !important;
+  }
+
+  /* 이메일 텍스트 영역 (FooterComponent 대응) */
+  .footer-email,
+  .support-email,
+  [class*="email"],
+  footer ul.info li {
+    width: 100% !important;
+    text-align: center !important;
+    font-size: 11px !important;
+    padding: 8px 16px !important;
+    word-break: break-all !important;
+    white-space: normal !important;
+    overflow: visible !important;
   }
 
   .student-mobile-card {
@@ -1436,6 +1481,7 @@ const confirmSend = () => {
     padding: 12px 14px !important;
     margin: 0 !important;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    box-sizing: border-box !important;
   }
 
   .mobile-card-top {
@@ -1457,11 +1503,50 @@ const confirmSend = () => {
     color: #3d90ef;
   }
 
+  /* 프로그레스바 영역 */
+  .mobile-card-progress {
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 발송 버튼 영역 */
   .mobile-card-bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 6px;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    margin-top: 6px !important;
+  }
+
+  /* 날짜 텍스트는 좌측 */
+  .mobile-card-date {
+    flex: 1 !important;
+    font-size: 12px !important;
+    color: #9A9A9A !important;
+  }
+
+  /* 발송 버튼 우측 고정 */
+  .btn-send-icon {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    padding: 5px 10px !important;
+    border-radius: 6px !important;
+    border: 1.5px solid #e0e0e0 !important;
+    background: white !important;
+    font-size: 12px !important;
+    color: #525252 !important;
+    cursor: pointer !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    margin-left: auto !important;
+
+    &.active {
+      background: #258AFF !important;
+      border-color: #258AFF !important;
+      color: white !important;
+    }
   }
 
   /* 테이블 헤더 및 행 */
@@ -1517,36 +1602,81 @@ const confirmSend = () => {
     }
   }
 
-  /* SMS 모달 */
+  /* SMS 모달 - 하단 시트 형식 */
   .modal-overlay {
-    padding: 16px;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    z-index: 9999 !important;
+    display: flex !important;
+    align-items: flex-end !important;
+    background: rgba(0, 0, 0, 0.5) !important;
+    padding: 0 !important;
   }
 
   .modal-container {
-    max-width: 95%;
-    max-height: 90vh;
+    position: relative !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: 85vh !important;
+    height: auto !important;
+    border-radius: 20px 20px 0 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    transform: none !important;
+    margin: 0 !important;
+    background: white !important;
   }
 
   .modal-header {
-    padding: 16px 20px;
+    flex-shrink: 0 !important;
+    padding: 16px 20px !important;
+    border-bottom: 1px solid #f0f0f0 !important;
 
     h3 {
-      font-size: 16px;
+      font-size: 16px !important;
     }
   }
 
+  .modal-body,
   .modal-content {
-    padding: 16px 20px;
+    flex: 1 !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding: 16px 20px !important;
+    max-height: calc(85vh - 120px) !important;
   }
 
   .modal-footer {
-    padding: 16px 20px;
-    gap: 8px;
+    flex-shrink: 0 !important;
+    padding: 12px 16px !important;
+    border-top: 1px solid #f0f0f0 !important;
+    background: white !important;
+    display: flex !important;
+    gap: 8px !important;
+    justify-content: flex-end !important;
 
     button {
-      padding: 8px 16px;
-      font-size: 13px;
+      padding: 10px 16px !important;
+      font-size: 13px !important;
+      flex: 1 !important;
+      max-width: 120px !important;
     }
+  }
+
+  /* 카카오톡 스타일 말풍선 */
+  .kakao-bubble {
+    max-width: 100% !important;
+    word-break: break-word !important;
+    font-size: 13px !important;
+    line-height: 1.6 !important;
+    padding: 14px 16px !important;
   }
 }
 </style>
