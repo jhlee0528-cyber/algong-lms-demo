@@ -272,6 +272,19 @@ import {
 import { Chart, registerables } from "chart.js";
 import Library2 from "../Library2.vue";
 import { allbookinfo } from "../../../assets/bookinfo/allbookinfo.js";
+
+// API imports (주석처리 - 나중에 재연결 시 사용)
+// import {
+//   getStudentLevelProgress,
+//   getStudentLibraryLessonProgress,
+//   getStudentRacingResult,
+//   getStudentRecentBooks,
+//   getStudentAllReadInfo,
+//   getClassMonthAverageUsage,
+//   getStudentMonthUsage,
+// } from "../../../api/api-list-2";
+
+// 더미 데이터 imports
 import {
   getStudentLevelProgress,
   getStudentLibraryLessonProgress,
@@ -280,7 +293,8 @@ import {
   getStudentAllReadInfo,
   getClassMonthAverageUsage,
   getStudentMonthUsage,
-} from "../../../api/api-list-2";
+} from "../../../data/students.js";
+
 Chart.register(...registerables);
 
 import { bookKeyList } from "../../../assets/bookinfo/bookkey";
@@ -291,6 +305,9 @@ import store from "../../../store";
 
 import { library_ko } from "../../../assets/translate/ko";
 import { library_vt } from "../../../assets/translate/vt";
+
+// 더미 데이터 모드 플래그 (실제 배포 시 false로 변경)
+const useDummyData = true;
 
 const props = defineProps({
   student: {
@@ -401,7 +418,6 @@ const changeData = async (id) => {
 
   if (content.value === "all") {
     // 전체 독서 활동 API 호출
-
     return;
   }
 
@@ -411,57 +427,90 @@ const changeData = async (id) => {
     totalReading: Math.floor(Math.random() * 200) + 50,
   }));
 
-  const res = (await getStudentRacingResult(id)).data.data;
+  if (useDummyData) {
+    // 더미 데이터 사용
+    const res = getStudentRacingResult(id);
+    perfect.value = res.perfect || 0;
+    good.value = res.good || 0;
+    notbad.value = res.notbad || 0;
 
-  perfect.value = res.perfect || 0;
-  good.value = res.good || 0;
-  notbad.value = res.notbad || 0;
-
-  if (store.state.lang === "ko") {
-    const res2 = (await getStudentLibraryLessonProgress(id)).data.data;
-
-    let arr = [];
-
-    for (let i = 0; i < res2.length; i++) {
-      if (store.state.lang === "ko") {
+    if (store.state.lang === "ko") {
+      const res2 = getStudentLibraryLessonProgress(id);
+      let arr = [];
+      for (let i = 0; i < res2.length; i++) {
         arr.push({
           name: `${i + 1}단원`,
           value: res2[i],
         });
-      } else {
-        arr.push({
-          name: `Lesson${i + 1}`,
-          value: res2[i],
-        });
       }
+      progressData.value = arr;
     }
 
-    progressData.value = arr;
+    const res3 = getStudentLevelProgress(id);
+    levelData.value = [
+      { name: "Level K", value: res3["-1"] },
+      { name: "Starter", value: res3["0"] },
+      { name: "Level 1", value: res3["1"] },
+      { name: "Level 2", value: res3["2"] },
+      { name: "Level 3", value: res3["3"] },
+      { name: "Level 4", value: res3["4"] },
+      { name: "Level 5", value: res3["5"] },
+    ];
+
+    const res4 = getStudentRecentBooks(id);
+    recentBooks.value = res4;
+
+    const res5 = getStudentAllReadInfo(id);
+    allReadInfo.value = res5;
+
+    const branchName = store.state.currentBranch;
+    const res6 = getClassMonthAverageUsage(branchName);
+    const res7 = getStudentMonthUsage(id);
+
+    classUsage.value = res6;
+    studentUsage.value = res7;
+  } else {
+    // 실제 API 호출 (나중에 재연결 시 주석 해제)
+    // const res = (await getStudentRacingResult(id)).data.data;
+    // perfect.value = res.perfect || 0;
+    // good.value = res.good || 0;
+    // notbad.value = res.notbad || 0;
+    //
+    // if (store.state.lang === "ko") {
+    //   const res2 = (await getStudentLibraryLessonProgress(id)).data.data;
+    //   let arr = [];
+    //   for (let i = 0; i < res2.length; i++) {
+    //     arr.push({
+    //       name: `${i + 1}단원`,
+    //       value: res2[i],
+    //     });
+    //   }
+    //   progressData.value = arr;
+    // }
+    //
+    // const res3 = (await getStudentLevelProgress(id)).data.data;
+    // levelData.value = [
+    //   { name: "Level K", value: res3["-1"] },
+    //   { name: "Starter", value: res3["0"] },
+    //   { name: "Level 1", value: res3["1"] },
+    //   { name: "Level 2", value: res3["2"] },
+    //   { name: "Level 3", value: res3["3"] },
+    //   { name: "Level 4", value: res3["4"] },
+    //   { name: "Level 5", value: res3["5"] },
+    // ];
+    //
+    // const res4 = (await getStudentRecentBooks(id)).data.data;
+    // recentBooks.value = res4;
+    //
+    // const res5 = (await getStudentAllReadInfo(id)).data.data;
+    // allReadInfo.value = res5;
+    //
+    // const res6 = (await getClassMonthAverageUsage()).data.data;
+    // const res7 = (await getStudentMonthUsage(id)).data.data;
+    //
+    // classUsage.value = res6;
+    // studentUsage.value = res7;
   }
-
-  const res3 = (await getStudentLevelProgress(id)).data.data;
-
-  levelData.value = [
-    { name: "Level K", value: res3["-1"] },
-    { name: "Starter", value: res3["0"] },
-    { name: "Level 1", value: res3["1"] },
-    { name: "Level 2", value: res3["2"] },
-    { name: "Level 3", value: res3["3"] },
-    { name: "Level 4", value: res3["4"] },
-    { name: "Level 5", value: res3["5"] },
-  ];
-
-  const res4 = (await getStudentRecentBooks(id)).data.data;
-  recentBooks.value = res4;
-
-  const res5 = (await getStudentAllReadInfo(id)).data.data;
-  allReadInfo.value = res5;
-
-  const res6 = (await getClassMonthAverageUsage()).data.data;
-  const res7 = (await getStudentMonthUsage(id)).data.data;
-
-  classUsage.value = res6;
-  studentUsage.value = res7;
 
   renderCharts();
 };

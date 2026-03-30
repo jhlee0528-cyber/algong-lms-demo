@@ -264,8 +264,21 @@
 </template>
 
 <script>
-import { onMounted, onUnmounted, onActivated, ref, onBeforeMount } from "vue";
+import { onMounted, onUnmounted, onActivated, ref, onBeforeMount, computed, watch } from "vue";
 import { Chart, registerables } from "chart.js";
+
+// API imports (주석처리 - 나중에 재연결 시 사용)
+// import {
+//   getClassAllReadInfo,
+//   getClassLibraryLessonProgress,
+//   getClassMonthAllUsage,
+//   getClassPopularBooks,
+//   getClassQuizAverage,
+//   getWeeklyRanking,
+//   getClassWeeklyPopularBooks,
+// } from "../../../api/api-list-2";
+
+// 더미 데이터 imports
 import {
   getClassAllReadInfo,
   getClassLibraryLessonProgress,
@@ -274,7 +287,7 @@ import {
   getClassQuizAverage,
   getWeeklyRanking,
   getClassWeeklyPopularBooks,
-} from "../../../api/api-list-2";
+} from "../../../data/students.js";
 
 import { bookKeyList } from "../../../assets/bookinfo/bookkey";
 
@@ -286,6 +299,9 @@ import { library_vt } from "../../../assets/translate/vt";
 import store from "../../../store";
 
 Chart.register(...registerables);
+
+// 더미 데이터 모드 플래그 (실제 배포 시 false로 변경)
+const useDummyData = true;
 
 export default {
   data() {
@@ -311,25 +327,46 @@ export default {
     };
   },
   async created() {
-    const res = await getClassAllReadInfo();
-    this.allActivity = res.data.data;
-    //const res2 = (await getClassPopularBooks()).data.data;
-    //this.popularbooks = res2;
-    this.changePopularFlag("week");
-
-    // 주간 독서 랭킹 추가
-    const res3 = (await getWeeklyRanking()).data.data;
-
-    //const res4 = (await getClassWeeklyPopularBooks()).data.data;
-
-    this.ranking = res3.ranking;
-    this.startDate = this.prettyDate(res3.start);
-    this.endDate = this.prettyDate(res3.end);
+    this.loadBranchData();
+  },
+  computed: {
+    currentBranch() {
+      return store.state.currentBranch;
+    }
+  },
+  watch: {
+    currentBranch() {
+      this.loadBranchData();
+    }
   },
   components: {
     BookModal,
   },
   methods: {
+    async loadBranchData() {
+      const branchName = store.state.currentBranch;
+
+      if (useDummyData) {
+        // 더미 데이터 사용
+        this.allActivity = getClassAllReadInfo(branchName);
+        this.changePopularFlag("week");
+
+        const res3 = getWeeklyRanking(branchName);
+        this.ranking = res3.ranking;
+        this.startDate = this.prettyDate(res3.start);
+        this.endDate = this.prettyDate(res3.end);
+      } else {
+        // 실제 API 호출 (나중에 재연결 시 주석 해제)
+        // const res = await getClassAllReadInfo();
+        // this.allActivity = res.data.data;
+        // this.changePopularFlag("week");
+        //
+        // const res3 = (await getWeeklyRanking()).data.data;
+        // this.ranking = res3.ranking;
+        // this.startDate = this.prettyDate(res3.start);
+        // this.endDate = this.prettyDate(res3.end);
+      }
+    },
     backgroundVars(bookCode) {
       const imageUrl = `https://argame3.blob.core.windows.net/library-book-data/book_thumbnail/${bookCode}.jpg`;
       return {
@@ -350,23 +387,36 @@ export default {
     },
     async changePopularFlag(text) {
       this.popularFlag = text;
+      const branchName = store.state.currentBranch;
 
-      if (text === "week") {
-        if (!this.popularbooksWeekly.length) {
-          const res4 = (await getClassWeeklyPopularBooks()).data.data;
-
-          this.popularbooksWeekly = res4;
+      if (useDummyData) {
+        // 더미 데이터 사용
+        if (text === "week") {
+          if (!this.popularbooksWeekly.length) {
+            this.popularbooksWeekly = getClassWeeklyPopularBooks(branchName);
+          }
+          this.popularbooks = this.popularbooksWeekly;
+        } else {
+          if (!this.popularbooksAll.length) {
+            this.popularbooksAll = getClassPopularBooks(branchName);
+          }
+          this.popularbooks = this.popularbooksAll;
         }
-
-        this.popularbooks = this.popularbooksWeekly;
       } else {
-        if (!this.popularbooksAll.length) {
-          const res2 = (await getClassPopularBooks()).data.data;
-
-          this.popularbooksAll = res2;
-        }
-
-        this.popularbooks = this.popularbooksAll;
+        // 실제 API 호출 (나중에 재연결 시 주석 해제)
+        // if (text === "week") {
+        //   if (!this.popularbooksWeekly.length) {
+        //     const res4 = (await getClassWeeklyPopularBooks()).data.data;
+        //     this.popularbooksWeekly = res4;
+        //   }
+        //   this.popularbooks = this.popularbooksWeekly;
+        // } else {
+        //   if (!this.popularbooksAll.length) {
+        //     const res2 = (await getClassPopularBooks()).data.data;
+        //     this.popularbooksAll = res2;
+        //   }
+        //   this.popularbooks = this.popularbooksAll;
+        // }
       }
     },
     selectBook(bookCode) {
@@ -391,36 +441,42 @@ export default {
         totalReading: 0,
       }));
 
-      if (store.state.lang === "ko") {
-        progressData.value = Array.from({ length: 12 }, (_, i) => ({
-          name: `${i + 1}단원`,
-          value: 0,
-        }));
-      } else {
-        progressData.value = Array.from({ length: 12 }, (_, i) => ({
-          name: `Lesson${i + 1}`,
-          value: 0,
-        }));
-      }
-
-      if (store.state.lang === "ko") {
-        let arr = [];
-        const res2 = (await getClassLibraryLessonProgress()).data.data;
-        for (let i = 0; i < res2.length; i++) {
-          if (store.state.lang === "ko") {
+      if (useDummyData) {
+        // 더미 데이터 사용
+        if (store.state.lang === "ko") {
+          const res2 = getClassLibraryLessonProgress();
+          let arr = [];
+          for (let i = 0; i < res2.length; i++) {
             arr.push({
               name: `${i + 1}단원`,
               value: res2[i],
             });
-          } else {
-            arr.push({
-              name: `Lesson${i + 1}`,
-              value: res2[i],
-            });
           }
+          progressData.value = arr;
+        } else {
+          progressData.value = Array.from({ length: 12 }, (_, i) => ({
+            name: `Lesson${i + 1}`,
+            value: 0,
+          }));
         }
-
-        progressData.value = arr;
+      } else {
+        // 실제 API 호출 (나중에 재연결 시 주석 해제)
+        // if (store.state.lang === "ko") {
+        //   const res2 = (await getClassLibraryLessonProgress()).data.data;
+        //   let arr = [];
+        //   for (let i = 0; i < res2.length; i++) {
+        //     arr.push({
+        //       name: `${i + 1}단원`,
+        //       value: res2[i],
+        //     });
+        //   }
+        //   progressData.value = arr;
+        // } else {
+        //   progressData.value = Array.from({ length: 12 }, (_, i) => ({
+        //     name: `Lesson${i + 1}`,
+        //     value: 0,
+        //   }));
+        // }
       }
     }
 
@@ -429,29 +485,33 @@ export default {
     const notbad = ref(0);
 
     async function setPieData() {
-      const res = (await getClassQuizAverage()).data.data;
-      // const res = {
-      //   perfect: null,
-      //   good: null,
-      //   notbad: null,
-      // };
+      if (useDummyData) {
+        // 더미 데이터 사용
+        const res = getClassQuizAverage();
+        perfect.value = res.perfect || 0;
+        good.value = res.good || 0;
+        notbad.value = res.notbad || 0;
 
-      perfect.value = res.perfect || 0;
-      good.value = res.good || 0;
-      notbad.value = res.notbad || 0;
-
-      const _perfect = res.perfect || 0;
-      const _good = res.good || 0;
-      const _notbad = res.notbad || 0;
-
-      return { _perfect, _good, _notbad };
+        return { _perfect: res.perfect || 0, _good: res.good || 0, _notbad: res.notbad || 0 };
+      } else {
+        // 실제 API 호출 (나중에 재연결 시 주석 해제)
+        // const res = (await getClassQuizAverage()).data.data;
+        // perfect.value = res.perfect || 0;
+        // good.value = res.good || 0;
+        // notbad.value = res.notbad || 0;
+        // return { _perfect: res.perfect || 0, _good: res.good || 0, _notbad: res.notbad || 0 };
+      }
     }
 
     async function setLineData() {
-      const res = (await getClassMonthAllUsage()).data.data;
-      return res;
-
-      //return [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+      if (useDummyData) {
+        // 더미 데이터 사용
+        return getClassMonthAllUsage();
+      } else {
+        // 실제 API 호출 (나중에 재연결 시 주석 해제)
+        // const res = (await getClassMonthAllUsage()).data.data;
+        // return res;
+      }
     }
 
     async function renderCharts() {

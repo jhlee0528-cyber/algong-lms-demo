@@ -545,3 +545,162 @@ export function getLibraryStudentList(branchName) {
     readingCount: student.readingCount || 0
   }));
 }
+
+// ==================== OurReading.vue용 더미 데이터 ====================
+
+// 지점 전체 독서 활동 정보
+export function getClassAllReadInfo(branchName) {
+  const students = getStudentsByBranch(branchName);
+  const totalBooks = students.reduce((sum, s) => sum + (s.readingCount || 0), 0);
+
+  return {
+    bookCount: totalBooks,
+    readCount: totalBooks * 2, // 읽은 횟수는 책 수의 2배 정도
+    sentenceCount: totalBooks * 50 // 책당 평균 50문장
+  };
+}
+
+// 주간 독서 랭킹
+export function getWeeklyRanking(branchName) {
+  const students = getStudentsByBranch(branchName);
+  const today = new Date();
+  const startDate = new Date(today);
+  startDate.setDate(today.getDate() - 7);
+
+  const ranking = students
+    .map(student => ({
+      name: student.name,
+      weeklyBooks: Math.floor(Math.random() * 3) + 1 // 주간 1~3권
+    }))
+    .sort((a, b) => b.weeklyBooks - a.weeklyBooks)
+    .slice(0, 10);
+
+  return {
+    ranking,
+    start: startDate.toISOString(),
+    end: today.toISOString()
+  };
+}
+
+// 인기 도서 (전체 기간)
+export function getClassPopularBooks(branchName) {
+  const stats = generateBranchReadingStats(branchName);
+  return stats.popularBooks || [];
+}
+
+// 인기 도서 (주간)
+export function getClassWeeklyPopularBooks(branchName) {
+  const stats = generateBranchReadingStats(branchName);
+  // 주간 인기 도서는 전체와 비슷하지만 순서를 약간 바꿈
+  const books = stats.popularBooks || [];
+  return books.map((book, idx) => ({
+    ...book,
+    readCount: Math.max(1, book.readCount - idx)
+  }));
+}
+
+// 단원별 진행률 (12단원)
+export function getClassLibraryLessonProgress() {
+  return Array.from({ length: 12 }, () => Math.floor(Math.random() * 30) + 10);
+}
+
+// 퀴즈 평균 (Perfect, Good, Not Bad)
+export function getClassQuizAverage() {
+  const total = 100;
+  const perfect = Math.floor(Math.random() * 30) + 20; // 20~50%
+  const good = Math.floor(Math.random() * 30) + 30; // 30~60%
+  const notbad = total - perfect - good;
+
+  return { perfect, good, notbad };
+}
+
+// 월별 사용량 (1~12월)
+export function getClassMonthAllUsage() {
+  return Array.from({ length: 12 }, (_, i) => {
+    const currentMonth = new Date().getMonth();
+    // 현재 월까지만 데이터 있고, 이후는 0
+    if (i > currentMonth) return 0;
+    return Math.floor(Math.random() * 30) + 10; // 10~40권
+  });
+}
+
+// ==================== StudentReading.vue용 더미 데이터 ====================
+
+// 학생 퀴즈 결과
+export function getStudentRacingResult(studentId) {
+  const student = getStudentById(studentId);
+  if (!student) return { perfect: 0, good: 0, notbad: 0 };
+
+  const total = (student.readingCount || 0) * 10; // 책당 10문제 정도
+  if (total === 0) return { perfect: 0, good: 0, notbad: 0 };
+
+  const perfect = Math.floor(total * (0.3 + Math.random() * 0.3)); // 30~60%
+  const good = Math.floor(total * (0.2 + Math.random() * 0.2)); // 20~40%
+  const notbad = total - perfect - good;
+
+  return { perfect, good, notbad };
+}
+
+// 학생 단원별 진행률
+export function getStudentLibraryLessonProgress(studentId) {
+  const student = getStudentById(studentId);
+  const multiplier = (student?.readingCount || 0) > 0 ? 1 : 0;
+
+  return Array.from({ length: 12 }, () =>
+    Math.floor(Math.random() * 20 * multiplier) + (5 * multiplier)
+  );
+}
+
+// 학생 레벨별 진행률
+export function getStudentLevelProgress(studentId) {
+  const student = getStudentById(studentId);
+  const multiplier = (student?.readingCount || 0) > 0 ? 1 : 0;
+
+  return {
+    '-1': Math.floor(Math.random() * 15 * multiplier),
+    '0': Math.floor(Math.random() * 20 * multiplier),
+    '1': Math.floor(Math.random() * 25 * multiplier),
+    '2': Math.floor(Math.random() * 20 * multiplier),
+    '3': Math.floor(Math.random() * 15 * multiplier),
+    '4': Math.floor(Math.random() * 10 * multiplier),
+    '5': Math.floor(Math.random() * 5 * multiplier)
+  };
+}
+
+// 학생 최근 읽은 책
+export function getStudentRecentBooks(studentId) {
+  const readingData = getStudentReadingData(studentId);
+  if (!readingData) return [];
+  return readingData.recentBooks;
+}
+
+// 학생 전체 독서 정보
+export function getStudentAllReadInfo(studentId) {
+  const readingData = getStudentReadingData(studentId);
+  if (!readingData) {
+    return { bookCount: 0, readCount: 0, sentenceCount: 0 };
+  }
+
+  return {
+    bookCount: readingData.totalBooks,
+    readCount: readingData.totalCompleted * 2, // 완독 수의 2배
+    sentenceCount: readingData.totalCompleted * 50 // 책당 평균 50문장
+  };
+}
+
+// 반 평균 월별 사용량
+export function getClassMonthAverageUsage(branchName) {
+  return getClassMonthAllUsage(); // 같은 데이터 사용
+}
+
+// 학생 월별 사용량
+export function getStudentMonthUsage(studentId) {
+  const student = getStudentById(studentId);
+  const multiplier = (student?.readingCount || 0) > 0 ? 1 : 0;
+
+  return Array.from({ length: 12 }, (_, i) => {
+    const currentMonth = new Date().getMonth();
+    if (i > currentMonth) return 0;
+    return Math.floor(Math.random() * 10 * multiplier) + (2 * multiplier);
+  });
+}
