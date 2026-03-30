@@ -359,6 +359,36 @@ export function getStudentByAttendanceNumber(branch, attendanceNumber) {
 
 // ==================== E-Library 더미 데이터 ====================
 
+// 시드 기반 난수 생성 함수 (같은 시드면 항상 같은 값 반환)
+function seededRandom(seed) {
+  const x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+}
+
+// 학생 ID를 숫자 시드로 변환
+function getStudentSeed(studentId) {
+  if (typeof studentId === 'number') return studentId;
+  // 문자열 ID를 숫자로 변환
+  let hash = 0;
+  for (let i = 0; i < studentId.length; i++) {
+    const char = studentId.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash; // Convert to 32bit integer
+  }
+  return Math.abs(hash);
+}
+
+// 시드 기반으로 min~max 범위의 정수 반환
+function seededRandomInt(seed, min, max) {
+  const rand = seededRandom(seed);
+  return Math.floor(rand * (max - min + 1)) + min;
+}
+
+// 시드 기반으로 0~1 사이의 실수 반환 (offset으로 다양한 값 생성 가능)
+function seededRandomFloat(seed, offset = 0) {
+  return seededRandom(seed + offset);
+}
+
 // 도서 코드 풀 (실제 알공 도서 코드 형식)
 const bookCodes = [
   'A001', 'A002', 'A003', 'A004', 'A005', 'A006', 'A007', 'A008', 'A009', 'A010',
@@ -384,9 +414,10 @@ const bookTitles = [
   'Tom Sawyer', 'Robinson Crusoe'
 ];
 
-// 학생별 독서 데이터 생성
+// 학생별 독서 데이터 생성 (시드 기반으로 일관된 데이터 생성)
 function generateStudentReadingData(student) {
   const readingCount = student.readingCount || 0;
+  const studentSeed = getStudentSeed(student.id);
 
   if (readingCount === 0) {
     return {
@@ -404,13 +435,15 @@ function generateStudentReadingData(student) {
 
   for (let i = 0; i < readingCount; i++) {
     let bookIndex;
+    let attempts = 0;
     do {
-      bookIndex = Math.floor(Math.random() * bookCodes.length);
-    } while (usedBookIndices.has(bookIndex));
+      bookIndex = seededRandomInt(studentSeed + i * 100 + attempts, 0, bookCodes.length - 1);
+      attempts++;
+    } while (usedBookIndices.has(bookIndex) && attempts < 50);
     usedBookIndices.add(bookIndex);
 
-    const completeCount = Math.floor(Math.random() * 3) + 1; // 1~3독
-    const daysAgo = Math.floor(Math.random() * 30); // 최근 30일 이내
+    const completeCount = seededRandomInt(studentSeed + i * 100 + 50, 1, 3); // 1~3독
+    const daysAgo = seededRandomInt(studentSeed + i * 100 + 60, 0, 30); // 최근 30일 이내
     const recentDate = new Date();
     recentDate.setDate(recentDate.getDate() - daysAgo);
 
@@ -419,7 +452,7 @@ function generateStudentReadingData(student) {
       bookTitle: bookTitles[bookIndex],
       completeCount,
       recentDate: recentDate.toISOString().split('T')[0],
-      totalPage: 20 + Math.floor(Math.random() * 30), // 20~50페이지
+      totalPage: seededRandomInt(studentSeed + i * 100 + 70, 20, 50), // 20~50페이지
       currentPage: null, // 완독 책은 currentPage null
       progress: 100
     });
@@ -427,20 +460,23 @@ function generateStudentReadingData(student) {
 
   // 읽고 있는 책 1~2권 추가 (status가 normal인 경우만)
   const readingBooks = [];
-  if (student.status === 'normal' && Math.random() > 0.3) {
-    const numReading = Math.random() > 0.5 ? 1 : 2;
+  if (student.status === 'normal' && seededRandom(studentSeed + 999) > 0.3) {
+    const numReading = seededRandom(studentSeed + 1000) > 0.5 ? 1 : 2;
 
     for (let i = 0; i < numReading; i++) {
       let bookIndex;
+      let attempts = 0;
       do {
-        bookIndex = Math.floor(Math.random() * bookCodes.length);
-      } while (usedBookIndices.has(bookIndex));
+        bookIndex = seededRandomInt(studentSeed + i * 200 + attempts + 1000, 0, bookCodes.length - 1);
+        attempts++;
+      } while (usedBookIndices.has(bookIndex) && attempts < 50);
       usedBookIndices.add(bookIndex);
 
-      const totalPage = 20 + Math.floor(Math.random() * 30);
-      const currentPage = Math.floor(totalPage * (0.2 + Math.random() * 0.6)); // 20%~80% 진행
+      const totalPage = seededRandomInt(studentSeed + i * 200 + 1100, 20, 50);
+      const progressPercent = seededRandomFloat(studentSeed + i * 200 + 1200) * 0.6 + 0.2; // 20%~80%
+      const currentPage = Math.floor(totalPage * progressPercent);
       const progress = Math.floor((currentPage / totalPage) * 100);
-      const daysAgo = Math.floor(Math.random() * 7); // 최근 7일 이내
+      const daysAgo = seededRandomInt(studentSeed + i * 200 + 1300, 0, 7); // 최근 7일 이내
       const recentDate = new Date();
       recentDate.setDate(recentDate.getDate() - daysAgo);
 
@@ -626,7 +662,7 @@ export function getClassMonthAllUsage() {
 
 // ==================== StudentReading.vue용 더미 데이터 ====================
 
-// 학생 퀴즈 결과
+// 학생 퀴즈 결과 (시드 기반)
 export function getStudentRacingResult(studentId) {
   const student = getStudentById(studentId);
   if (!student) return { perfect: 0, good: 0, notbad: 0 };
@@ -634,36 +670,42 @@ export function getStudentRacingResult(studentId) {
   const total = (student.readingCount || 0) * 10; // 책당 10문제 정도
   if (total === 0) return { perfect: 0, good: 0, notbad: 0 };
 
-  const perfect = Math.floor(total * (0.3 + Math.random() * 0.3)); // 30~60%
-  const good = Math.floor(total * (0.2 + Math.random() * 0.2)); // 20~40%
+  const studentSeed = getStudentSeed(studentId);
+  const perfectRatio = 0.3 + seededRandomFloat(studentSeed + 2000) * 0.3; // 30~60%
+  const goodRatio = 0.2 + seededRandomFloat(studentSeed + 2100) * 0.2; // 20~40%
+
+  const perfect = Math.floor(total * perfectRatio);
+  const good = Math.floor(total * goodRatio);
   const notbad = total - perfect - good;
 
   return { perfect, good, notbad };
 }
 
-// 학생 단원별 진행률
+// 학생 단원별 진행률 (시드 기반)
 export function getStudentLibraryLessonProgress(studentId) {
   const student = getStudentById(studentId);
   const multiplier = (student?.readingCount || 0) > 0 ? 1 : 0;
+  const studentSeed = getStudentSeed(studentId);
 
-  return Array.from({ length: 12 }, () =>
-    Math.floor(Math.random() * 20 * multiplier) + (5 * multiplier)
+  return Array.from({ length: 12 }, (_, i) =>
+    seededRandomInt(studentSeed + 3000 + i * 10, 5, 25) * multiplier
   );
 }
 
-// 학생 레벨별 진행률
+// 학생 레벨별 진행률 (시드 기반)
 export function getStudentLevelProgress(studentId) {
   const student = getStudentById(studentId);
   const multiplier = (student?.readingCount || 0) > 0 ? 1 : 0;
+  const studentSeed = getStudentSeed(studentId);
 
   return {
-    '-1': Math.floor(Math.random() * 15 * multiplier),
-    '0': Math.floor(Math.random() * 20 * multiplier),
-    '1': Math.floor(Math.random() * 25 * multiplier),
-    '2': Math.floor(Math.random() * 20 * multiplier),
-    '3': Math.floor(Math.random() * 15 * multiplier),
-    '4': Math.floor(Math.random() * 10 * multiplier),
-    '5': Math.floor(Math.random() * 5 * multiplier)
+    '-1': seededRandomInt(studentSeed + 4000, 0, 15) * multiplier,
+    '0': seededRandomInt(studentSeed + 4100, 0, 20) * multiplier,
+    '1': seededRandomInt(studentSeed + 4200, 0, 25) * multiplier,
+    '2': seededRandomInt(studentSeed + 4300, 0, 20) * multiplier,
+    '3': seededRandomInt(studentSeed + 4400, 0, 15) * multiplier,
+    '4': seededRandomInt(studentSeed + 4500, 0, 10) * multiplier,
+    '5': seededRandomInt(studentSeed + 4600, 0, 5) * multiplier
   };
 }
 
@@ -693,14 +735,24 @@ export function getClassMonthAverageUsage(branchName) {
   return getClassMonthAllUsage(); // 같은 데이터 사용
 }
 
-// 학생 월별 사용량
+// 학생 월별 사용량 (시드 기반)
 export function getStudentMonthUsage(studentId) {
   const student = getStudentById(studentId);
   const multiplier = (student?.readingCount || 0) > 0 ? 1 : 0;
+  const studentSeed = getStudentSeed(studentId);
 
   return Array.from({ length: 12 }, (_, i) => {
     const currentMonth = new Date().getMonth();
     if (i > currentMonth) return 0;
-    return Math.floor(Math.random() * 10 * multiplier) + (2 * multiplier);
+    return seededRandomInt(studentSeed + 5000 + i * 10, 2, 12) * multiplier;
   });
+}
+
+// ==================== DashboardView.vue용 ====================
+
+// 학생 상태 조회 (progress 기반)
+export function getStudentStatus(progress) {
+  if (progress >= 80) return 'normal';
+  if (progress >= 50) return 'warning';
+  return 'danger';
 }

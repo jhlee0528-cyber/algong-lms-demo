@@ -366,7 +366,7 @@ import { ref, computed, watch, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import WrapContent from '../../components/common/WrapContent.vue';
-import { branchStudents } from '../../data/students.js';
+import { branchStudents, getStudentStatus } from '../../data/students.js';
 
 const router = useRouter();
 const store = useStore();
