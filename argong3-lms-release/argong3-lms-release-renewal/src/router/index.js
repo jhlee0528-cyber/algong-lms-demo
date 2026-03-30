@@ -257,7 +257,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(process.env.NODE_ENV === 'production' ? '/algong-lms-demo/' : '/'),
   scrollBehavior(to, from) {
     if (
       to.params.userId &&
