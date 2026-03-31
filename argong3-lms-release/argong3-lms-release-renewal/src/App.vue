@@ -91,6 +91,7 @@ export default {
     window.addEventListener("success", this.handleSuccess);
     window.addEventListener("passwordsuccess", this.handlePasswordSuccess);
 
+    /* GitHub Pages 데모용 - maintenance 체크 비활성화
     try {
       const res_1 = await maintenance();
       if (res_1.data.data === true) {
@@ -116,6 +117,7 @@ export default {
       window.dispatchEvent(errorEvent);
       return;
     }
+    */
 
     // if (this.$store.state.token) {
     //   const res = await teacherinfo();
