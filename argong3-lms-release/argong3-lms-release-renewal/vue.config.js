@@ -1,4 +1,5 @@
 const { defineConfig } = require('@vue/cli-service')
+const webpack = require('webpack')
 module.exports = defineConfig({
   publicPath: process.env.NODE_ENV === 'production'
     ? '/algong-lms-demo/'
@@ -10,5 +11,12 @@ module.exports = defineConfig({
     }
   },
   lintOnSave: false,
-  productionSourceMap: false
+  productionSourceMap: false,
+  configureWebpack: {
+    plugins: [
+      new webpack.DefinePlugin({
+        'process.env.VUE_APP_DEMO_MODE': JSON.stringify('true')
+      })
+    ]
+  }
 })
