@@ -1,5 +1,6 @@
 import { instance, instanceAuth, socketinstance } from './url'
 import axios from 'axios'
+import { MOCK_TEACHER } from '@/mock/index.js'
 
 const maintenance = async () => {
   return await instance
@@ -15,6 +16,9 @@ const login = async (loginData) => {
     })
 }
 const userInfo = async () => {
+  if (process.env.VUE_APP_DEMO_MODE === 'true') {
+    return { data: { result: true, data: MOCK_TEACHER } }
+  }
   return await instanceAuth
     .get('/users', { credentials: true })
     .catch((err) => {

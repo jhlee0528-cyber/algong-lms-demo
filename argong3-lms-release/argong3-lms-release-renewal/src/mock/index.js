@@ -5,7 +5,11 @@ export const MOCK_TEACHER = {
   id: 1,
   name: "데모 선생님",
   email: "demo@algong.kr",
-  academy: "알공 영어교습소"
+  academy: "알공 영어교습소",
+  payPlan: "general",
+  publisher: "algong",
+  grade: 3,
+  classNum: 1
 };
 
 export const MOCK_STUDENTS = [
