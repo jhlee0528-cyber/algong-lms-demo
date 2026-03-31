@@ -9,7 +9,28 @@ export const MOCK_TEACHER = {
   payPlan: "general",
   publisher: "algong",
   grade: 3,
-  classNum: 1
+  classNum: 1,
+  schoolCode: "DEMO001"
+};
+
+export const MOCK_LESSONS = [
+  'Hello, World!',
+  'My Family',
+  'School Life',
+  'Fun with Friends',
+  'Animals I Love',
+  'Seasons & Weather',
+  'My Daily Routine',
+  'Food I Like',
+  'Places in Town',
+  'Hobbies & Sports'
+];
+
+export const MOCK_SCHOOL = {
+  payPlan: 'general',
+  name: '알공 영어교습소',
+  code: 'DEMO001',
+  address: '서울특별시 금천구'
 };
 
 export const MOCK_STUDENTS = [

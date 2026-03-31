@@ -1,6 +1,6 @@
 import { instance, instanceAuth, socketinstance } from './url'
 import axios from 'axios'
-import { MOCK_TEACHER } from '@/mock/index.js'
+import { MOCK_TEACHER, MOCK_LESSONS, MOCK_SCHOOL } from '@/mock/index.js'
 
 const maintenance = async () => {
   return await instance
@@ -26,6 +26,9 @@ const userInfo = async () => {
     })
 } // 단원 정보 불러오기
 const lessonInfo = async () => {
+  if (process.env.VUE_APP_DEMO_MODE === 'true') {
+    return { data: { result: true, data: MOCK_LESSONS } }
+  }
   return await instanceAuth
     .get('/lms/lesson-list', { credentials: true })
     .catch((err) => {
@@ -33,6 +36,9 @@ const lessonInfo = async () => {
     })
 }
 const lessonaverageprogress = async () => {
+  if (process.env.VUE_APP_DEMO_MODE === 'true') {
+    return { data: { result: true, data: [] } }
+  }
   return await instanceAuth
     .get('/lms/class-lesson-progress', { credentials: true })
     .catch((err) => {
@@ -40,6 +46,9 @@ const lessonaverageprogress = async () => {
     })
 }
 const lessonStudentInfo = async (index) => {
+  if (process.env.VUE_APP_DEMO_MODE === 'true') {
+    return { data: { result: true, data: [{ userId: 1 }] } }
+  }
   return await instanceAuth
     .get(`/lms/student-studylist/${index}`, { credentials: true })
     .catch((err) => {

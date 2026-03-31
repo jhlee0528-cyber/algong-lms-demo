@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { instance, instanceAuth } from './url'
+import { MOCK_SCHOOL } from '@/mock/index.js'
 
 const settingclasslist = async (data) => {
   const { grade, classNum } = data
@@ -9,6 +10,9 @@ const settingclasslist = async (data) => {
 }
 
 const schoolinfo = async () => {
+  if (process.env.VUE_APP_DEMO_MODE === 'true') {
+    return { data: { result: true, data: MOCK_SCHOOL } }
+  }
   return await instanceAuth.get(`/lms/school`, {
     credentials: true
   })
@@ -123,6 +127,9 @@ const getChathessAuth = async (data) => {
 }
 
 const getSSORestrict = async (data) => {
+  if (process.env.VUE_APP_DEMO_MODE === 'true') {
+    return { data: { result: true, data: -1 } }
+  }
   return await instanceAuth.get(`/lms/get/ssorestrict/${data}`, {
     credentials: true
   })
@@ -561,6 +568,9 @@ const createAiepStudent = async (data) => {
 }
 
 export const classEngSummary = async (data) => {
+  if (process.env.VUE_APP_DEMO_MODE === 'true') {
+    return { data: { result: true, data: {} } }
+  }
   return await instanceAuth.get(`/lms/class/studyinfo`, data, {
     credentials: true
   })
