@@ -59,8 +59,21 @@ import store from './index'
 import { login_ko } from '../assets/translate/ko'
 import { login_vt } from '../assets/translate/vt'
 import { getLanguage2 } from '../api/api-list-2'
+import { MOCK_TOKEN, MOCK_TEACHER } from '@/mock/index.js'
 
 const LOGIN = async ({ commit }, loginData) => {
+  const isDemoMode = process.env.VUE_APP_DEMO_MODE === 'true'
+  if (isDemoMode) {
+    store.state.loading = true
+    setTimeout(() => {
+      store.state.token = MOCK_TOKEN
+      saveCookie('info', MOCK_TOKEN)
+      store.state.loading = false
+      window.location.href = `${window.location.origin}/learning/status`
+    }, 500)
+    return
+  }
+
   store.state.loading = true
   const logind = { os: 'pc', id: loginData.id, password: loginData.password }
   const res = await login(logind)
